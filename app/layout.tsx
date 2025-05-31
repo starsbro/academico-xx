@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Outfit } from 'next/font/google';
 import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -9,8 +10,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'Spark! Next.js Template',
-  description: 'Spark! Next.js Template',
+  title: 'academico-ai',
+  description: 'Spark! Next.js Template: Academico-ai',
   keywords: ['Next.js', 'React', 'TypeScript', 'Template'],
 };
 
@@ -20,12 +21,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable}`}>
-      <body>
-        <ErrorBoundary>
-          <div className="main-content-container">{children}</div>
-        </ErrorBoundary>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className={`${outfit.variable}`}>
+        <body>
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+          <ErrorBoundary>
+            <div className="main-content-container">{children}</div>
+          </ErrorBoundary>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
