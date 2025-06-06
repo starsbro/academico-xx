@@ -1,0 +1,5 @@
+.env
+node_modules/
+/src/config/academico-ai-firebase-adminsdk-fbsvc-55aacdba4f.json
+
+

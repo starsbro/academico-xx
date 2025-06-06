@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
 import { Outfit } from 'next/font/google';
 import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -24,11 +24,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${outfit.variable}`}>
         <body>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
+          <header className="flex justify-start items-center p-4 gap-4 h-16">
+            {/* <SignedOut>
               <SignInButton />
               <SignUpButton />
-            </SignedOut>
+            </SignedOut> */}
             <SignedIn>
               <UserButton />
             </SignedIn>
