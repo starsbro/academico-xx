@@ -5,7 +5,9 @@ dotenv.config();
 
 import express, { json } from 'express';
 import cors from 'cors';
-import { admin, db } from './config/firebaseAdmin'; // Import initialized Firebase Admin
+//import { admin, db } from './config/firebaseAdmin.js'; // Import initialized Firebase Admin
+import pkg from 'firebase-admin';
+const { admin } = pkg;
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'; // For Clerk authentication
 
 const app = express();

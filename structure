@@ -1,0 +1,52 @@
+academico-ai/
+├── frontend/
+│   ├── .next/             # Next.js build output (generated)
+│   ├── public/            # Static assets for Next.js (images, favicon, etc.)
+│   ├── src/
+│   │   ├── app/           # Next.js App Router (pages, layouts, API routes for frontend-specific logic)
+│   │   │   ├── page.js
+│   │   │   ├── layout.js
+│   │   │   └── api/       # Next.js API Routes (for frontend-specific API needs, e.g., calling your Node.js backend)
+│   │   │       └── aggregated-data/
+│   │   │           └── route.ts    # Next.js API Route with TS
+│   │   ├── components/    # Reusable React components
+│   │   │   └── MyComponent.tsx
+│   │   ├── lib/           # Frontend utility functions, Firebase client-side config
+│   │   │   ├── firebaseClient.ts   # Firebase client-side config
+│   │   │   └── firebaseAdmin.ts    # Firebase Admin SDK config for Next.js API routes (if needed)
+│   │   ├── types/                  # Custom TypeScript types/interfaces
+│   │   │   └── index.d.ts
+│   │   └── styles/        # Global styles
+│   ├── next.config.js
+│   ├── package.json
+│   ├── tsconfig.json      # If using TypeScript
+│   └── .env.local         # Environment variables for frontend
+│
+├── backend/
+│   ├── functions/         # Firebase Cloud Functions (your Node.js backend logic that Firebase deploys)
+# │   │   ├── index.js       # Main entry point for Cloud Functions
+
+│   │   ├── src/           # Your core Node.js backend code (controllers, services, models)
+│   │   │   ├── index.ts            # Main entry for Cloud Functions (exports TS functions)
+│   │   │   ├── routes/
+│   │   │   │   └── users.ts
+│   │   │   ├── controllers/
+│   │   │   │   └── userController.ts
+│   │   │   ├── services/
+│   │   │   │   └── userService.ts
+│   │   │   └── utils/
+│   │   │   ├── types/              # Custom TypeScript types/interfaces for backend
+│   │   │   │   └── index.d.ts
+│   │   ├── lib/                    # Compiled JavaScript output (generated)
+│   │   ├── package.json   # Dependencies for your Cloud Functions
+│   │   ├── tsconfig.json  # If using TypeScript for Functions
+│   │   └── .env           # Environment variables for functions
+│   ├── public/            # (Optional) If you have any static assets ONLY served by Cloud Functions, but usually handled by Next.js Hosting
+│   ├── firebase.json      # Firebase CLI configuration for this project
+│   ├── .firebaserc        # Firebase project aliases
+│   └── .env               # Global backend environment variables
+│
+├── .gitignore             # Git ignore file for the whole mono-repo
+├── README.md              # Project documentation
+├── package.json           # Optional: A root package.json for workspace management (e.g., Lerna, pnpm workspaces, npm workspaces)
+└── tsconfig.json          # Optional: A root tsconfig.json for mono-repo setup

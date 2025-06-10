@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { doc, getDoc, DocumentData } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase'; // Your client-side Firebase init
+import { auth, db } from '../../lib/firebase'; // Adjust the path as needed based on your project structure
 import { signInWithCustomToken } from 'firebase/auth';
 
 //1. Define an interface for the shape of firestoreData
