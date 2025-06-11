@@ -42,7 +42,7 @@ interface Project {
   bgColor?: string;
 }
 
-// --- Dummy Data (Replace with Firestore/Database Logic) ---
+// --- Dummy Data (Next step: Replace with Firestore/Database Logic) ---
 let projectsData: Project[] = [
   {
     id: '1', // Ensure IDs are strings
