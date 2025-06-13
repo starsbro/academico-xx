@@ -15,6 +15,7 @@
   --card-border: #78a0c8;
   --link-color: var(--primary-accent);
   --code-bg: #e9ecef;
+   --spacing: 4px;
 }
 
 html {

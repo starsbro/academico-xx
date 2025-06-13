@@ -5,7 +5,9 @@ import { useUser, UserButton } from '@clerk/nextjs';
 import { Button } from './../components/Button';
 import { Input } from './../components/ui/input';
 import { ScrollArea } from './../components/ui/scroll-area';
-import { Home, PenTool, Paperclip, Send, ArrowUp } from 'lucide-react';
+import { Home, PenTool, Send } from 'lucide-react';
+//import { Paperclip, ArrowUp } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 // Define a type for chat messages received from the backend
 interface ChatMessage {
@@ -21,10 +23,12 @@ export default function Component() {
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const { isLoaded, isSignedIn, user } = useUser();
+  const router = useRouter();
 
   // Ensure this environment variable is set in your .env.local for local dev,
   // and in your Firebase config for deployment.
-  const backendUrl: string = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000/api';
+  const backendUrl: string =
+    process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:5001/academico-ai/us-central1/api';
 
   // Scroll to the latest message whenever chatHistory updates
   useEffect(() => {
@@ -93,6 +97,10 @@ export default function Component() {
       handleSendMessage();
     }
   };
+  // Function to handle navigation to the home page
+  const handleGoHome = () => {
+    router.push('/');
+  };
 
   // Loading state / not signed in
   if (!isLoaded || !isSignedIn) {
@@ -110,24 +118,28 @@ export default function Component() {
   const username: string = user.username || user.fullName || user.emailAddresses[0]?.emailAddress || 'Guest';
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-128 bg-gray-50 gap-4 rounded-lg">
       {/* Left Sidebar */}
       <div className="w-64 bg-gradient-to-b from-blue-400 to-blue-600 text-white flex flex-col">
-        <div className="p-4 flex items-center gap-3">
+        <div className="p-4 flex items-center gap-3" style={{ margin: 12 }}>
           <UserButton />
           <span className="font-medium">Academic {username}</span>
-          <Home className="w-5 h-5 ml-auto" />
+          <div onClick={handleGoHome}>
+            <Home className="w-5 h-5 ml-auto" />
+          </div>
         </div>
 
-        <div className="px-4 mb-4">
-          <Button className="w-full bg-white/20 hover:bg-white/30 text-white border-0 justify-start gap-2">
+        <div className="px-4 mb-4" style={{ margin: 6 }}>
+          <Button className="w-full bg-white/20 hover:bg-white/30 text-white border-0 justify-center gap-2">
             <PenTool className="w-4 h-4" />
-            New
+            New chat
           </Button>
         </div>
 
         <div className="flex-1 px-4">
-          <h3 className="text-sm font-medium mb-3 opacity-90">Chat History</h3>
+          <h3 className="text-sm font-medium opacity-90" style={{ margin: 12 }}>
+            Chats
+          </h3>
           <ScrollArea className="h-full">
             <div className="space-y-1">
               {/* Display fetched chat history snippets */}
@@ -135,7 +147,7 @@ export default function Component() {
                 <Button
                   key={chat.id}
                   variant="outline"
-                  className="w-full justify-start text-white hover:bg-white/20 h-8 text-sm font-normal"
+                  className="w-60 justify-start text-white hover:bg-white/20 h-8 text-sm font-normal "
                 >
                   {chat.message.substring(0, 30)}
                   {chat.message.length > 30 ? '...' : ''}
@@ -162,7 +174,7 @@ export default function Component() {
             <div ref={chatEndRef} />
 
             {/* Action Buttons (as before) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
               <Button
                 variant="outline"
                 className="h-16 bg-purple-100 border-purple-200 hover:bg-purple-150 text-purple-700 text-xs font-medium flex flex-col items-center justify-center gap-1"
@@ -187,31 +199,36 @@ export default function Component() {
               >
                 <span className="text-center leading-tight">Full Context Knowledge Graph</span>
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* Input Area */}
-        <div className="border-t bg-white p-4">
-          <div className="max-w-4xl mx-auto">
+        <div className="border-t bg-fuchsia-100 rounded-2xl p-4">
+          <div className="max-w-3xl mx-8">
             <div className="relative">
               <Input
                 placeholder="I am thinking about..."
-                className="pr-20 h-12 text-sm"
-                value={currentMessage}
+                className="pr-20 h-12 text-lg"
+                value={currentMessage || ''}
                 onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
               />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                <Button size="small" variant="outline" className="h-8 w-8 p-0">
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                {/* <Button size="small" variant="outline" className="h-8 w-8 p-0">
                   <Paperclip className="w-4 h-4" />
+                </Button> */}
+                <Button
+                  size="small"
+                  variant="outline"
+                  className="h-8 w-8 p-0 justify-center"
+                  onClick={handleSendMessage}
+                >
+                  <Send className="w-4 h-4 " />
                 </Button>
-                <Button size="small" variant="outline" className="h-8 w-8 p-0" onClick={handleSendMessage}>
-                  <Send className="w-4 h-4" />
-                </Button>
-                <Button size="small" className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600">
-                  <ArrowUp className="w-4 h-4" />
-                </Button>
+                {/* <Button size="small" className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600">
+                  <ArrowUp className="w-4 h-4 text-white" onClick={handleSendMessage} />
+                </Button> */}
               </div>
             </div>
           </div>
@@ -221,6 +238,7 @@ export default function Component() {
   );
 }
 
+// Old version
 // 'use client';
 
 // import { useUser, UserButton } from '@clerk/nextjs';
