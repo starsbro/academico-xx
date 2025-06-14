@@ -5,11 +5,8 @@ declare const __app_id: string;
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useUser, UserButton } from '@clerk/nextjs';
-import { Button } from './../components/Button';
 import { Input } from './../components/ui/input';
-//import { ScrollArea } from './../components/ui/scroll-area';
-import { Home, Send } from 'lucide-react';
-//import { Paperclip, ArrowUp } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 // Define a type for chat messages received from the backend
@@ -35,8 +32,11 @@ export default function Component() {
   const [userChats, setUserChats] = useState<UserChat[]>([]);
   const [isLoadingChats, setIsLoadingChats] = useState<boolean>(true);
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [newChatTitle, setNewChatTitle] = useState<string>('');
 
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const initialChatFetchRef = useRef(false);
 
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
@@ -66,58 +66,82 @@ export default function Component() {
     }
   }, [chatHistory]);
 
-  // Fetch chat history on component mount or user change
-  // useEffect(() => {
-  //   const fetchChatHistory = async () => {
-  //     // Ensure user data is loaded and user is signed in
-  //     if (!isLoaded || !isSignedIn || !user?.id) return;
-
-  //     try {
-  //       const response = await fetch(`${backendUrl}/chat-history/${user.id}`);
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const data: ChatMessage[] = await response.json();
-  //       setChatHistory(data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch chat history:', error);
-  //     }
-  //   };
-
-  //   fetchChatHistory();
-  // }, [isLoaded, isSignedIn, user?.id, backendUrl]); // Depend on user ID and backend URL
-
   // Function to fetch the list of all chats for the user
   const fetchUserChats = useCallback(async () => {
-    if (!isLoaded || !isSignedIn || !user?.id) return;
+    if (!isLoaded || !isSignedIn || !user?.id) {
+      setIsLoadingChats(false);
+      setUserChats([]);
+      return;
+    }
     setIsLoadingChats(true);
     try {
       const url = `${backendUrl}/users/${user.id}/chats`;
-      console.log('Fetching user chats from:', url);
+      console.log('Fetching user chats for sidebar:', url);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data: UserChat[] = await response.json();
-      setUserChats(data);
+      const sortedData = data.sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime());
+      setUserChats(sortedData);
       // Automatically select the most recent chat if available
-      if (data.length > 0 && !selectedChatId) {
-        setSelectedChatId(data[0].id);
-      }
+      // if (data.length > 0 && !selectedChatId) {
+      //   setSelectedChatId(data[0].id);
+      // }
     } catch (error) {
       console.error('Failed to fetch user chats:', error);
     } finally {
       setIsLoadingChats(false);
     }
-  }, [isLoaded, isSignedIn, user?.id, backendUrl, selectedChatId]);
+  }, [isLoaded, isSignedIn, user?.id, backendUrl]);
+
   //Fetch user chats on component mount or user change
   useEffect(() => {
     fetchUserChats();
   }, [fetchUserChats]);
+
+  // Effect for initial loading and auto-selection of the first chat
+  // Effect for initial application load:
+  // fetches chats and performs initial auto-se
+  useEffect(() => {
+    // Only run this logic once on component mount for a given user
+    if (isLoaded && isSignedIn && user?.id && !initialChatFetchRef.current) {
+      const fetchAndSelectInitialChats = async () => {
+        setIsLoadingChats(true);
+        try {
+          const url = `${backendUrl}/users/${user.id}/chats`;
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data: UserChat[] = await response.json();
+          const sortedData = data.sort(
+            (a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
+          );
+          setUserChats(sortedData);
+
+          if (selectedChatId === null && sortedData.length > 0) {
+            setSelectedChatId(sortedData[0].id);
+          }
+        } catch (error) {
+          console.error('Failed to fetch and select initial user chats:', error);
+        } finally {
+          setIsLoadingChats(false);
+          initialChatFetchRef.current = true;
+        }
+      };
+      fetchAndSelectInitialChats();
+    }
+  }, [isLoaded, isSignedIn, user?.id, backendUrl]);
+
   // Function to fetch messages for a specific chat
   const fetchMessagesForChat = useCallback(
     async (chatId: string) => {
-      if (!isLoaded || !isSignedIn || !user?.id || !chatId) return;
+      if (!isLoaded || !isSignedIn || !user?.id || !chatId) {
+        setIsLoadingMessages(false);
+        setChatHistory([]);
+        return;
+      }
       setIsLoadingMessages(true);
       try {
         const url = `${backendUrl}/users/${user.id}/chats/${chatId}/messages`;
@@ -152,10 +176,14 @@ export default function Component() {
     setSelectedChatId(null);
     setChatHistory([]);
     setCurrentMessage('');
+    setEditingChatId(null);
+    initialChatFetchRef.current = false;
+    fetchUserChats();
   };
 
   const handleSelectChat = (chatId: string) => {
     setSelectedChatId(chatId);
+    setEditingChatId(null);
   };
 
   const handleSendMessage = async () => {
@@ -201,24 +229,26 @@ export default function Component() {
       // If a new chat was creted, update selectedChatId and the userChats list
       if (savedResponse.newChatId && !selectedChatId) {
         setSelectedChatId(savedResponse.newChatId);
+        fetchUserChats(); // Call to refresh the sidebar
         // Add the new chat to the userChats list (sort by lastUpdatedAt for correct display)
-        setUserChats((prevChats) =>
-          [
-            {
-              id: savedResponse.newChatId,
-              title: currentMessage.substring(0, 30) + (currentMessage.length > 30 ? '...' : ''),
-              createdAt: new Date().toISOString(),
-              lastUpdatedAt: new Date().toISOString(),
-            },
-            ...prevChats,
-          ].sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
-        );
+        // setUserChats((prevChats) =>
+        //   [
+        //     {
+        //       id: savedResponse.newChatId,
+        //       title: currentMessage.substring(0, 30) + (currentMessage.length > 30 ? '...' : ''),
+        //       createdAt: new Date().toISOString(),
+        //       lastUpdatedAt: new Date().toISOString(),
+        //     },
+        //     ...prevChats,
+        //   ].sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
+        // );
       } else if (selectedChatId && !savedResponse.newChatId) {
-        setUserChats((prevChats) =>
-          prevChats
-            .map((chat) => (chat.id === selectedChatId ? { ...chat, lastUpdatedAt: new Date().toISOString() } : chat))
-            .sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
-        );
+        fetchUserChats();
+        // setUserChats((prevChats) =>
+        //   prevChats
+        //     .map((chat) => (chat.id === selectedChatId ? { ...chat, lastUpdatedAt: new Date().toISOString() } : chat))
+        //     .sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
+        // );
       }
       // Add the new message to chat history with the ID from the backend
       setChatHistory((prevHistory) => [
@@ -237,9 +267,49 @@ export default function Component() {
       handleSendMessage();
     }
   };
+
   // Function to handle navigation to the home page
   const handleGoHome = () => {
     router.push('/');
+  };
+
+  // --- New Function for Editing Chat Title ---
+  const handleEditChatTitle = (chatId: string, currentTitle: string) => {
+    setEditingChatId(chatId);
+    setNewChatTitle(currentTitle); // Populate input with current title
+  };
+
+  const handleSaveChatTitle = async (chatId: string) => {
+    if (!newChatTitle.trim() || !user?.id) return;
+
+    try {
+      const url = `${backendUrl}/users/${user.id}/chats/${chatId}/title`;
+      console.log('Updating chat title to:', url, 'with new title:', newChatTitle.trim());
+      const response = await fetch(url, {
+        method: 'PUT', // Use PUT for updating a resource
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title: newChatTitle.trim() }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // After saving, refresh the chat list in the sidebar to show the updated title
+      fetchUserChats();
+
+      setEditingChatId(null);
+      setNewChatTitle('');
+    } catch (error) {
+      console.error('Failed to update chat title:', error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingChatId(null);
+    setNewChatTitle('');
   };
 
   // Loading state / not signed in
@@ -275,7 +345,7 @@ export default function Component() {
             New chat
           </Button>
         </div> */}
-        <div className="mb-4">
+        <div className="px-4 mb-4" style={{ margin: 6 }}>
           <button
             className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-200 ease-in-out"
             onClick={handleNewChat}
@@ -303,7 +373,7 @@ export default function Component() {
         </div>
 
         <div className="flex-1 px-4">
-          <h3 className="text-sm font-medium opacity-90" style={{ margin: 12 }}>
+          <h3 className="text-sm font-medium opacity-90 pl-2" style={{ margin: 12 }}>
             Chats ({userChats.length})
           </h3>
           <div className="space-y-2">
@@ -313,33 +383,101 @@ export default function Component() {
               <p className="text-white/70 text-sm pl-2">No chats yet. Start a new one!</p>
             ) : (
               userChats.map((chat) => (
-                <button
-                  key={chat.id}
-                  className={`w-full text-left py-2 px-3 rounded-lg text-white text-sm transition duration-200 ease-in-out
-                    ${selectedChatId === chat.id ? 'bg-white/30 font-semibold' : 'hover:bg-white/20'}`}
-                  onClick={() => handleSelectChat(chat.id)}
-                >
-                  {chat.title}
-                </button>
+                <div key={chat.id} className="flex items-center justify-between group">
+                  {editingChatId === chat.id ? (
+                    <input
+                      type="text"
+                      value={newChatTitle}
+                      onChange={(e) => setNewChatTitle(e.target.value)}
+                      className="flex-1 bg-white/20 text-white px-3 py-1 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-white"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleSaveChatTitle(chat.id);
+                        if (e.key === 'Escape') handleCancelEdit();
+                      }}
+                    />
+                  ) : (
+                    <button
+                      className={`w-full text-left py-2 px-3 rounded-lg text-white text-sm transition duration-200 ease-in-out
+                        ${selectedChatId === chat.id ? 'bg-white/30 font-semibold' : 'hover:bg-white/20'}`}
+                      onClick={() => handleSelectChat(chat.id)}
+                    >
+                      {chat.title}
+                    </button>
+                  )}
+                  {editingChatId === chat.id ? (
+                    <div className="flex ml-2">
+                      <button
+                        className="text-white/70 hover:text-white p-1 rounded-full"
+                        onClick={() => handleSaveChatTitle(chat.id)}
+                        title="Save"
+                      >
+                        {/* Save icon inline SVG */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lucide lucide-check"
+                        >
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                      </button>
+                      <button
+                        className="text-white/70 hover:text-white p-1 rounded-full"
+                        onClick={handleCancelEdit}
+                        title="Cancel"
+                      >
+                        {/* X icon inline SVG */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lucide lucide-x"
+                        >
+                          <path d="M18 6 6 18" />
+                          <path d="m6 6 12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="text-white/70 hover:text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity ml-2"
+                      onClick={() => handleEditChatTitle(chat.id, chat.title)}
+                      title="Edit title"
+                    >
+                      {/* Edit icon inline SVG */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-pencil"
+                      >
+                        <path d="M12.1 17.5 1.5 22l4.5-10.6M17.1 14.9L22 10l-4.9-4.9c-.9-.9-2.2-.9-3.1 0L12.1 6.9c-.9.9-.9 2.2 0 3.1L17.1 14.9Z" />
+                        <path d="M7.6 15.8L4 20l4.2-3.6" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               ))
             )}
           </div>
-
-          {/* <ScrollArea className="h-full">
-            <div className="space-y-1">
-              Display fetched chat history snippets
-              {chatHistory.map((chat) => (
-                <Button
-                  key={chat.id}
-                  variant="outline"
-                  className="w-60 justify-start text-white hover:bg-white/20 h-8 text-sm font-normal "
-                >
-                  {chat.message.substring(0, 30)}
-                  {chat.message.length > 30 ? '...' : ''}
-                </Button>
-              ))}
-            </div>
-          </ScrollArea> */}
         </div>
       </div>
 
@@ -362,6 +500,11 @@ export default function Component() {
                 <p className="text-lg font-semibold">No messages in this chat yet.</p>
                 <p className="text-sm">Be the first to say something!</p>
               </div>
+            ) : chatHistory.length === 0 && selectedChatId ? (
+              <div className="text-center text-gray-500 mt-20">
+                <p className="text-lg font-semibold">No messages in this chat yet.</p>
+                <p className="text-sm">Be the first to say something!</p>
+              </div>
             ) : (
               // Display full chat messages
               chatHistory.map((chat) => (
@@ -373,44 +516,7 @@ export default function Component() {
                 </div>
               ))
             )}
-            {/* Display full chat messages */}
-            {/* {chatHistory.map((chat) => (
-              <div key={chat.id} className="bg-white rounded-lg p-4 shadow-sm mb-4">
-                <p className="text-gray-800 text-sm">{chat.message}</p>
-                <p className="text-gray-500 text-xs text-right mt-1">
-                  {new Date(chat.timestamp).toLocaleString()} - {chat.userId === user.id ? 'You' : 'Bot'}
-                </p>
-              </div>
-            ))} */}
             <div ref={chatEndRef} />
-
-            {/* Action Buttons (as before) */}
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              <Button
-                variant="outline"
-                className="h-16 bg-purple-100 border-purple-200 hover:bg-purple-150 text-purple-700 text-xs font-medium flex flex-col items-center justify-center gap-1"
-              >
-                <span className="text-center leading-tight">Generate Search Knowledge Graph</span>
-              </Button>
-              <Button
-                variant="outline"
-                className="h-16 bg-purple-100 border-purple-200 hover:bg-purple-150 text-purple-700 text-xs font-medium flex flex-col items-center justify-center gap-1"
-              >
-                <span className="text-center leading-tight">Search Knowledge Graph</span>
-              </Button>
-              <Button
-                variant="outline"
-                className="h-16 bg-purple-100 border-purple-200 hover:bg-purple-150 text-purple-700 text-xs font-medium flex flex-col items-center justify-center gap-1"
-              >
-                <span className="text-center leading-tight">Generate Full Context Knowledge Graph</span>
-              </Button>
-              <Button
-                variant="outline"
-                className="h-16 bg-purple-100 border-purple-200 hover:bg-purple-150 text-purple-700 text-xs font-medium flex flex-col items-center justify-center gap-1"
-              >
-                <span className="text-center leading-tight">Full Context Knowledge Graph</span>
-              </Button>
-            </div> */}
           </div>
         </div>
 
@@ -427,9 +533,6 @@ export default function Component() {
                 disabled={!isSignedIn}
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                {/* <Button size="small" variant="outline" className="h-8 w-8 p-0">
-                  <Paperclip className="w-4 h-4" />
-                </Button> */}
                 <button
                   className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-md transition duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleSendMessage}
@@ -452,17 +555,6 @@ export default function Component() {
                     <path d="M15 7L7 15" />
                   </svg>
                 </button>
-                <Button
-                  size="small"
-                  variant="outline"
-                  className="h-8 w-8 p-0 justify-center"
-                  onClick={handleSendMessage}
-                >
-                  <Send className="w-4 h-4 " />
-                </Button>
-                {/* <Button size="small" className="h-8 w-8 p-0 bg-blue-500 hover:bg-blue-600">
-                  <ArrowUp className="w-4 h-4 text-white" onClick={handleSendMessage} />
-                </Button> */}
               </div>
             </div>
           </div>
