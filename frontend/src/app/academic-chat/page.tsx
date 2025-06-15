@@ -106,7 +106,7 @@ export default function Component() {
   useEffect(() => {
     // Only run this logic once on component mount for a given user
     if (isLoaded && isSignedIn && user?.id && !initialChatFetchRef.current) {
-      const fetchAndSelectInitialChats = async () => {
+      const initialLoadAndSelect = async () => {
         setIsLoadingChats(true);
         try {
           const url = `${backendUrl}/users/${user.id}/chats`;
@@ -130,7 +130,7 @@ export default function Component() {
           initialChatFetchRef.current = true;
         }
       };
-      fetchAndSelectInitialChats();
+      initialLoadAndSelect();
     }
   }, [isLoaded, isSignedIn, user?.id, backendUrl]);
 

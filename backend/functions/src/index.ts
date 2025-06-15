@@ -158,6 +158,55 @@ app.post("/message", async (req, res) => {
 });
 
 /**
+ * PUT /users/:userId/chats/:chatId/title
+ * Updates the title of a specific chat.
+ *
+ * Request Body:
+ * {
+ * "title": "string"
+ * }
+ *
+ * Response:
+ * {
+ * "status": "success"
+ * }
+ */
+console.log(`Express: Setting up 
+  app.put('/users/:userId/chats/:chatId/title') route...`);
+app.put("/users/:userId/chats/:chatId/title", async (req, res) => {
+  const requestedUserId = req.params.userId;
+  const requestedChatId = req.params.chatId;
+  const {title} = req.body;
+
+  console.log(`Express: PUT 
+    /users/${requestedUserId}/chats/${requestedChatId}/title 
+    request received with title: ${title}`);
+
+  if (!title) {
+    res.status(400).send("Missing required field: title.");
+    return;
+  }
+
+  try {
+    const chatRef = db.collection("users")
+      .doc(requestedUserId).collection("chats").doc(requestedChatId);
+    await chatRef.update({
+      title: title,
+      lastUpdatedAt: FieldValue.serverTimestamp(),
+    });
+    console.log(`Express: Chat 
+      ${requestedChatId} title updated to: ${title}`);
+    res.status(200)
+      .json({status: "success", message: "Chat title updated successfully."});
+  } catch (error) {
+    console.error(`Error updating chat title 
+      for chat ${requestedChatId}:`, error);
+    res.status(500).send("Internal Server Error: Could not update chat title.");
+  }
+});
+
+
+/**
  * GET /users/: userId/chats
  * Fetches a list of all chats for a specific user, ordered by last update.
  */
