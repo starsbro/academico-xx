@@ -1,8 +1,5 @@
 'use client';
 
-// Declare global variables available in the local environment
-declare const __app_id: string;
-
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useUser, UserButton } from '@clerk/nextjs';
 import { Input } from './../components/ui/input';
@@ -14,15 +11,15 @@ interface ChatMessage {
   id: string; // Document ID from Firestore
   userId: string;
   message: string;
-  timestamp: string; // ISO string from backend
+  timestamp: string;
 }
 
 //Define a type for a chat entry in the sidebar
 interface UserChat {
   id: string;
   title: string;
-  createdAt: string; // ISO string
-  lastUpdatedAt: string; //ISO string
+  createdAt: string;
+  lastUpdatedAt: string;
 }
 
 export default function Component() {
@@ -41,23 +38,8 @@ export default function Component() {
   const { isLoaded, isSignedIn, user } = useUser();
   const router = useRouter();
 
-  // // Dynamically constrct the backend URL using __app_id
-  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-  // const backendUrl: string = `http://us-central1-${appId}.cloudfunctions.net/api`;
-
-  // Ensure this environment variable is set in your .env.local for local dev,
-  // and in your Firebase config for deployment.
-  const backendUrl: string = 'http://localhost:5001/academico-ai/us-central1/api';
-  // process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:5001/academico-ai/us-central1/api';
-
-  // Log the constructed backend URL for debugging
-  useEffect(() => {
-    console.log('--- Frontend Debug Info ---');
-    console.log('__app_id (raw):', typeof __app_id !== 'undefined' ? __app_id : 'undefined/not-available');
-    console.log('appId (derived):', appId);
-    console.log('Backend URL being used:', backendUrl);
-    console.log('---------------------------');
-  }, [appId, backendUrl]); // Log once on component mount
+  // environment variable in .env.local
+  const backendUrl: string = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
   // Scroll to the latest message whenever chatHistory updates
   useEffect(() => {
@@ -76,7 +58,6 @@ export default function Component() {
     setIsLoadingChats(true);
     try {
       const url = `${backendUrl}/users/${user.id}/chats`;
-      console.log('Fetching user chats for sidebar:', url);
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -84,10 +65,6 @@ export default function Component() {
       const data: UserChat[] = await response.json();
       const sortedData = data.sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime());
       setUserChats(sortedData);
-      // Automatically select the most recent chat if available
-      // if (data.length > 0 && !selectedChatId) {
-      //   setSelectedChatId(data[0].id);
-      // }
     } catch (error) {
       console.error('Failed to fetch user chats:', error);
     } finally {
@@ -100,9 +77,7 @@ export default function Component() {
     fetchUserChats();
   }, [fetchUserChats]);
 
-  // Effect for initial loading and auto-selection of the first chat
-  // Effect for initial application load:
-  // fetches chats and performs initial auto-se
+  // Effect for initial application loadS
   useEffect(() => {
     // Only run this logic once on component mount for a given user
     if (isLoaded && isSignedIn && user?.id && !initialChatFetchRef.current) {
@@ -145,7 +120,6 @@ export default function Component() {
       setIsLoadingMessages(true);
       try {
         const url = `${backendUrl}/users/${user.id}/chats/${chatId}/messages`;
-        console.log('Fetching messages for chat from:', url);
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -162,7 +136,6 @@ export default function Component() {
     [isLoaded, isSignedIn, user?.id, backendUrl]
   );
 
-  // Effect to load messages when selectedChatId changes
   useEffect(() => {
     if (selectedChatId) {
       fetchMessagesForChat(selectedChatId);
@@ -209,9 +182,8 @@ export default function Component() {
 
     try {
       const url = `${backendUrl}/message`;
-      console.log('Sending message to: ', url, 'with payload:', newMessagePayload);
+      // console.log('Sending message to: ', url, 'with payload:', newMessagePayload);
       // POST to the updated message endpoint
-      // const response = await fetch(`${backendUrl}/chat`, {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -229,26 +201,9 @@ export default function Component() {
       // If a new chat was creted, update selectedChatId and the userChats list
       if (savedResponse.newChatId && !selectedChatId) {
         setSelectedChatId(savedResponse.newChatId);
-        fetchUserChats(); // Call to refresh the sidebar
-        // Add the new chat to the userChats list (sort by lastUpdatedAt for correct display)
-        // setUserChats((prevChats) =>
-        //   [
-        //     {
-        //       id: savedResponse.newChatId,
-        //       title: currentMessage.substring(0, 30) + (currentMessage.length > 30 ? '...' : ''),
-        //       createdAt: new Date().toISOString(),
-        //       lastUpdatedAt: new Date().toISOString(),
-        //     },
-        //     ...prevChats,
-        //   ].sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
-        // );
+        fetchUserChats();
       } else if (selectedChatId && !savedResponse.newChatId) {
         fetchUserChats();
-        // setUserChats((prevChats) =>
-        //   prevChats
-        //     .map((chat) => (chat.id === selectedChatId ? { ...chat, lastUpdatedAt: new Date().toISOString() } : chat))
-        //     .sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime())
-        // );
       }
       // Add the new message to chat history with the ID from the backend
       setChatHistory((prevHistory) => [
@@ -258,7 +213,6 @@ export default function Component() {
       setCurrentMessage(''); // Clear the input field
     } catch (error) {
       console.error('Failed to send message:', error);
-      // TODO: Optionally, show an error message to the user
     }
   };
 
@@ -276,7 +230,7 @@ export default function Component() {
   // --- New Function for Editing Chat Title ---
   const handleEditChatTitle = (chatId: string, currentTitle: string) => {
     setEditingChatId(chatId);
-    setNewChatTitle(currentTitle); // Populate input with current title
+    setNewChatTitle(currentTitle);
   };
 
   const handleSaveChatTitle = async (chatId: string) => {
@@ -284,7 +238,6 @@ export default function Component() {
 
     try {
       const url = `${backendUrl}/users/${user.id}/chats/${chatId}/title`;
-      console.log('Updating chat title to:', url, 'with new title:', newChatTitle.trim());
       const response = await fetch(url, {
         method: 'PUT', // Use PUT for updating a resource
         headers: {
@@ -324,7 +277,6 @@ export default function Component() {
     );
   }
 
-  // Get username safely
   const username: string = user.username || user.fullName || user.emailAddresses[0]?.emailAddress || 'Guest';
 
   return (
@@ -338,19 +290,11 @@ export default function Component() {
             <Home className="w-5 h-5 ml-auto text-gray-600 cursor-pointer" />
           </div>
         </div>
-
-        {/* <div className="px-4 mb-4" style={{ margin: 6 }}>
-          <Button className="w-full bg-white/20 hover:bg-white/30 text-white border-0 justify-center gap-2">
-            <PenTool className="w-4 h-4" />
-            New chat
-          </Button>
-        </div> */}
         <div className="px-4 mb-4" style={{ margin: 6 }}>
           <button
             className="w-full bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-200 ease-in-out"
             onClick={handleNewChat}
           >
-            {/* Using inline SVG for PenTool icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

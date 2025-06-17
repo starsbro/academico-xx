@@ -5,6 +5,9 @@ import cors from "cors";
 import apiRoutes from "./routes";
 import {FieldValue} from "firebase-admin/firestore";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+console.log = function() {};
+
 // Initialize Firebase Admin SDK
 admin.initializeApp();
 

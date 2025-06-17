@@ -4,6 +4,9 @@ import * as messageModel from "../models/message-model";
 import * as admin from "firebase-admin";
 import {FieldValue} from "firebase-admin/firestore";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+console.log = function() {};
+
 /**
  * Handles sending a message. Creates a new chat if no chatId is provided.
  * @param {express.Request} req

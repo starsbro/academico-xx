@@ -3,6 +3,8 @@ import * as chatModel from "../models/chat-model";
 // import * as messageModel from "../models/message-model";
 import {FieldValue} from "firebase-admin/firestore";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+console.log = function() {};
 
 /**
  * Handles fetching all chats for a specific user.
