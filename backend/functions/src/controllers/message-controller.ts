@@ -51,6 +51,7 @@ export async function createMessage(req: Request, res: Response) {
       userId?: string;
       message?: string;
       timestamp: string;
+      newChatId?: string;
     } = {
       id: newDoc.id,
       userId: savedMessage?.userId,
@@ -62,7 +63,7 @@ export async function createMessage(req: Request, res: Response) {
     };
 
     if (newChatCreated) {
-      responseBody.id = currentChatId;
+      responseBody.newChatId = currentChatId;
     }
 
     res.status(201).json(responseBody);
