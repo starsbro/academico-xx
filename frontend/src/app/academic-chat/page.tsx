@@ -107,7 +107,7 @@ export default function Component() {
       };
       initialLoadAndSelect();
     }
-  }, [isLoaded, isSignedIn, user?.id, backendUrl, selectedChatId]);
+  }, [isLoaded, isSignedIn, user?.id, backendUrl]);
 
   // Function to fetch messages for a specific chat
   const fetchMessagesForChat = useCallback(
@@ -146,12 +146,17 @@ export default function Component() {
 
   // Handles starting a new chat
   const handleNewChat = () => {
+    // Clear the current state to prepare for a new chat
     setSelectedChatId(null);
     setChatHistory([]);
     setCurrentMessage('');
     setEditingChatId(null);
+
+    // Reset the initial fetch flag to allow fresh state
     initialChatFetchRef.current = false;
-    fetchUserChats();
+
+    // Note: A new chat will be automatically created in the backend
+    // when the user sends their first message (via handleSendMessage)
   };
 
   const handleSelectChat = (chatId: string) => {
@@ -316,10 +321,8 @@ export default function Component() {
           </button>
         </div>
 
-        <div className="flex-1 px-4">
-          <h3 className="text-sm font-medium opacity-90 pl-2" style={{ margin: 12 }}>
-            Chats ({userChats.length})
-          </h3>
+        <div className="flex-1 px-6">
+          <h3 className="text-sm font-medium opacity-90 pl-2 mb-3">Chats ({userChats.length})</h3>
           <div className="space-y-2">
             {isLoadingChats ? (
               <p className="text-white/70 text-sm pl-2">Loading chats...</p>
@@ -341,7 +344,7 @@ export default function Component() {
                     />
                   ) : (
                     <button
-                      className={`w-full text-left py-2 px-3 rounded-lg text-white text-sm transition duration-200 ease-in-out
+                      className={`w-full text-left py-3 px-4 rounded-lg text-white text-sm transition duration-200 ease-in-out
                         ${selectedChatId === chat.id ? 'bg-white/30 font-semibold' : 'hover:bg-white/20'}`}
                       onClick={() => handleSelectChat(chat.id)}
                     >
@@ -466,7 +469,7 @@ export default function Component() {
 
         {/* Input Area */}
         <div className="border-t bg-fuchsia-100 rounded-2xl p-4">
-          <div className="max-w-3xl mx-8">
+          <div className="max-w-3xl mx-auto px-8">
             <div className="relative">
               <Input
                 placeholder="I am thinking about..."
