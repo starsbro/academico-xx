@@ -4,8 +4,8 @@ import * as messageModel from "../models/message-model";
 import * as admin from "firebase-admin";
 import {FieldValue} from "firebase-admin/firestore";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-console.log = function() {};
+// // eslint-disable-next-line @typescript-eslint/no-empty-function
+// console.log = function() {};
 
 /**
  * Handles sending a message. Creates a new chat if no chatId is provided.
@@ -17,6 +17,7 @@ export async function createMessage(req: Request, res: Response) {
   console.log("Crontroller: Creating message");
   try {
     const {userId, message, timestamp, chatId} = req.body;
+    console.log("chatId is: ", chatId);
 
     if (!userId || !message || !timestamp) {
       res.status(400).send(

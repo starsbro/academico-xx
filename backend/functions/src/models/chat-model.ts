@@ -7,8 +7,8 @@ import {FieldValue} from "firebase-admin/firestore";
 interface UserChat {
   id: string;
   title: string;
-  createdAt: string; // ISO string
-  lastUpdatedAt: string; // ISO string
+  createdAt: string;
+  lastUpdatedAt: string;
 }
 
 /**

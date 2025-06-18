@@ -47,3 +47,6 @@ app.use((req, res) => {
 
 // Export the Express app as an HTTP Cloud Function
 exports.api = functions.https.onRequest(app);
+
+// Export Next.js app function
+export {nextjsApp} from "./nextjs";

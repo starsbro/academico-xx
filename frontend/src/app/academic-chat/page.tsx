@@ -107,7 +107,7 @@ export default function Component() {
       };
       initialLoadAndSelect();
     }
-  }, [isLoaded, isSignedIn, user?.id, backendUrl]);
+  }, [isLoaded, isSignedIn, user?.id, backendUrl, selectedChatId]);
 
   // Function to fetch messages for a specific chat
   const fetchMessagesForChat = useCallback(
@@ -227,7 +227,7 @@ export default function Component() {
     router.push('/');
   };
 
-  // --- New Function for Editing Chat Title ---
+  //  New Function for Editing Chat Title
   const handleEditChatTitle = (chatId: string, currentTitle: string) => {
     setEditingChatId(chatId);
     setNewChatTitle(currentTitle);

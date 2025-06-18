@@ -1,7 +1,13 @@
 {
+  "firestore": {
+    "database": "(default)",
+    "location": "nam7",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "functions": [
     {
-      "source": "functions",
+      "source": "backend/functions",
       "codebase": "default",
       "ignore": [
         "node_modules",
@@ -16,12 +22,29 @@
       ]
     }
   ],
+  "hosting": {
+    "public": "frontend/public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nextjsApp"
+      }
+    ]
+  },
   "emulators": {
     "functions": {
       "port": 5001
     },
     "firestore": {
       "port": 8080
+    },
+    "hosting": {
+      "port": 5000
     },
     "ui": {
       "enabled": true
