@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ProtectedRoute } from '../components/Auth/ProtectedRoute';
 import { ThemeToggle } from './components/ThemeToggle';
 import { Button } from './components/Button';
 // import { FeatureCard, FeatureCardProps } from './components/FeatureCard';
@@ -48,6 +49,14 @@ import { Input } from './components/ui/input';
 // ];
 
 export default function HomePage() {
+  return (
+    <ProtectedRoute>
+      <HomePageContent />
+    </ProtectedRoute>
+  );
+}
+
+function HomePageContent() {
   // const openLink = (url: string) => window.open(url, '_blank');
   // const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 

@@ -1,7 +1,7 @@
 // Custom hook for managing chat state and operations
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '../contexts/AuthContext';
 import { ChatMessage, UserChat } from '../types/chat.types';
 import { ChatService } from '../services/chatService';
 
@@ -18,7 +18,7 @@ export const useChat = () => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const [intentionalNewChat, setIntentionalNewChat] = useState(false);
   const initialChatFetchRef = useRef(false);
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { user } = useAuth();
 
   // Scroll to the latest message whenever chatHistory updates
   useEffect(() => {
@@ -29,7 +29,7 @@ export const useChat = () => {
 
   // Function to fetch the list of all chats for the user
   const fetchUserChats = useCallback(async () => {
-    if (!isLoaded || !isSignedIn || !user?.id) {
+    if (!user?.uid) {
       setIsLoadingChats(false);
       setUserChats([]);
       return;
@@ -37,23 +37,23 @@ export const useChat = () => {
 
     setIsLoadingChats(true);
     try {
-      const data = await ChatService.fetchUserChats(user.id);
+      const data = await ChatService.fetchUserChats(user.uid);
       setUserChats(data);
     } catch (error) {
       console.error('Failed to fetch user chats:', error);
     } finally {
       setIsLoadingChats(false);
     }
-  }, [isLoaded, isSignedIn, user?.id]);
+  }, [user?.uid]);
 
   // Function to fetch messages for a specific chat
   const fetchMessagesForChat = useCallback(
     async (chatId: string) => {
-      if (!user?.id) return;
+      if (!user?.uid) return;
 
       setIsLoadingMessages(true);
       try {
-        const data = await ChatService.fetchChatMessages(chatId, user.id);
+        const data = await ChatService.fetchChatMessages(chatId, user.uid);
         setChatHistory(data);
       } catch (error) {
         console.error(`Failed to fetch chat history for chat ${chatId}:`, error);
@@ -62,7 +62,7 @@ export const useChat = () => {
         setIsLoadingMessages(false);
       }
     },
-    [user?.id]
+    [user?.uid]
   );
 
   // Handle new chat creation
@@ -84,10 +84,10 @@ export const useChat = () => {
 
   // Handle sending a message
   const handleSendMessage = useCallback(async () => {
-    if (!currentMessage.trim() || !user?.id) return;
+    if (!currentMessage.trim() || !user?.uid) return;
 
     const newMessagePayload = {
-      userId: user.id,
+      userId: user.uid,
       message: currentMessage.trim(),
       timestamp: new Date().toISOString(),
       ...(selectedChatId && { chatId: selectedChatId }),
@@ -114,7 +114,7 @@ export const useChat = () => {
     } catch (error) {
       console.error('Failed to send message:', error);
     }
-  }, [currentMessage, user?.id, selectedChatId, fetchUserChats]);
+  }, [currentMessage, user?.uid, selectedChatId, fetchUserChats]);
 
   // Handle saving chat title
   const handleSaveChatTitle = useCallback(
@@ -126,8 +126,8 @@ export const useChat = () => {
       }
 
       try {
-        if (!user?.id) return;
-        await ChatService.updateChatTitle(chatId, newChatTitle.trim(), user.id);
+        if (!user?.uid) return;
+        await ChatService.updateChatTitle(chatId, newChatTitle.trim(), user.uid);
         await fetchUserChats();
         setEditingChatId(null);
         setNewChatTitle('');
@@ -135,7 +135,7 @@ export const useChat = () => {
         console.error('Failed to update chat title:', error);
       }
     },
-    [newChatTitle, fetchUserChats, user?.id]
+    [newChatTitle, fetchUserChats, user?.uid]
   );
 
   // Handle editing chat title
@@ -175,11 +175,11 @@ export const useChat = () => {
 
   // Initial load effect
   useEffect(() => {
-    if (isLoaded && isSignedIn && user?.id && !initialChatFetchRef.current) {
+    if (user?.uid && !initialChatFetchRef.current) {
       const initialLoadAndSelect = async () => {
         setIsLoadingChats(true);
         try {
-          const data = await ChatService.fetchUserChats(user.id);
+          const data = await ChatService.fetchUserChats(user.uid);
           setUserChats(data);
 
           if (selectedChatId === null && data.length > 0 && !intentionalNewChat) {
@@ -195,7 +195,7 @@ export const useChat = () => {
 
       initialLoadAndSelect();
     }
-  }, [isLoaded, isSignedIn, user?.id, selectedChatId, intentionalNewChat]);
+  }, [user?.uid, selectedChatId, intentionalNewChat]);
 
   return {
     // State
@@ -222,8 +222,6 @@ export const useChat = () => {
     fetchUserChats,
 
     // User data
-    isLoaded,
-    isSignedIn,
     user,
   };
 };

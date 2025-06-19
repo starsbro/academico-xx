@@ -1,13 +1,9 @@
-import { SignIn } from '@clerk/nextjs';
+import SignIn from '../../../components/Auth/SignIn';
 
 export async function generateStaticParams() {
   return [{ 'sign-in': [] }];
 }
 
 export default function Page() {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <SignIn />
-    </div>
-  );
+  return <SignIn />;
 }

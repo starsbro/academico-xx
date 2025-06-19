@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
 import { Outfit } from 'next/font/google';
 import Link from 'next/link';
 import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { AuthProvider } from '../contexts/AuthContext';
+import { UserButton } from '../components/Auth/UserButton';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -22,16 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <AuthProvider>
       <html lang="en" className={`${outfit.variable}`}>
         <body>
           <header className="flex justify-between items-center p-4 gap-4 h-16">
-            {/* <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut> */}
-            <SignedIn>
-              <UserButton />
+            <UserButton />
+            <div className="flex items-center space-x-4">
               <Link href="/" className="flex justify-center items-center" style={{ fontFamily: 'cursive' }}>
                 Home
               </Link>
@@ -41,7 +38,7 @@ export default function RootLayout({
               <Link href="/academic-chat" className="mr-4" style={{ fontFamily: 'cursive' }}>
                 Academic-chat
               </Link>
-            </SignedIn>
+            </div>
             <div className="w-8">{/* This div is just for spacing */}</div>
           </header>
           <ErrorBoundary>
@@ -49,6 +46,6 @@ export default function RootLayout({
           </ErrorBoundary>
         </body>
       </html>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }

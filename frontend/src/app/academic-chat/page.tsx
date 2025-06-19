@@ -6,9 +6,18 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useChat } from '../../hooks/useChat';
 import { ChatSidebar, ChatArea, ChatInput } from '../../components/Chat';
+import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import styles from './page.module.css';
 
 export default function AcademicChatPage() {
+  return (
+    <ProtectedRoute>
+      <AcademicChatContent />
+    </ProtectedRoute>
+  );
+}
+
+function AcademicChatContent() {
   const router = useRouter();
   const {
     // State
@@ -34,8 +43,6 @@ export default function AcademicChatPage() {
     handleKeyPress,
 
     // User data
-    isLoaded,
-    isSignedIn,
     user,
   } = useChat();
 
@@ -44,19 +51,9 @@ export default function AcademicChatPage() {
     router.push('/dashboard');
   };
 
-  // Loading state / not signed in
-  if (!isLoaded || !isSignedIn) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading Academico AI...</p>
-        </div>
-      </div>
-    );
-  }
+  // Loading state handled by ProtectedRoute
 
-  const username: string = user.username || user.fullName || user.emailAddresses[0]?.emailAddress || 'Guest';
+  const username: string = user?.displayName || user?.email || 'Guest';
 
   return (
     <div className={styles.chatPageContainer}>
@@ -87,14 +84,14 @@ export default function AcademicChatPage() {
           isLoadingMessages={isLoadingMessages}
           selectedChatId={selectedChatId}
           username={username}
-          userId={user?.id}
+          userId={user?.uid}
           chatEndRef={chatEndRef}
         />
 
         {/* Input Area */}
         <ChatInput
           currentMessage={currentMessage}
-          isSignedIn={isSignedIn}
+          isSignedIn={true}
           onMessageChange={setCurrentMessage}
           onSendMessage={handleSendMessage}
           onKeyPress={handleKeyPress}

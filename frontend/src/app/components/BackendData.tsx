@@ -1,7 +1,7 @@
 // components/BackendData.tsx
 'use client';
 import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/nextjs';
+import { useAuth } from '../../contexts/AuthContext';
 
 //1. Define an interface for the shape of my backend data.
 //   Customize this to match the actual JSON response from my API.
@@ -18,7 +18,7 @@ interface ProtectedData {
 }
 
 export default function BackendData() {
-  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const { user } = useAuth();
 
   // Use the new interface in my useState hook instead of <any>.
   const [backendData, setBackendData] = useState<ProtectedData | null>(null);
@@ -30,14 +30,14 @@ export default function BackendData() {
     const fetchProtectedData = async () => {
       setLoading(true);
       setError(null);
-      if (!isLoaded || !isSignedIn) {
+      if (!user) {
         setLoading(false);
         return;
       }
 
       try {
-        // Get the Clerk session token
-        const token = await getToken();
+        // Get Firebase ID token
+        const token = await user.getIdToken();
 
         if (!token) {
           throw new Error('No authentication token found.');
@@ -71,11 +71,11 @@ export default function BackendData() {
     };
 
     fetchProtectedData();
-  }, [getToken, isLoaded, isSignedIn]);
+  }, [user]);
 
   if (loading) return <div>Loading backend data...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!isSignedIn) return <div>Sign in to see protected backend data.</div>;
+  if (!user) return <div>Sign in to see protected backend data.</div>;
 
   return (
     <div>

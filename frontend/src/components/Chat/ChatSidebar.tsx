@@ -1,7 +1,7 @@
 // Chat Sidebar Component
 
 import React from 'react';
-import { UserButton } from '@clerk/nextjs';
+import { UserButton } from '../Auth/UserButton';
 import { UserChat } from '../../types/chat.types';
 import { ThemeToggle } from '../../app/components/ThemeToggle/ThemeToggle';
 import styles from './ChatSidebar.module.css';

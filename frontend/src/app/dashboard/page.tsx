@@ -4,6 +4,7 @@
 import { Plus, MoreHorizontal } from 'lucide-react';
 import { Button } from './../components/Button';
 import { Badge } from './../components/ui/badge';
+import { UserButton } from '../../components/Auth/UserButton';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,11 +12,20 @@ import {
   DropdownMenuTrigger,
 } from './../components/ui/dropdown-menu';
 import React, { useState, useEffect } from 'react'; // Import useState and useEffect
-import { useUser, UserButton } from '@clerk/nextjs';
+import { useAuth } from '../../contexts/AuthContext';
+import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import type { Project } from '../../types/project.d.ts'; // Import the shared Project type
 
 export default function Dashboard() {
-  const { isLoaded, isSignedIn, user } = useUser();
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
+  );
+}
+
+function DashboardContent() {
+  const { user } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]); // State to store fetched projects
   const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
   const [errorProjects, setErrorProjects] = useState<string | null>(null);
@@ -75,18 +85,7 @@ export default function Dashboard() {
     }
   };
 
-  if (!isLoaded || !isSignedIn) {
-    return (
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">Academico.ai</h1>
-          <div className="flex items-center gap-3">{isLoaded && <UserButton />}</div>
-        </div>
-      </header>
-    );
-  }
-
-  const username = user.username || user.fullName || user.emailAddresses[0]?.emailAddress || 'Guest';
+  const username = user?.displayName || user?.email || 'Guest';
 
   return (
     <div className="min-h-screen bg-gray-50">
