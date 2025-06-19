@@ -100,13 +100,13 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
             }`}
           >
             <div
-              className={`max-w-2xl rounded-2xl p-4 shadow-lg ${
-                chat.userId === userId ? 'bg-blue-500 text-white' : 'bg-white border border-gray-200 text-gray-800'
+              className={`${styles.messageBubble} ${
+                chat.userId === userId ? styles.messageBubbleUser : styles.messageBubbleAI
               }`}
             >
-              <div className="flex items-start gap-3">
+              <div className={styles.messageContent}>
                 {chat.userId !== userId && (
-                  <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className={`${styles.avatar} ${styles.avatarAI}`}>
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -117,8 +117,8 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
                     </svg>
                   </div>
                 )}
-                <div className="flex-1 min-w-0">
-                  <div className="mb-2">
+                <div className={styles.messageText}>
+                  <div className={styles.messageHeader}>
                     <span
                       className={`text-xs font-semibold uppercase tracking-wide ${
                         chat.userId === userId ? 'text-blue-100' : 'text-gray-500'
@@ -127,10 +127,10 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
                       {chat.userId === userId ? 'You' : 'Academico AI'}
                     </span>
                   </div>
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{chat.message}</p>
+                  <div className={styles.messageBody}>{chat.message}</div>
                 </div>
                 {chat.userId === userId && (
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className={`${styles.avatar} ${styles.avatarUser}`}>
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -144,8 +144,8 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
               </div>
 
               <div
-                className={`flex justify-end mt-3 pt-2 border-t ${
-                  chat.userId === userId ? 'border-blue-400/30' : 'border-gray-200'
+                className={`${styles.messageFooter} ${
+                  chat.userId === userId ? styles.messageFooterUser : styles.messageFooterAI
                 }`}
               >
                 <span className={`text-xs ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400'}`}>

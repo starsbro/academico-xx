@@ -6,6 +6,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useChat } from '../../hooks/useChat';
 import { ChatSidebar, ChatArea, ChatInput } from '../../components/Chat';
+import styles from './page.module.css';
 
 export default function AcademicChatPage() {
   const router = useRouter();
@@ -58,26 +59,28 @@ export default function AcademicChatPage() {
   const username: string = user.username || user.fullName || user.emailAddresses[0]?.emailAddress || 'Guest';
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className={styles.chatPageContainer}>
       {/* Sidebar */}
-      <ChatSidebar
-        userChats={userChats}
-        selectedChatId={selectedChatId}
-        isLoadingChats={isLoadingChats}
-        editingChatId={editingChatId}
-        newChatTitle={newChatTitle}
-        username={username}
-        onNewChat={handleNewChat}
-        onSelectChat={handleSelectChat}
-        onEditChatTitle={handleEditChatTitle}
-        onSaveChatTitle={handleSaveChatTitle}
-        onCancelEdit={handleCancelEdit}
-        onGoHome={handleGoHome}
-        setNewChatTitle={setNewChatTitle}
-      />
+      <div className={styles.sidebar}>
+        <ChatSidebar
+          userChats={userChats}
+          selectedChatId={selectedChatId}
+          isLoadingChats={isLoadingChats}
+          editingChatId={editingChatId}
+          newChatTitle={newChatTitle}
+          username={username}
+          onNewChat={handleNewChat}
+          onSelectChat={handleSelectChat}
+          onEditChatTitle={handleEditChatTitle}
+          onSaveChatTitle={handleSaveChatTitle}
+          onCancelEdit={handleCancelEdit}
+          onGoHome={handleGoHome}
+          setNewChatTitle={setNewChatTitle}
+        />
+      </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className={styles.chatMainArea}>
         {/* Chat Messages */}
         <ChatArea
           chatHistory={chatHistory}

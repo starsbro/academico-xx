@@ -1,0 +1,57 @@
+/* Main Chat Page Styling */
+.chatPageContainer {
+  display: flex;
+  height: 100vh;
+  background: #f3f4f6;
+  overflow: hidden;
+  padding: 16px;
+  gap: 16px;
+}
+
+.chatMainArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.sidebar {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chatPageContainer {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .chatMainArea {
+    border-radius: 16px;
+  }
+  
+  .sidebar {
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatPageContainer {
+    padding: 4px;
+    gap: 4px;
+  }
+  
+  .chatMainArea {
+    border-radius: 12px;
+  }
+  
+  .sidebar {
+    border-radius: 12px;
+  }
+}
