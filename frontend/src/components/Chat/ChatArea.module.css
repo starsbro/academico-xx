@@ -1,0 +1,27 @@
+.chatContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+.chatWrapper {
+  max-width: 1024px; /* equivalent to max-w-4xl */
+  margin: 0 auto;
+}
+
+.messageContainer {
+  display: flex;
+  margin-top: 24px;
+}
+
+.messageContainer:first-child {
+  margin-top: 0;
+}
+
+.messageContainerEnd {
+  justify-content: flex-end;
+}
+
+.messageContainerStart {
+  justify-content: flex-start;
+}
