@@ -26,20 +26,29 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en" className={`${outfit.variable}`}>
         <body>
-          <header className="flex justify-between items-center p-4 gap-4 h-16">
+          <header className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4 h-16 bg-white/80 backdrop-blur-sm border-b border-gray-200/50">
             <UserButton />
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex justify-center items-center" style={{ fontFamily: 'cursive' }}>
+            <nav className="flex items-center gap-6 sm:gap-8 lg:gap-12">
+              <Link
+                href="/"
+                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+              >
                 Home
               </Link>
-              <Link href="/dashboard" className="mr-4" style={{ fontFamily: 'cursive' }}>
+              <Link
+                href="/dashboard"
+                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+              >
                 Dashboard
               </Link>
-              <Link href="/academic-chat" className="mr-4" style={{ fontFamily: 'cursive' }}>
-                Academic-chat
+              <Link
+                href="/academic-chat"
+                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+              >
+                Academic Chat
               </Link>
-            </div>
-            <div className="w-8">{/* This div is just for spacing */}</div>
+            </nav>
+            <div className="w-8"></div>
           </header>
           <ErrorBoundary>
             <div className="main-content-container">{children}</div>

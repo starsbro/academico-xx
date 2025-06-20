@@ -20,7 +20,7 @@
 }
 
 /* Ensure input field has proper padding for send button */
-.inputField input {
+.inputField > input {
   padding-right: 64px !important;
   width: 100%;
 }
