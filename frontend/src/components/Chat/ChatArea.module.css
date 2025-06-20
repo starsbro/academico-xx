@@ -36,7 +36,9 @@
   max-width: 42rem; /* equivalent to max-w-2xl */
   border-radius: 1rem;
   padding: 10px 24px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .messageBubbleUser {
@@ -69,7 +71,6 @@
   font-size: 0.95rem;
   line-height: 1.6;
   white-space: pre-wrap;
- 
 }
 
 .messageFooter {
@@ -110,11 +111,11 @@
   .chatContainer {
     padding: 24px 20px;
   }
-  
+
   .chatWrapper {
     padding: 0 12px;
   }
-  
+
   .messageContainer {
     padding: 0 8px;
   }
@@ -124,11 +125,11 @@
   .chatContainer {
     padding: 16px 12px;
   }
-  
+
   .chatWrapper {
     padding: 0 8px;
   }
-  
+
   .messageContainer {
     padding: 0 4px;
   }

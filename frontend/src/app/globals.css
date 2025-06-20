@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+@import 'tailwindcss/preflight';
+@import 'tailwindcss/utilities';
 @tailwind utilities;
 
 :root {
@@ -15,7 +15,7 @@
   --card-border: #78a0c8;
   --link-color: var(--primary-accent);
   --code-bg: #e9ecef;
-   --spacing: 4px;
+  --spacing: 4px;
 }
 
 html {
@@ -27,7 +27,7 @@ html.dark {
   /* Dark Mode Theme Overrides */
   --page-bg: #1a202c;
   --page-bg-gradient-start: #191425;
-  --page-bg-gradient-end: #0D1117;
+  --page-bg-gradient-end: #0d1117;
   --text-color: #e2e8f0;
   --primary-accent: #a246f8;
   --secondary-accent: #f595c6;
@@ -217,7 +217,8 @@ html.dark .error-boundary details {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -226,7 +227,8 @@ html.dark .error-boundary details {
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
@@ -281,7 +283,9 @@ html.dark .error-boundary details {
 }
 
 @keyframes typing {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0);
     opacity: 0.5;
   }
@@ -317,7 +321,9 @@ html.dark .error-boundary details {
 
 /* Enhanced transitions */
 .transition-transform-opacity {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 /* Smooth scrollbar for webkit browsers */
@@ -345,7 +351,7 @@ html.dark .error-boundary details {
   border: 2px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -365,7 +371,7 @@ html.dark .error-boundary details {
 
 .button-enhanced:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
     0 4px 12px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -382,8 +388,13 @@ html.dark .error-boundary details {
 
 /* Enhanced border animations */
 @keyframes border-glow {
-  0%, 100% { border-color: rgba(255, 255, 255, 0.2); }
-  50% { border-color: rgba(255, 255, 255, 0.4); }
+  0%,
+  100% {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 .border-animate {
