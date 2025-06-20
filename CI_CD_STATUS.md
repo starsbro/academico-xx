@@ -2,23 +2,42 @@
 
 ## ✅ Pipeline Fix Applied
 
-### Problem Solved
-The CI/CD pipeline was failing with `Firebase: Error (auth/invalid-api-key)` during the build process. This happened because:
+### Problems Solved
+1. **Firebase Auth Error**: `Firebase: Error (auth/invalid-api-key)` during build process
+2. **GitHub Permissions Error**: `Resource not accessible by integration` (403 error)
 
-1. **Missing Environment Variables**: GitHub Actions didn't have access to Firebase config during build
-2. **Static Generation Issue**: Next.js was trying to initialize Firebase during static page generation
-3. **Build-time vs Runtime**: Firebase was being initialized at build time instead of runtime
+#### Firebase Auth Issue
+The CI/CD pipeline was failing because:
+- **Missing Environment Variables**: GitHub Actions didn't have access to Firebase config during build
+- **Static Generation Issue**: Next.js was trying to initialize Firebase during static page generation
+- **Build-time vs Runtime**: Firebase was being initialized at build time instead of runtime
 
-### Solution Implemented
-1. **Added Fallbacks**: Firebase config now has empty string fallbacks for missing env vars
-2. **Conditional Initialization**: Firebase only initializes when required config is available
-3. **Null Checks**: All auth functions now handle the case where Firebase might not be initialized
-4. **Build Safety**: The app can now build successfully without Firebase credentials
+#### GitHub Permissions Issue  
+The Firebase Deploy action was failing because:
+- **Missing Permissions**: Workflows lacked proper GitHub permissions
+- **Check Runs Access**: Action couldn't create status checks and PR comments
+- **Integration Limits**: Default permissions were too restrictive
+
+### Solutions Implemented
+1. **Firebase Configuration**:
+   - Added fallbacks for missing environment variables
+   - Conditional initialization only when required config is available
+   - Null checks for all auth functions
+   - Build safety without Firebase credentials
+
+2. **GitHub Permissions**:
+   - Added comprehensive permissions to all workflow files
+   - Granted `checks: write`, `contents: read`, `pull-requests: write`
+   - Added `actions: read` and `statuses: write` permissions
+   - Fixed integration access for Firebase Deploy action
 
 ### Changes Made
 - `/frontend/src/lib/firebase.ts`: Added conditional Firebase initialization
 - `/frontend/src/contexts/AuthContext.tsx`: Added null checks for auth functions
 - `/frontend/.env.example`: Updated to show required Firebase environment variables
+- **All workflow files**: Added comprehensive GitHub Actions permissions
+- **Permission sections**: Added to `ci.yml`, `deploy.yml`, `test.yml`, `release.yml`, etc.
+- **Firebase Deploy**: Fixed integration permissions for preview deployments
 
 ## 🔍 Current Pipeline Status
 
