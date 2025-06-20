@@ -12,6 +12,13 @@ on:
       - dev
       - develop
 
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+  actions: read
+  statuses: write
+
 env:
   NODE_VERSION: '20'
 
