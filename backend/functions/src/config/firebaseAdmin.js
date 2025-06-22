@@ -16,6 +16,16 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+
+// Connect to Firestore emulator when running locally
+if (process.env.FUNCTIONS_EMULATOR === "true" ||
+    process.env.NODE_ENV === "development") {
+  db.settings({
+    host: "localhost:8080",
+    ssl: false,
+  });
+}
+
 const firebaseAdmin = {
   admin,
   db,

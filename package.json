@@ -11,6 +11,8 @@
     "deploy:hosting": "firebase deploy --only hosting",
     "deploy:functions": "firebase deploy --only functions",
     "serve": "firebase emulators:start",
+    "dev": "firebase emulators:start --import=./emulator-data --export-on-exit",
+    "dev:reset": "firebase emulators:start --import=./emulator-data --export-on-exit --wipe-on-start",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "test:unit": "npm run test:unit:frontend && npm run test:unit:backend",
     "test:unit:frontend": "cd frontend && npm test",
