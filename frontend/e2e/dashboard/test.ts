@@ -1,15 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { AuthHelpers } from '../utils/auth-helpers';
-import { TEST_USERS } from '../utils/test-data';
 
 test.describe('Dashboard Navigation', () => {
-  let authHelpers: AuthHelpers;
-
-  test.beforeEach(async ({ page }) => {
-    authHelpers = new AuthHelpers(page);
-    // Note: This assumes you have a test user set up in your Firebase Auth
-    // await authHelpers.signIn(TEST_USERS.valid.email, TEST_USERS.valid.password);
-  });
+  // Note: Authentication helpers available when needed in the future
+  // Example usage:
+  // const helpers = createTestHelpers(page);
+  // await helpers.auth.attemptSignIn();
 
   test('should display dashboard correctly when not authenticated', async ({ page }) => {
     await page.goto('/dashboard');
