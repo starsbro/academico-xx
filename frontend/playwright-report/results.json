@@ -1,0 +1,600 @@
+{
+  "config": {
+    "configFile": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/playwright.config.ts",
+    "rootDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "playwright-report/results.xml"
+        }
+      ],
+      [
+        "line",
+        null
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts",
+          "**/*.test.ts",
+          "**/test/**/*.ts",
+          "**/tests/**/*.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts",
+          "**/*.test.ts",
+          "**/test/**/*.ts",
+          "**/tests/**/*.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts",
+          "**/*.test.ts",
+          "**/test/**/*.ts",
+          "**/tests/**/*.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts",
+          "**/*.test.ts",
+          "**/test/**/*.ts",
+          "**/tests/**/*.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts",
+          "**/*.test.ts",
+          "**/test/**/*.ts",
+          "**/tests/**/*.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.53.1",
+    "workers": 4,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "stdout": "ignore",
+      "stderr": "pipe"
+    }
+  },
+  "suites": [
+    {
+      "title": "chat/chat-protected.spec.ts",
+      "file": "chat/chat-protected.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Chat Page Protection",
+          "file": "chat/chat-protected.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6286,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Chat page properly protected - redirects to sign-in\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:33.028Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7238ba1943715a0989b9",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 10104,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ /dashboard properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "✅ /academic-chat properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "ℹ️ /profile accessible without auth or different redirect\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:33.035Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-897be714f4743b647bd8",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 5040,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Chat page properly protected - redirects to sign-in\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:33.042Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7ca2482c8e386177bf60",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 9781,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ /dashboard properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "✅ /academic-chat properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "ℹ️ /profile accessible without auth or different redirect\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:33.036Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-c162f3eab7f539baceab",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2419,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Chat page properly protected - redirects to sign-in\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:40.428Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-a40420deba3723631d00",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4224,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ /dashboard properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "✅ /academic-chat properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "ℹ️ /profile accessible without auth or different redirect\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:40.421Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-42c1073f1de5ace6f6bb",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2734,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Chat page properly protected - redirects to sign-in\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:43.565Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7feb5f6426806c72bba8",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 4011,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ /dashboard properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "✅ /academic-chat properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "ℹ️ /profile accessible without auth or different redirect\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:45.228Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-e5a81ede5ac6a599a493",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2264,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ Chat page properly protected - redirects to sign-in\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:44.382Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-f546ce9f41aed121e14d",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3555,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "✅ /dashboard properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "✅ /academic-chat properly protected - redirects to sign-in\n"
+                        },
+                        {
+                          "text": "ℹ️ /profile accessible without auth or different redirect\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-06-21T20:16:46.040Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-002d4d64485f6e6b09e7",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-06-21T20:16:29.148Z",
+    "duration": 20702.751,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

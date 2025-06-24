@@ -1,3 +1,13 @@
+How to Run thisacademico-ai project?
+1. At root folder, npm install , npm run dev, it will start Firebase emulator.
+2. cd frontend ent frontend folder, npm run dev, open http://localhost:3000
+3. sign-in by email or Google the third sign-in.
+
+
+How to visit Our deploy version?
+Visit https://academico-ai.web.app
+
+
 This is a template for Spark! DS 519 projects. It has pre-configured eslint.config.mjs - ([`ESLint`](https://eslint.org/)) and .prettierrc - ([`Prettier`](https://prettier.io/)) to reflect industry standard development guidelines.
 
 ## Setting Up Your Developer Experience

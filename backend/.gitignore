@@ -1,0 +1,6 @@
+.env
+node_modules/
+functions/src/config/academico-ai-firebase-adminsdk-fbsvc-55aacdba4f.json
+firestore-debug.log
+
+

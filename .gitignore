@@ -40,3 +40,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# clerk configuration (can include secrets)
+/.clerk/
+
+GITHUB_SECRETS_SETUP.md
+
+setup-github-secrets.sh
+
+.firebase/
+
+# Firebase Emulator Data
+emulator-data/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
