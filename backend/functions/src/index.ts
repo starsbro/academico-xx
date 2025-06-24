@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import express from "express";
 import cors from "cors";
-import apiRoutes from "./routes";
+import apiRoutes from "./routes/index-simple";
 import {FieldValue} from "firebase-admin/firestore";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
