@@ -9,6 +9,7 @@
     "export": "next build",
     "deploy": "npm run export && firebase deploy",
     "lint": "eslint . --fix",
+    "lint:fix": "eslint . --fix",
     "lint:debug": "eslint . --fix --debug",
     "test": "jest",
     "test:ci": "jest --ci --coverage --watchAll=false",

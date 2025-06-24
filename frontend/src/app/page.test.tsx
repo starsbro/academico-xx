@@ -1,17 +1,55 @@
 import { render, screen } from '@testing-library/react';
 import Home from './page';
+import { AuthProvider } from '../contexts/AuthContext';
+
+// Mock Next.js router
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+    replace: jest.fn(),
+    pathname: '/',
+  }),
+}));
+
+// Mock Firebase auth
+jest.mock('../lib/firebase', () => ({
+  auth: {
+    onAuthStateChanged: jest.fn((callback) => {
+      // Simulate authenticated user for testing
+      const mockUser = {
+        uid: 'test-uid',
+        email: 'test@example.com',
+        displayName: 'Test User',
+      };
+      callback(mockUser);
+      return jest.fn(); // Return unsubscribe function
+    }),
+  },
+}));
 
 // Mock window.open
 const mockOpen = jest.fn();
 window.open = mockOpen;
 
+// Test wrapper component with AuthProvider
+const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <AuthProvider>{children}</AuthProvider>;
+};
+
 describe('Home Page', () => {
   beforeEach(() => {
     mockOpen.mockClear();
+    mockPush.mockClear();
   });
 
   it('renders the main hero heading and subtitle', () => {
-    render(<Home />);
+    render(
+      <TestWrapper>
+        <Home />
+      </TestWrapper>
+    );
+
     expect(screen.getByText('Spark Your Next Creation! ✨')).toBeInTheDocument();
     // expect(
     //   screen.getByText(

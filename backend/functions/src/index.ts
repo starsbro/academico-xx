@@ -18,8 +18,26 @@ console.log("Admin.firestore.FieldValue (after init):",
 
 const app = express();
 
-// Apply global middlewares
-app.use(cors({origin: "*"}));
+// Enhanced CORS configuration for development and production
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://academico-ai.web.app",
+    "https://academico-ai.firebaseapp.com",
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options("*", cors(corsOptions));
+
+// Apply other middlewares
 app.use(express.json());
 
 // Add a logging middleware for
@@ -28,6 +46,8 @@ app.use((req, res, next) =>{
   console.log(`Express Main: Incoming Request -
     Method: ${req.method},
     Path: ${req.path},
+    Origin: ${req.headers.origin},
+    Headers: ${JSON.stringify(req.headers, null, 2)},
     Body: ${JSON.stringify(req.body)}`
   );
   next();

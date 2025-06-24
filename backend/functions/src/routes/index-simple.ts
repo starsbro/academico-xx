@@ -1,7 +1,5 @@
-// Define API routes
+// Define API routes - Simplified for debugging
 import {Router} from "express";
-import * as chatController from "../controllers/chat-controller";
-import * as messageController from "../controllers/message-controller";
 
 const router = Router();
 
@@ -24,14 +22,9 @@ router.post("/test-post", (req, res) => {
   res.status(200).send("Test POST successful!");
 });
 
-// Message Routes
-router.post("/message", messageController.createMessage);
-router.get("/users/:userId/chats/:chatId/messages",
-  messageController.getMessages);
-
-// Chat Routes
-router.get("/users/:userId/chats", chatController.getChats);
-router.put("/users/:userId/chats/:chatId/title",
-  chatController.updateChatTitle);
+// Simple test routes without complex parameters
+router.get("/test-chats", (req, res) => {
+  res.status(200).json({message: "Test chats endpoint working"});
+});
 
 export default router;
