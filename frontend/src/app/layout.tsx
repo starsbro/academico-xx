@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en" className={`${outfit.variable}`}>
-        <body>
+        <body suppressHydrationWarning={true}>
           <header className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4 h-16 bg-white/80 backdrop-blur-sm border-b border-gray-200/50">
             <UserButton />
             <nav className="flex items-center gap-6 sm:gap-8 lg:gap-12">

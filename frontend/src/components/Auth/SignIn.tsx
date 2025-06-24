@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, Sparkles, GraduationCap } from 'lucide-react';
+import styles from './SignIn.module.css';
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -54,7 +55,7 @@ const SignIn: React.FC = () => {
         <div className="absolute bottom-40 right-10 w-16 h-16 bg-pink-200 dark:bg-pink-800 rounded-full opacity-20 animate-pulse delay-3000"></div>
       </div>
 
-      <div className="relative w-full max-w-2xl mx-auto">
+      <div className="relative w-xl max-w-xl mx-2">
         {/* Main card */}
         <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/30 px-8 sm:px-12 lg:px-16 py-12 sm:py-16">
           {/* Header */}
@@ -62,25 +63,29 @@ const SignIn: React.FC = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl shadow-lg mb-4">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-2">
               Welcome back!
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-base">Sign in to continue your academic journey</p>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">Sign in to continue your academic journey</p>
           </div>
 
           {/* Error message */}
           {error && (
             <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl">
-              <p className="text-red-700 dark:text-red-400 text-sm font-medium">{error}</p>
+              <p className="text-red-700 dark:text-red-400 text-base font-medium">{error}</p>
             </div>
           )}
 
           {/* Sign in form */}
-          <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className={`space-y-8 px-4 sm:px-8 ${styles.formContainer}`} style={{ gap: '0.5rem' }}>
+            <form onSubmit={handleSubmit} className={`space-y-8 ${styles.formContent}`} style={{ gap: '0.5rem' }}>
               {/* Email field */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-base font-medium text-gray-700 dark:text-gray-300 block">
+              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '0.5rem' }}>
+                <label
+                  htmlFor="email"
+                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
+                  style={{ marginBottom: '0.5rem' }}
+                >
                   Email address
                 </label>
                 <div className="relative">
@@ -95,7 +100,7 @@ const SignIn: React.FC = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-12 pr-4 py-4 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-lg"
+                    className="block w-full pr-4 py-4 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl"
                     placeholder="Enter your email"
                     style={{ paddingLeft: '2rem' }}
                   />
@@ -103,8 +108,12 @@ const SignIn: React.FC = () => {
               </div>
 
               {/* Password field */}
-              <div className="space-y-2">
-                <label htmlFor="password" className="text-base font-medium text-gray-700 dark:text-gray-300 block">
+              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '2rem' }}>
+                <label
+                  htmlFor="password"
+                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
+                  style={{ marginBottom: '0.5rem' }}
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -119,7 +128,7 @@ const SignIn: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-12 pr-16 py-4 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-lg"
+                    className="block w-full pr-16 py-4 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/50 dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl"
                     placeholder="Enter your password"
                     style={{ paddingLeft: '2rem' }}
                   />
@@ -138,21 +147,24 @@ const SignIn: React.FC = () => {
               </div>
 
               {/* Forgot password */}
-              <div className="flex justify-end">
+              <div className="flex justify-end" style={{ marginBottom: '0.5rem' }}>
                 <Link
                   href="/reset-password"
-                  className="text-base text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                  className="text-lg text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
                 >
                   Forgot your password?
                 </Link>
               </div>
 
               {/* Sign in button */}
-              <div className="flex justify-center pt-6">
+              <div
+                className={`flex justify-center pt-8 ${styles.buttonContainer}`}
+                style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
+              >
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 disabled:from-gray-400 disabled:to-gray-500 disabled:text-gray-300 font-bold py-4 px-10 rounded-2xl shadow-xl hover:shadow-2xl disabled:cursor-not-allowed transition-all duration-500 ease-out transform hover:scale-[1.02] hover:-translate-y-1 disabled:transform-none min-w-[240px] text-lg border-2 border-blue-700/30 hover:border-blue-600/50 backdrop-blur-sm"
+                  className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 disabled:from-gray-400 disabled:to-gray-500 disabled:text-gray-300 font-bold py-4 px-10 rounded-2xl shadow-xl hover:shadow-2xl disabled:cursor-not-allowed transition-all duration-500 ease-out transform hover:scale-[1.02] hover:-translate-y-1 disabled:transform-none min-w-[240px] text-xl border-2 border-blue-700/30 hover:border-blue-600/50 backdrop-blur-sm"
                 >
                   {/* Shine effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
@@ -172,11 +184,11 @@ const SignIn: React.FC = () => {
             </form>
 
             {/* Divider */}
-            <div className="relative my-8">
+            <div className={`relative my-10 ${styles.dividerContainer}`} style={{ margin: '1rem 0' }}>
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200 dark:border-gray-600"></div>
               </div>
-              <div className="relative flex justify-center text-base">
+              <div className="relative flex justify-center text-lg">
                 <span className="px-4 bg-white/80 dark:bg-gray-800/90 text-gray-500 dark:text-gray-400 font-medium">
                   Or continue with
                 </span>
@@ -188,7 +200,7 @@ const SignIn: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-2xl bg-white/70 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 font-semibold hover:bg-white dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:scale-[1.01] text-lg backdrop-blur-sm"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-2xl bg-white/70 dark:bg-gray-700/70 text-gray-700 dark:text-gray-300 font-semibold hover:bg-white dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-lg hover:scale-[1.01] text-xl backdrop-blur-sm"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -213,8 +225,8 @@ const SignIn: React.FC = () => {
           </div>
 
           {/* Sign up link */}
-          <div className="mt-8 text-center">
-            <p className="text-base text-gray-600 dark:text-gray-400">
+          <div className={`mt-5 text-center ${styles.signUpContainer}`}>
+            <p className="text-lg text-gray-600 dark:text-gray-400" style={{ padding: '1rem 0' }}>
               Don&apos;t have an account?{' '}
               <Link
                 href="/sign-up"
@@ -227,8 +239,8 @@ const SignIn: React.FC = () => {
         </div>
 
         {/* Footer text */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1">
+        <div className={`mt-10 text-center ${styles.footerContainer}`}>
+          <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1">
             <Sparkles className="w-3 h-3" />
             Powered by Academico AI
             <Sparkles className="w-3 h-3" />

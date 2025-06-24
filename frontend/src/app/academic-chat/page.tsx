@@ -52,7 +52,6 @@ function AcademicChatContent() {
   };
 
   // Loading state handled by ProtectedRoute
-
   const username: string = user?.displayName || user?.email || 'Guest';
 
   return (
