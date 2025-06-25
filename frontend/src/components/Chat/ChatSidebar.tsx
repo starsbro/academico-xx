@@ -37,10 +37,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   setNewChatTitle,
 }) => {
   return (
-    <div className="w-80 bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black text-white flex flex-col h-full shadow-xl">
+    <div className="w-80 bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black text-white flex flex-col h-full shadow-xl chat-sidebar">
       {/* Header */}
-      <div className="p-6 border-b border-gray-700">
-        <div className="flex items-center gap-3 mb-8 pt-2 px-2">
+      <div className="sidebar-header border-b border-gray-700">
+        <div className="flex items-center gap-3 mb-8 pt-2 header-content">
           <ThemeToggle />
           <div className="flex-1 min-w-0">
             <h1 className="font-bold text-lg text-white">Academico AI</h1>
@@ -50,7 +50,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
 
         <button
-          className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 active:translate-y-0"
+          className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 px-4 new-chat-button rounded-lg flex items-center justify-center gap-2 font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 active:translate-y-0"
           onClick={onNewChat}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,13 +61,13 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <h3 className="text-sm font-medium opacity-90 pl-2 mb-3">Chats ({userChats.length})</h3>
-        <div className="space-y-2 px-3">
+      <div className="flex-1 overflow-y-auto sidebar-content">
+        <h3 className="text-sm font-medium opacity-90 pl-4 mb-3">Chats ({userChats.length})</h3>
+        <div className="space-y-2 content-inner">
           {isLoadingChats ? (
-            <p className="text-white/70 text-sm pl-2">Loading chats...</p>
+            <p className="text-white/70 text-sm pl-4">Loading chats...</p>
           ) : userChats.length === 0 ? (
-            <p className="text-white/70 text-sm pl-2">No chats yet. Start a new one!</p>
+            <p className="text-white/70 text-sm pl-4">No chats yet. Start a new one!</p>
           ) : (
             userChats.map((chat) => (
               <div key={chat.id} className="flex items-center justify-between group">
@@ -121,10 +121,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       {/* Footer */}
-      <div className="p-6 border-t border-gray-700">
+      <div className="sidebar-footer border-t border-gray-700">
         <button
           onClick={onGoHome}
-          className="w-full flex items-center gap-3 text-gray-300 hover:text-white py-3 px-4 rounded-lg hover:bg-white/10 transition-all duration-200"
+          className="w-full flex items-center gap-3 text-gray-300 hover:text-white py-3 rounded-lg hover:bg-white/10 transition-all duration-200"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

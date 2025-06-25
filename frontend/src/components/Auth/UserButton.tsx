@@ -12,7 +12,9 @@ interface UserButtonProps {
 export const UserButton: React.FC<UserButtonProps> = ({ className = '' }) => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -37,12 +39,20 @@ export const UserButton: React.FC<UserButtonProps> = ({ className = '' }) => {
   };
 
   const toggleDropdown = () => {
+    if (!isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 8, // 8px below the button
+        left: rect.right - 288, // 288px is the width of dropdown (w-72), align right edge
+      });
+    }
     setIsOpen(!isOpen);
   };
 
   return (
     <div className={`relative ${className}`} ref={dropdownRef} style={{ zIndex: 1000 }}>
       <button
+        ref={buttonRef}
         onClick={toggleDropdown}
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
       >
@@ -65,8 +75,12 @@ export const UserButton: React.FC<UserButtonProps> = ({ className = '' }) => {
 
       {isOpen && (
         <div
-          className="fixed top-16 left-4 w-72 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
-          style={{ zIndex: 9999 }}
+          className="fixed w-72 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+          style={{
+            zIndex: 9999,
+            top: `${dropdownPosition.top}px`,
+            left: `${Math.max(16, dropdownPosition.left)}px`, // Ensure it doesn't go off-screen
+          }}
         >
           <div
             className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700"

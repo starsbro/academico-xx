@@ -4,7 +4,7 @@ import Link from 'next/link';
 import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from '../contexts/AuthContext';
-import { UserButton } from '../components/Auth/UserButton';
+//import { UserButton } from '../components/Auth/UserButton';
 import { DeploymentInfo } from '../components/DeploymentInfo/DeploymentInfo';
 
 const outfit = Outfit({
@@ -27,29 +27,28 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en" className={`${outfit.variable}`}>
         <body suppressHydrationWarning={true}>
-          <header className="flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4 h-16 bg-white/80 backdrop-blur-sm border-b border-gray-200/50">
-            <UserButton />
-            <nav className="flex items-center gap-6 sm:gap-8 lg:gap-12">
+          <header className="flex justify-center items-center px-8 sm:px-12 lg:px-16 py-6 min-h-20 bg-white/80 backdrop-blur-sm border-b border-gray-200/50">
+            {/* <UserButton /> */}
+            <nav className="flex items-center gap-8 sm:gap-12 lg:gap-16">
               <Link
                 href="/"
-                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+                className="px-12 py-4 text-lg sm:text-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
               >
                 Home
               </Link>
               <Link
                 href="/dashboard"
-                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+                className="px-12 py-4 text-lg sm:text-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
               >
                 Dashboard
               </Link>
               <Link
                 href="/academic-chat"
-                className="px-3 py-2 text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
+                className="px-12 py-4 text-lg sm:text-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 rounded-lg transition-all duration-200 font-medium whitespace-nowrap"
               >
                 Academic Chat
               </Link>
             </nav>
-            <div className="w-8"></div>
           </header>
           <ErrorBoundary>
             <div className="main-content-container">{children}</div>

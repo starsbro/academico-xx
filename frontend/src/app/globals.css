@@ -86,13 +86,70 @@ html.dark body {
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
 }
+
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Force navigation link padding to work with higher specificity */
+header nav a {
+  padding: 1rem 2rem;
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+header nav a:hover {
+  background-color: rgb(219 234 254);
+  border-color: rgb(191 219 254);
+  color: rgb(37 99 235);
+}
+
+/* Force chat message spacing with higher specificity */
+.chat-area .chat-message-container {
+  margin-bottom: 2rem;
+}
+
+.chat-area .chat-message-container:last-child {
+  margin-bottom: 0;
+}
+
+/* Force sidebar spacing with higher specificity */
+.chat-sidebar.w-80 .sidebar-header {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-header .header-content {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.chat-sidebar.w-80 .sidebar-header .new-chat-button {
+  margin-top: 1.5rem;
+}
+
+.chat-sidebar.w-80 .sidebar-content {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-content .content-inner {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.chat-sidebar.w-80 .sidebar-footer {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-footer button {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* ErrorBoundary Fallback UI Styling */

@@ -89,12 +89,12 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-8 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-t-3xl">
+    <div className="flex-1 overflow-y-auto p-8 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-t-3xl chat-area">
       <div className="max-w-4xl mx-auto">
         {chatHistory.map((chat) => (
           <div
             key={chat.id}
-            className={`flex mt-6 first:mt-0 ${chat.userId === userId ? 'justify-end' : 'justify-start'}`}
+            className={`chat-message-container flex ${chat.userId === userId ? 'justify-end' : 'justify-start'}`}
           >
             <div
               className={`max-w-2xl rounded-2xl p-6 shadow-lg ${
@@ -120,14 +120,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
                 <div className="flex-1 min-w-0">
                   <div className="mb-2">
                     <span
-                      className={`text-xs font-semibold uppercase tracking-wide ${
+                      className={`text-sm font-semibold uppercase tracking-wide ${
                         chat.userId === userId ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'
                       }`}
                     >
                       {chat.userId === userId ? 'You' : 'Academico AI'}
                     </span>
                   </div>
-                  <div className="text-sm leading-relaxed whitespace-pre-wrap">{chat.message}</div>
+                  <div className="text-base leading-relaxed whitespace-pre-wrap">{chat.message}</div>
                 </div>
 
                 {chat.userId === userId && (
@@ -150,7 +150,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
                 }`}
               >
                 <span
-                  className={`text-xs ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400 dark:text-gray-500'}`}
+                  className={`text-sm ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400 dark:text-gray-500'}`}
                 >
                   {new Date(chat.timestamp).toLocaleString('en-US', {
                     month: 'short',
