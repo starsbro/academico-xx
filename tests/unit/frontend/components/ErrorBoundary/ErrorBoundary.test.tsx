@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 
 // Component that throws an error
 const ThrowError = () => {

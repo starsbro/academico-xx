@@ -1,5 +1,7 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  coverageProvider: 'v8',
+  roots: ['<rootDir>', '<rootDir>/../frontend/src'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleDirectories: ['node_modules', '<rootDir>/node_modules', '<rootDir>/../frontend/node_modules'],
   resolver: undefined,
@@ -22,6 +24,7 @@ module.exports = {
   },
   testMatch: [
     '<rootDir>/unit/**/*.test.[jt]s?(x)',
+    '<rootDir>/integration/**/*.test.[jt]s?(x)',
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['ts-jest', {
@@ -34,7 +37,12 @@ module.exports = {
     '!../frontend/src/**/*.stories.{js,jsx,ts,tsx}',
     '!../frontend/src/**/*.test.{js,jsx,ts,tsx}',
     '!../frontend/src/**/index.{js,jsx,ts,tsx}',
+    '!../frontend/src/**/*.types.{js,jsx,ts,tsx}',
+    '!../frontend/src/app/layout.tsx',
+    '!../frontend/src/app/globals.css',
+    '!../frontend/src/app/page.tsx',
   ],
+  coverageReporters: ['text', 'lcov', 'html'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
 };

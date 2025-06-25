@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { FeatureCard } from '@/components/FeatureCard';
+import { FeatureCard } from '@/components/FeatureCard/FeatureCard';
 
 describe('FeatureCard', () => {
   const mockOnClick = jest.fn();
