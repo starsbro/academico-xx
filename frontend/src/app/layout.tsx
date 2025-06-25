@@ -5,6 +5,7 @@ import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from '../contexts/AuthContext';
 import { UserButton } from '../components/Auth/UserButton';
+import { DeploymentInfo } from '../components/DeploymentInfo/DeploymentInfo';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({
           <ErrorBoundary>
             <div className="main-content-container">{children}</div>
           </ErrorBoundary>
+          <DeploymentInfo />
         </body>
       </html>
     </AuthProvider>

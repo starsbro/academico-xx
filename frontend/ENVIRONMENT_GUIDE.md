@@ -67,7 +67,7 @@ firebase emulators:start
 npm run dev
 ```
 
-### Production Deployment Workflow
+### Production Deployment Workflow (Basic)
 
 ```bash
 # 1. Setup production environment and build
@@ -80,27 +80,67 @@ firebase deploy --only hosting
 npm run deploy
 ```
 
-### Testing Production Build Locally
+### Production Deployment Workflow (Enhanced with Tracking)
 
 ```bash
-# 1. Setup production environment and build
-npm run build:production
+# 1. Setup production environment with deployment tracking
+npm run setup:production:enhanced
 
-# 2. Start production server locally
-npm run start
+# 2. Build and deploy with tracking
+npm run deploy:enhanced
+
+# Or do it step by step
+npm run build:production:enhanced
+firebase deploy --only hosting
 ```
 
-## 📋 Current Environment Check
-
-You can check your current environment by looking at:
+### Check Current Deployment Information
 
 ```bash
-# Check current .env.local content
-cat .env.local | grep NEXT_PUBLIC_ENV
+# Check what's currently deployed and configured
+npm run check:deployment
+```
 
-# Expected outputs:
-# NEXT_PUBLIC_ENV=development  (for local dev)
-# NEXT_PUBLIC_ENV=production   (for production)
+## � Deployment Tracking
+
+### Enhanced Deployment Information
+
+When using the enhanced setup (`npm run setup:production:enhanced`), the following information is automatically tracked:
+
+- **Branch**: Which git branch the deployment was built from
+- **Commit**: The exact git commit hash (short and full)
+- **Build Timestamp**: When the build was created
+- **Build User**: Who created the build
+- **Deployment Log**: A log file tracking all deployments
+
+### In-App Deployment Info
+
+The `DeploymentInfo` component can be added to your app to show deployment information:
+
+```tsx
+import { DeploymentInfo } from '@/components/DeploymentInfo/DeploymentInfo';
+
+// Add to your layout or any page
+<DeploymentInfo />
+```
+
+This component:
+- Shows build information in development mode
+- Can be enabled in production with `NEXT_PUBLIC_SHOW_DEPLOYMENT_INFO=true`
+- Provides a clickable info button in the bottom-right corner
+- Links to the GitHub commit for easy reference
+
+### Checking Deployment Information
+
+```bash
+# Check current deployment configuration and history
+npm run check:deployment
+
+# View deployment log
+cat deployment.log
+
+# Check environment variables
+cat .env.local | grep NEXT_PUBLIC_BUILD
 ```
 
 ## 🔒 Important Notes
