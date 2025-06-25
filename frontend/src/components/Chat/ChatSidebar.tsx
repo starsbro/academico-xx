@@ -4,7 +4,6 @@ import React from 'react';
 import { UserButton } from '../Auth/UserButton';
 import { UserChat } from '../../types/chat.types';
 import { ThemeToggle } from '../../app/components/ThemeToggle/ThemeToggle';
-import styles from './ChatSidebar.module.css';
 
 interface ChatSidebarProps {
   userChats: UserChat[];
@@ -38,10 +37,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   setNewChatTitle,
 }) => {
   return (
-    <div className={styles.sidebarContainer}>
+    <div className="w-80 bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black text-white flex flex-col h-full shadow-xl">
       {/* Header */}
-      <div className={styles.sidebarHeader}>
-        <div className={styles.userSection}>
+      <div className="p-6 border-b border-gray-700">
+        <div className="flex items-center gap-3 mb-8 pt-2 px-2">
           <ThemeToggle />
           <div className="flex-1 min-w-0">
             <h1 className="font-bold text-lg text-white">Academico AI</h1>
@@ -51,7 +50,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
 
         <button
-          className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-medium ${styles.newChatButton}`}
+          className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-2 font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/25 active:translate-y-0"
           onClick={onNewChat}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,16 +61,16 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       {/* Chat List */}
-      <div className={styles.chatListSection}>
+      <div className="flex-1 overflow-y-auto p-6">
         <h3 className="text-sm font-medium opacity-90 pl-2 mb-3">Chats ({userChats.length})</h3>
-        <div className={`space-y-2 ${styles.chatList}`}>
+        <div className="space-y-2 px-3">
           {isLoadingChats ? (
             <p className="text-white/70 text-sm pl-2">Loading chats...</p>
           ) : userChats.length === 0 ? (
             <p className="text-white/70 text-sm pl-2">No chats yet. Start a new one!</p>
           ) : (
             userChats.map((chat) => (
-              <div key={chat.id} className={`flex items-center justify-between group ${styles.chatItem}`}>
+              <div key={chat.id} className="flex items-center justify-between group">
                 {editingChatId === chat.id ? (
                   <input
                     type="text"
@@ -86,12 +85,14 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   />
                 ) : (
                   <button
-                    className={`w-full text-left py-3 px-4 rounded-lg text-white text-sm ease-in-out
-                        ${
-                          selectedChatId === chat.id
-                            ? `bg-white/30 font-semibold ${styles.chatHistoryItemSelected}`
-                            : `hover:bg-white/20 ${styles.chatHistoryItem}`
-                        }`}
+                    className={`
+                      w-full text-left py-3 px-4 rounded-lg text-white text-sm transition-all duration-250 ease-out relative
+                      ${
+                        selectedChatId === chat.id
+                          ? 'bg-blue-500/25 font-semibold translate-x-1.5 shadow-lg before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-blue-500 before:to-blue-700 before:rounded-r-sm'
+                          : 'hover:bg-white/20 hover:translate-x-1 hover:shadow-md hover:before:absolute hover:before:left-0 hover:before:top-0 hover:before:bottom-0 hover:before:w-1 hover:before:bg-gradient-to-b hover:before:from-blue-500 hover:before:to-blue-700 hover:before:rounded-r-sm hover:before:opacity-60'
+                      }
+                    `}
                     onClick={() => onSelectChat(chat.id)}
                   >
                     <div className="truncate">{chat.title}</div>
@@ -100,7 +101,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 )}
                 {editingChatId !== chat.id && (
                   <button
-                    className={`ml-2 text-white/50 hover:text-white opacity-0 group-hover:opacity-100 ${styles.editButton}`}
+                    className="ml-2 text-white/50 hover:text-white opacity-0 group-hover:opacity-100 transition-all duration-200 p-1 rounded hover:bg-white/10"
                     onClick={() => onEditChatTitle(chat.id, chat.title)}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,9 +121,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       {/* Footer */}
-      <div className={styles.sidebarFooter}>
-        <button onClick={onGoHome} className={styles.backButton}>
-          <svg className={`w-4 h-4 ${styles.backButtonIcon}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="p-6 border-t border-gray-700">
+        <button
+          onClick={onGoHome}
+          className="w-full flex items-center gap-3 text-gray-300 hover:text-white py-3 px-4 rounded-lg hover:bg-white/10 transition-all duration-200"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"

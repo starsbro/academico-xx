@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ChatMessage } from '../../types/chat.types';
-import styles from './ChatArea.module.css';
 
 interface ChatAreaProps {
   chatHistory: ChatMessage[];
@@ -90,23 +89,23 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   }
 
   return (
-    <div className={styles.chatContainer}>
-      <div className={styles.chatWrapper}>
+    <div className="flex-1 overflow-y-auto p-8 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-t-3xl">
+      <div className="max-w-4xl mx-auto">
         {chatHistory.map((chat) => (
           <div
             key={chat.id}
-            className={`${styles.messageContainer} ${
-              chat.userId === userId ? styles.messageContainerEnd : styles.messageContainerStart
-            }`}
+            className={`flex mt-6 first:mt-0 ${chat.userId === userId ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`${styles.messageBubble} ${
-                chat.userId === userId ? styles.messageBubbleUser : styles.messageBubbleAI
+              className={`max-w-2xl rounded-2xl p-6 shadow-lg ${
+                chat.userId === userId
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white'
               }`}
             >
-              <div className={styles.messageContent}>
+              <div className="flex items-start gap-2">
                 {chat.userId !== userId && (
-                  <div className={`${styles.avatar} ${styles.avatarAI}`}>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -117,20 +116,22 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
                     </svg>
                   </div>
                 )}
-                <div className={styles.messageText}>
-                  <div className={styles.messageHeader}>
+
+                <div className="flex-1 min-w-0">
+                  <div className="mb-2">
                     <span
                       className={`text-xs font-semibold uppercase tracking-wide ${
-                        chat.userId === userId ? 'text-blue-100' : 'text-gray-500'
+                        chat.userId === userId ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'
                       }`}
                     >
                       {chat.userId === userId ? 'You' : 'Academico AI'}
                     </span>
                   </div>
-                  <div className={styles.messageBody}>{chat.message}</div>
+                  <div className="text-sm leading-relaxed whitespace-pre-wrap">{chat.message}</div>
                 </div>
+
                 {chat.userId === userId && (
-                  <div className={`${styles.avatar} ${styles.avatarUser}`}>
+                  <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
@@ -144,11 +145,13 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
               </div>
 
               <div
-                className={`${styles.messageFooter} ${
-                  chat.userId === userId ? styles.messageFooterUser : styles.messageFooterAI
+                className={`flex justify-end mt-2 pt-2 border-t ${
+                  chat.userId === userId ? 'border-blue-400/30' : 'border-gray-200 dark:border-gray-600'
                 }`}
               >
-                <span className={`text-xs ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400'}`}>
+                <span
+                  className={`text-xs ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400 dark:text-gray-500'}`}
+                >
                   {new Date(chat.timestamp).toLocaleString('en-US', {
                     month: 'short',
                     day: 'numeric',

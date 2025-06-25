@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './ThemeToggle.module.css';
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -21,16 +20,23 @@ export function ThemeToggle() {
   };
 
   return (
-    <button onClick={toggleTheme} className={styles.themeToggle} aria-label="Toggle theme">
-      <div className={styles.iconWrapper}>
+    <button
+      onClick={toggleTheme}
+      className="fixed top-4 right-4 bg-white/70 dark:bg-gray-800/70 border border-white/20 dark:border-white/10 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 ease-out backdrop-blur-md shadow-lg hover:scale-110 hover:shadow-xl z-50"
+      aria-label="Toggle theme"
+    >
+      <div className="w-6 h-6 flex items-center justify-center">
         <svg
-          className={`${styles.icon} ${isDark ? styles.moon : styles.sun}`}
+          className={`w-full h-full text-indigo-500 dark:text-violet-400 transition-all duration-200 ${
+            isDark ? 'rotate-180' : 'rotate-0'
+          }`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          data-testid={isDark ? 'moon-icon' : 'sun-icon'}
         >
           {isDark ? (
             // Moon icon

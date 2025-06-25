@@ -11,7 +11,6 @@ import { Button } from './components/Button';
 //   DevToolsDetails,
 //   ResponsiveDesignDetails,
 // } from './components/FeatureCard/details';
-import styles from './page.module.css';
 import { Search } from 'lucide-react';
 import { Input } from './components/ui/input';
 
@@ -69,14 +68,16 @@ function HomePageContent() {
   // const column2Features = featureData.filter((_, index) => index % 2 === 1);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.themeToggleContainer}>
+    <div className="flex flex-col flex-1 p-8 box-border">
+      <div className="fixed top-5 right-5 z-[1000]">
         <ThemeToggle />
       </div>
 
-      <main className={styles.pageMain}>
-        <section className={styles.heroSection}>
-          <h1 className={styles.title}>Spark Your Next Creation! ✨</h1>
+      <main className="flex-grow">
+        <section className="text-center py-16 px-4 border-b border-gray-200 dark:border-gray-700">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Spark Your Next Creation! ✨
+          </h1>
           <div className="flex space-x-3 w-full gap-4">
             <Input
               type="text"
@@ -129,7 +130,7 @@ function HomePageContent() {
         </section> */}
       </main>
 
-      <footer className={styles.footer}>
+      <footer className="text-center py-8 px-4 mt-auto border-t border-gray-200 dark:border-gray-700 text-sm opacity-70">
         <p>@Academico.ai 2025 all rights reserved. Happy research!</p>
       </footer>
     </div>

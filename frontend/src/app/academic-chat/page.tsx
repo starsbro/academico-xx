@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { useChat } from '../../hooks/useChat';
 import { ChatSidebar, ChatArea, ChatInput } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
-import styles from './page.module.css';
 
 export default function AcademicChatPage() {
   return (
@@ -55,9 +54,9 @@ function AcademicChatContent() {
   const username: string = user?.displayName || user?.email || 'Guest';
 
   return (
-    <div className={styles.chatPageContainer}>
+    <div className="flex h-screen bg-gray-100 overflow-hidden p-4 gap-4">
       {/* Sidebar */}
-      <div className={styles.sidebar}>
+      <div className="rounded-3xl overflow-hidden shadow-xl">
         <ChatSidebar
           userChats={userChats}
           selectedChatId={selectedChatId}
@@ -76,7 +75,7 @@ function AcademicChatContent() {
       </div>
 
       {/* Main Content Area */}
-      <div className={styles.chatMainArea}>
+      <div className="flex-1 flex flex-col bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-200">
         {/* Chat Messages */}
         <ChatArea
           chatHistory={chatHistory}
