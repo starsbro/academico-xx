@@ -16,6 +16,8 @@ module.exports = {
     '^firebase/auth$': '<rootDir>/__mocks__/firebase-auth.js',
     '^../lib/firebase$': '<rootDir>/__mocks__/firebase.js',
     '^@/lib/firebase$': '<rootDir>/__mocks__/firebase.js',
+    // Mock icon libraries
+    '^lucide-react$': '<rootDir>/__mocks__/lucide-react.js',
     // Mock Next.js
     '^next/navigation$': '<rootDir>/__mocks__/next-navigation.js',
     '^next/image$': '<rootDir>/__mocks__/next-image.js',
