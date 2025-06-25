@@ -16,8 +16,15 @@ module.exports = {
     '^firebase/auth$': '<rootDir>/__mocks__/firebase-auth.js',
     '^../lib/firebase$': '<rootDir>/__mocks__/firebase.js',
     '^@/lib/firebase$': '<rootDir>/__mocks__/firebase.js',
-    // Mock icon libraries
+    // Mock styling libraries
+    '^tailwind-merge$': '<rootDir>/__mocks__/tailwind-merge.js',
     '^lucide-react$': '<rootDir>/__mocks__/lucide-react.js',
+    '^clsx$': '<rootDir>/__mocks__/clsx.js',
+    '^class-variance-authority$': '<rootDir>/__mocks__/class-variance-authority.js',
+    // Mock Radix UI
+    '^@radix-ui/react-avatar$': '<rootDir>/__mocks__/@radix-ui/react-avatar.js',
+    '^@radix-ui/react-dropdown-menu$': '<rootDir>/__mocks__/@radix-ui/react-dropdown-menu.js',
+    '^@radix-ui/react-scroll-area$': '<rootDir>/__mocks__/@radix-ui/react-scroll-area.js',
     // Mock Next.js
     '^next/navigation$': '<rootDir>/__mocks__/next-navigation.js',
     '^next/image$': '<rootDir>/__mocks__/next-image.js',
