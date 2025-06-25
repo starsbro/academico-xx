@@ -13,6 +13,7 @@ module.exports = {
     '^@/lib/(.*)$': '<rootDir>/../frontend/src/lib/$1',
     '^@/app/(.*)$': '<rootDir>/../frontend/src/app/$1',
     // Mock Firebase
+    '^firebase/auth$': '<rootDir>/__mocks__/firebase-auth.js',
     '^../lib/firebase$': '<rootDir>/__mocks__/firebase.js',
     '^@/lib/firebase$': '<rootDir>/__mocks__/firebase.js',
     // Mock Next.js
