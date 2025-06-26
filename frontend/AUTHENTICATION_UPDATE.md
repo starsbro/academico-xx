@@ -11,7 +11,6 @@ The home page has been updated to require user authentication before access.
 🔓 /                    - Public (no auth required)
 🔓 /sign-in             - Public  
 🔓 /sign-up             - Public
-🔒 /dashboard           - Protected (auth required)
 🔒 /academic-chat       - Protected (auth required)
 ```
 
@@ -20,7 +19,6 @@ The home page has been updated to require user authentication before access.
 🔒 /                    - Protected (auth required) ← CHANGED
 🔓 /sign-in             - Public  
 🔓 /sign-up             - Public
-🔒 /dashboard           - Protected (auth required)
 🔒 /academic-chat       - Protected (auth required)
 ```
 
@@ -53,7 +51,6 @@ export default function HomePage() {
 
 **Protected routes** (authentication required):
 - `/` - Home page
-- `/dashboard` - Dashboard page  
 - `/academic-chat` - Chat interface
 
 ## ✅ Result

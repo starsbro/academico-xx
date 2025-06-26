@@ -13,13 +13,13 @@ import {FieldValue} from "firebase-admin/firestore";
  */
 export async function getChats(req:Request, res: Response) {
   const requestedUserId = req.params.userId;
-  console.log(`Controller: Fetching chats for user: ${requestedUserId}`);
+  // console.log(`Controller: Fetching chats for user: ${requestedUserId}`);
 
   try {
     const userChats = await chatModel.getChatsByUserId(requestedUserId);
     res.status(200).json(userChats);
-    console.log(`Controller: Fetched ${userChats.length} 
-            chats for user ${requestedUserId}`);
+    // console.log(`Controller: Fetched ${userChats.length} 
+    //         chats for user ${requestedUserId}`);
   } catch (error) {
     console.error(`Controller: Error fetching user chats 
             for ${requestedUserId}:`, error);
@@ -41,8 +41,8 @@ export async function updateChatTitle(req:Request, res: Response) {
   const requestedChatId = req.params.chatId;
   const {title} = req.body;
 
-  console.log(`Controller: Updating title for chat
-        ${requestedUserId} to: ${title}`);
+  // console.log(`Controller: Updating title for chat
+  //       ${requestedUserId} to: ${title}`);
 
   if (!title) {
     res.status(400).send("Missing required field: title.");
@@ -54,8 +54,8 @@ export async function updateChatTitle(req:Request, res: Response) {
       title: title,
       lastUpdatedAt: FieldValue.serverTimestamp(),
     });
-    console.log(`Controller: Chat ${requestedChatId} 
-            title updated to: ${title}`);
+    // console.log(`Controller: Chat ${requestedChatId} 
+    //         title updated to: ${title}`);
     res.status(200).json({
       status: "success",
       message: "Chat title updated successfully.",

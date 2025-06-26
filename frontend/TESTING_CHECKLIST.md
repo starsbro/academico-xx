@@ -30,7 +30,7 @@ npm run dev
   - No build tracking info (expected)
 
 #### ✅ 3. Navigation & Core Features
-- [ ] Test navigation between pages (Home, Dashboard, Academic Chat)
+- [ ] Test navigation between pages (Home, Academic Chat)
 - [ ] Verify no console errors in browser dev tools
 - [ ] Test basic functionality of existing features
 

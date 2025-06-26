@@ -8,7 +8,7 @@ export class ChatService {
   static async fetchUserChats(userId: string): Promise<UserChat[]> {
     const url = `${backendUrl}/users/${userId}/chats`;
 
-    console.log('🔍 Fetching user chats:', { url, backendUrl, userId });
+    // console.log('🔍 Fetching user chats:', { url, backendUrl, userId });
 
     try {
       const response = await fetch(url, {
@@ -18,8 +18,8 @@ export class ChatService {
         },
       });
 
-      console.log('📡 Response status:', response.status);
-      console.log('📡 Response headers:', [...response.headers.entries()]);
+      // console.log('📡 Response status:', response.status);
+      // console.log('📡 Response headers:', [...response.headers.entries()]);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -28,7 +28,7 @@ export class ChatService {
       }
 
       const data: UserChat[] = await response.json();
-      console.log('✅ Fetched chats:', data);
+      // console.log('✅ Fetched chats:', data);
       return data.sort((a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime());
     } catch (error) {
       console.error('❌ Fetch error:', error);
@@ -39,7 +39,7 @@ export class ChatService {
   static async fetchChatMessages(chatId: string, userId: string): Promise<ChatMessage[]> {
     const url = `${backendUrl}/users/${userId}/chats/${chatId}/messages`;
 
-    console.log('🔍 Fetching chat messages:', { url, chatId, userId });
+    // console.log('🔍 Fetching chat messages:', { url, chatId, userId });
 
     try {
       const response = await fetch(url, {
@@ -49,7 +49,7 @@ export class ChatService {
         },
       });
 
-      console.log('📡 Messages response status:', response.status);
+      // console.log('📡 Messages response status:', response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -58,7 +58,7 @@ export class ChatService {
       }
 
       const data: ChatMessage[] = await response.json();
-      console.log('✅ Fetched messages:', data);
+      // console.log('✅ Fetched messages:', data);
       return data.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
     } catch (error) {
       console.error('❌ Fetch messages error:', error);

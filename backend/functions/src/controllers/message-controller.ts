@@ -14,10 +14,10 @@ import {FieldValue} from "firebase-admin/firestore";
  * @return {void}
  */
 export async function createMessage(req: Request, res: Response) {
-  console.log("Crontroller: Creating message");
+  // console.log("Crontroller: Creating message");
   try {
     const {userId, message, timestamp, chatId} = req.body;
-    console.log("chatId is: ", chatId);
+    // console.log("chatId is: ", chatId);
 
     if (!userId || !message || !timestamp) {
       res.status(400).send(
@@ -35,13 +35,13 @@ export async function createMessage(req: Request, res: Response) {
       const chatRef = await chatModel.createChat(userId, newChatTitle);
       currentChatId = chatRef.id;
       newChatCreated = true;
-      console.log(`Controller: New chat created with ID: ${currentChatId}`);
+      // console.log(`Controller: New chat created with ID: ${currentChatId}`);
     } else {
       // If message is for existing chat, update its lostUpdatedAt timestamp
       await chatModel.updateChat(userId, currentChatId, {
         lastUpdatedAt: FieldValue.serverTimestamp(),
       });
-      console.log(`Controller: Using existing chat with ID: ${currentChatId}`);
+      // console.log(`Controller: Using existing chat with ID: ${currentChatId}`);
     }
 
     const newMessageRef = await messageModel
@@ -71,7 +71,7 @@ export async function createMessage(req: Request, res: Response) {
     }
 
     res.status(201).json(responseBody);
-    console.log("Controller: Message send successfully.");
+    // console.log("Controller: Message send successfully.");
   } catch (error) {
     console.log("Controller: Error sending message:", error);
     res.status(500).send("Internal Server Error: Could not send message.");
@@ -86,15 +86,15 @@ export async function createMessage(req: Request, res: Response) {
 export async function getMessages(req: Request, res: Response) {
   const requestedUserId = req.params.userId;
   const requestedChatId = req.params.chatId;
-  console.log(`Controller: Fetching messages for chat ${requestedChatId} 
-        of user ${requestedUserId}`);
+  // console.log(`Controller: Fetching messages for chat ${requestedChatId} 
+  //       of user ${requestedUserId}`);
 
   try {
     const chatMessages = await messageModel
       .getMessagesByChatId(requestedUserId, requestedChatId);
     res.status(200).json(chatMessages);
-    console.log(`Controller: Fetched 
-        ${chatMessages.length} messages for chat ${requestedChatId}`);
+    // console.log(`Controller: Fetched 
+    //     ${chatMessages.length} messages for chat ${requestedChatId}`);
   } catch (error) {
     console.error(`Controller: Error fetching messages 
         for chat ${requestedChatId}:`, error);

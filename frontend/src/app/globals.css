@@ -5,7 +5,7 @@
 
 :root {
   /* Global Theme Variables (Light Mode is default) */
-  --page-bg: #f0f4f8;
+  --page-bg: #e2e8f0;
   --page-bg-gradient-start: #e6f4ff;
   --page-bg-gradient-end: #89b2fa;
   --text-color: #2c3e50;
@@ -16,6 +16,12 @@
   --link-color: var(--primary-accent);
   --code-bg: #e9ecef;
   --spacing: 4px;
+  
+  /* Chat specific variables */
+  --chat-bg: white;
+  --chat-container-bg: white;
+  --sidebar-bg-start: #374151;
+  --sidebar-bg-end: #4b5563;
 }
 
 html {
@@ -25,7 +31,7 @@ html {
 html.dark {
   color-scheme: dark;
   /* Dark Mode Theme Overrides */
-  --page-bg: #1a202c;
+  --page-bg: #0f172a;
   --page-bg-gradient-start: #191425;
   --page-bg-gradient-end: #0d1117;
   --text-color: #e2e8f0;
@@ -35,12 +41,27 @@ html.dark {
   --card-border: #2c3034;
   --link-color: var(--primary-accent);
   --code-bg: #2c3034;
+  
+  /* Chat specific dark mode variables */
+  --chat-bg: #374151;
+  --chat-container-bg: #374151;
+  --sidebar-bg-start: #1f2937;
+  --sidebar-bg-end: #374151;
+}
+
+/* Chat Input Spacing */
+.main-content-area .chat-input-spacing {
+  margin-left: 40px;
+}
+
+@media (max-width: 1023px) {
+  .main-content-area .chat-input-spacing {
+    margin-left: 0;
+  }
 }
 
 body {
-  background-image: linear-gradient(to bottom, var(--page-bg-gradient-start), var(--page-bg-gradient-end));
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-color: #e2e8f0 !important; /* Slightly darker gray background for better contrast */
   color: var(--text-color);
   font-family: var(--font-outfit), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -55,7 +76,116 @@ body {
 
 /* Apply dark mode variables to body when html.dark is present */
 html.dark body {
+  background-color: #0f172a !important; /* Keep dark background for dark mode */
   color: var(--text-color);
+}
+
+/* Chat component styling with theme-aware backgrounds */
+.chat-area {
+  background-color: white !important;
+}
+
+.dark .chat-area {
+  background-color: #374151 !important;
+}
+
+/* Main content area styling */
+.main-content-area {
+  background-color: white !important;
+}
+
+.dark .main-content-area {
+  background-color: #374151 !important;
+}
+
+/* Improved chat area scrolling */
+.chat-area {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  padding-right: 8px; /* Extra space for scrollbar */
+}
+
+.chat-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.chat-area::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* Make sure the main content area can properly contain the scrollable area */
+.main-content-area {
+  overflow: hidden;
+}
+
+/* Responsive background fixes */
+@media (max-width: 1023px) {
+  .chat-area,
+  .main-content-area {
+    background-color: white !important;
+  }
+  
+  .dark .chat-area,
+  .dark .main-content-area {
+    background-color: #374151 !important;
+  }
+}
+
+/* Ensure consistent sidebar styling */
+.chat-sidebar {
+  background: linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end)) !important;
+}
+
+/* Force sidebar container to use same gradient */
+.sidebar-container {
+  background: linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end)) !important;
+}
+
+/* Eliminate any gaps or lines between sidebar and main content */
+@media (min-width: 1024px) {
+  .sidebar-container {
+    border-right: none !important;
+    margin-right: 0 !important;
+    box-shadow: none !important;
+  }
+  
+  .main-content-area {
+    border-left: none !important;
+    margin-left: 0 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  }
+  
+  /* Ensure seamless connection */
+  .sidebar-container + .main-content-area {
+    border-left: none !important;
+  }
+  
+  /* Ensure no gaps between components */
+  .flex.h-screen {
+    gap: 0 !important;
+  }
+}
+
+/* Fix potential shadow overlap issues */
+.sidebar-container {
+  z-index: 10;
+}
+
+.main-content-area {
+  z-index: 5;
 }
 
 .main-content-container {
@@ -65,7 +195,7 @@ html.dark body {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-  flex-grow: 1; /* Ensure main content can grow */
+  min-height: 80dvh; /* Use full viewport height since no header */
   display: flex; /* Added to allow children to flex if needed */
   flex-direction: column; /* Added for default stacking */
 }
@@ -456,4 +586,46 @@ html.dark .error-boundary details {
 
 .border-animate {
   animation: border-glow 2s ease-in-out infinite;
+}
+
+/* Additional fix for any potential border artifacts */
+.sidebar-container::after,
+.main-content-area::before {
+  display: none !important;
+}
+
+/* Chat window container with proper height calculation */
+.chat-window-container {
+  height: calc(100vh - 2rem); /* Mobile: subtract more for top space */
+  margin-top: 1rem; /* Add explicit top margin */
+}
+
+@media (min-width: 640px) {
+  .chat-window-container {
+    height: calc(100vh - 3rem); /* Small: subtract more for top space */
+    margin-top: 1.5rem; /* Add more top margin */
+  }
+}
+
+@media (min-width: 1024px) {
+  .chat-window-container {
+    height: calc(100vh - 4rem); /* Large: subtract more for top space */
+    margin-top: 2rem; /* Add even more top margin */
+  }
+}
+
+/* Enhanced chat window styling for better visibility */
+.chat-window-container {
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.dark .chat-window-container {
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 10px 25px -5px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }

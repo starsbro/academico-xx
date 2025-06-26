@@ -3,7 +3,6 @@
 import React from 'react';
 import { UserButton } from '../Auth/UserButton';
 import { UserChat } from '../../types/chat.types';
-import { ThemeToggle } from '../../app/components/ThemeToggle/ThemeToggle';
 
 interface ChatSidebarProps {
   userChats: UserChat[];
@@ -17,7 +16,6 @@ interface ChatSidebarProps {
   onEditChatTitle: (chatId: string, currentTitle: string) => void;
   onSaveChatTitle: (chatId: string) => void;
   onCancelEdit: () => void;
-  onGoHome: () => void;
   setNewChatTitle: (title: string) => void;
 }
 
@@ -33,18 +31,16 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   onEditChatTitle,
   onSaveChatTitle,
   onCancelEdit,
-  onGoHome,
   setNewChatTitle,
 }) => {
   return (
-    <div className="w-80 bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-900 dark:to-black text-white flex flex-col h-full shadow-xl chat-sidebar">
+    <div className="w-80 h-full text-white flex flex-col shadow-xl chat-sidebar bg-transparent">
       {/* Header */}
-      <div className="sidebar-header border-b border-gray-700">
+      <div className="sidebar-header p-6">
         <div className="flex items-center gap-3 mb-8 pt-2 header-content">
-          <ThemeToggle />
           <div className="flex-1 min-w-0">
             <h1 className="font-bold text-lg text-white">Academico AI</h1>
-            <p className="text-gray-300 text-sm truncate">{username}</p>
+            <p className="text-gray-200 text-sm truncate">{username}</p>
           </div>
           <UserButton />
         </div>
@@ -61,13 +57,13 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto sidebar-content">
+      <div className="flex-1 overflow-y-auto sidebar-content pt-4">
         <h3 className="text-sm font-medium opacity-90 pl-4 mb-3">Chats ({userChats.length})</h3>
         <div className="space-y-2 content-inner">
           {isLoadingChats ? (
-            <p className="text-white/70 text-sm pl-4">Loading chats...</p>
+            <p className="text-white/80 text-sm pl-4">Loading chats...</p>
           ) : userChats.length === 0 ? (
-            <p className="text-white/70 text-sm pl-4">No chats yet. Start a new one!</p>
+            <p className="text-white/80 text-sm pl-4">No chats yet. Start a new one!</p>
           ) : (
             userChats.map((chat) => (
               <div key={chat.id} className="flex items-center justify-between group">
@@ -118,24 +114,6 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             ))
           )}
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="sidebar-footer border-t border-gray-700">
-        <button
-          onClick={onGoHome}
-          className="w-full flex items-center gap-3 text-gray-300 hover:text-white py-3 rounded-lg hover:bg-white/10 transition-all duration-200"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-            />
-          </svg>
-          Back to Dashboard
-        </button>
       </div>
     </div>
   );
