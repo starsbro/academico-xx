@@ -18,7 +18,7 @@ export async function getChats(req:Request, res: Response) {
   try {
     const userChats = await chatModel.getChatsByUserId(requestedUserId);
     res.status(200).json(userChats);
-    // console.log(`Controller: Fetched ${userChats.length} 
+    // console.log(`Controller: Fetched ${userChats.length}
     //         chats for user ${requestedUserId}`);
   } catch (error) {
     console.error(`Controller: Error fetching user chats 
@@ -54,7 +54,7 @@ export async function updateChatTitle(req:Request, res: Response) {
       title: title,
       lastUpdatedAt: FieldValue.serverTimestamp(),
     });
-    // console.log(`Controller: Chat ${requestedChatId} 
+    // console.log(`Controller: Chat ${requestedChatId}
     //         title updated to: ${title}`);
     res.status(200).json({
       status: "success",

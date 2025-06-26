@@ -59,7 +59,7 @@ app.use("/", apiRoutes);
 
 // Generic 404 handler for Express routes not matched by apiRoutes
 app.use((req, res) => {
-  // console.log(`Express Main: Unhandled route - 
+  // console.log(`Express Main: Unhandled route -
   //   Method: ${req.method},
   //   Path: ${req.path}`);
   res.status(404)

@@ -41,7 +41,8 @@ export async function createMessage(req: Request, res: Response) {
       await chatModel.updateChat(userId, currentChatId, {
         lastUpdatedAt: FieldValue.serverTimestamp(),
       });
-      // console.log(`Controller: Using existing chat with ID: ${currentChatId}`);
+      // console.log(`Controller:
+      // Using existing chat with ID: ${currentChatId}`);
     }
 
     const newMessageRef = await messageModel
@@ -86,14 +87,14 @@ export async function createMessage(req: Request, res: Response) {
 export async function getMessages(req: Request, res: Response) {
   const requestedUserId = req.params.userId;
   const requestedChatId = req.params.chatId;
-  // console.log(`Controller: Fetching messages for chat ${requestedChatId} 
+  // console.log(`Controller: Fetching messages for chat ${requestedChatId}
   //       of user ${requestedUserId}`);
 
   try {
     const chatMessages = await messageModel
       .getMessagesByChatId(requestedUserId, requestedChatId);
     res.status(200).json(chatMessages);
-    // console.log(`Controller: Fetched 
+    // console.log(`Controller: Fetched
     //     ${chatMessages.length} messages for chat ${requestedChatId}`);
   } catch (error) {
     console.error(`Controller: Error fetching messages 
