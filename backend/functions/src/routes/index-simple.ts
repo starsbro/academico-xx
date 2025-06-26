@@ -1,5 +1,5 @@
 // Define API routes - Simplified for debugging
-import { Router } from "express";
+import {Router} from "express";
 
 const router = Router();
 
@@ -24,7 +24,7 @@ router.post("/test-post", (req, res) => {
 
 // Simple test routes without complex parameters
 router.get("/test-chats", (req, res) => {
-  res.status(200).json({ message: "Test chats endpoint working" });
+  res.status(200).json({message: "Test chats endpoint working"});
 });
 
 export default router;

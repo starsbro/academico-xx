@@ -1,6 +1,6 @@
 // src/config/firebaseAdmin.js
-import { admin } from "firebase-admin";
-import { readFileSync } from "fs";
+import {admin} from "firebase-admin";
+import {readFileSync} from "fs";
 
 // const serviceAccount = require(
 //   process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH

@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import * as chatModel from "../models/chat-model";
 import * as messageModel from "../models/message-model";
 import * as admin from "firebase-admin";
-import { FieldValue } from "firebase-admin/firestore";
+import {FieldValue} from "firebase-admin/firestore";
 
 // // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = function() {};
@@ -16,7 +16,7 @@ import { FieldValue } from "firebase-admin/firestore";
 export async function createMessage(req: Request, res: Response) {
   // console.log("Crontroller: Creating message");
   try {
-    const { userId, message, timestamp, chatId } = req.body;
+    const {userId, message, timestamp, chatId} = req.body;
     // console.log("chatId is: ", chatId);
 
     if (!userId || !message || !timestamp) {
@@ -48,7 +48,7 @@ export async function createMessage(req: Request, res: Response) {
     const newMessageRef = await messageModel.addMessageToChat(
       userId,
       currentChatId,
-      { userId, message, timestamp },
+      {userId, message, timestamp},
     );
 
     const newDoc = await newMessageRef.get();
@@ -64,11 +64,11 @@ export async function createMessage(req: Request, res: Response) {
       id: newDoc.id,
       userId: savedMessage?.userId,
       message: savedMessage?.message,
-      timestamp: savedMessage?.timestamp
-        ? (savedMessage.timestamp as admin.firestore.Timestamp)
-            .toDate()
-            .toISOString()
-        : new Date().toISOString(),
+      timestamp: savedMessage?.timestamp ?
+        (savedMessage.timestamp as admin.firestore.Timestamp)
+          .toDate()
+          .toISOString() :
+        new Date().toISOString(),
     };
 
     if (newChatCreated) {

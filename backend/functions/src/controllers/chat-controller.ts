@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import * as chatModel from "../models/chat-model";
 // import * as messageModel from "../models/message-model";
-import { FieldValue } from "firebase-admin/firestore";
+import {FieldValue} from "firebase-admin/firestore";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = function() {};
@@ -41,7 +41,7 @@ export async function getChats(req: Request, res: Response) {
 export async function updateChatTitle(req: Request, res: Response) {
   const requestedUserId = req.params.userId;
   const requestedChatId = req.params.chatId;
-  const { title } = req.body;
+  const {title} = req.body;
 
   // console.log(`Controller: Updating title for chat
   //       ${requestedUserId} to: ${title}`);

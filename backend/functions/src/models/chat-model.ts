@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { FieldValue } from "firebase-admin/firestore";
+import {FieldValue} from "firebase-admin/firestore";
 
 /**
  * Interface for a chat document returned from the database.
@@ -83,14 +83,14 @@ export async function getChatsByUserId(userId: string): Promise<UserChat[]> {
     userChats.push({
       id: doc.id,
       title: data.title || "Untitled Chat",
-      createdAt: data.createdAt
-        ? (data.createdAt as admin.firestore.Timestamp).toDate().toISOString()
-        : new Date().toISOString(),
-      lastUpdatedAt: data.lastUpdatedAt
-        ? (data.lastUpdatedAt as admin.firestore.Timestamp)
-            .toDate()
-            .toISOString()
-        : new Date().toISOString(),
+      createdAt: data.createdAt ?
+        (data.createdAt as admin.firestore.Timestamp).toDate().toISOString() :
+        new Date().toISOString(),
+      lastUpdatedAt: data.lastUpdatedAt ?
+        (data.lastUpdatedAt as admin.firestore.Timestamp)
+          .toDate()
+          .toISOString() :
+        new Date().toISOString(),
     });
   });
   return userChats;

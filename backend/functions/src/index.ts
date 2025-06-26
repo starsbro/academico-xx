@@ -70,4 +70,4 @@ app.use((req, res) => {
 exports.api = functions.https.onRequest(app);
 
 // Export Next.js app function
-export { nextjsApp } from "./nextjs";
+export {nextjsApp} from "./nextjs";

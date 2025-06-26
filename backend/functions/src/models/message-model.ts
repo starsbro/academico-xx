@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { FieldValue } from "firebase-admin/firestore";
+import {FieldValue} from "firebase-admin/firestore";
 
 /**
  * Interface for a message document returned from the database.
@@ -69,9 +69,9 @@ export async function getMessagesByChatId(
       id: doc.id,
       userId: data.userId,
       message: data.message,
-      timestamp: data.timestamp
-        ? (data.timestamp as admin.firestore.Timestamp).toDate().toISOString()
-        : new Date().toISOString(),
+      timestamp: data.timestamp ?
+        (data.timestamp as admin.firestore.Timestamp).toDate().toISOString() :
+        new Date().toISOString(),
     });
   });
   return chatMessages;
