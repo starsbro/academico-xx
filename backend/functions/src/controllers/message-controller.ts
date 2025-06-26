@@ -1,8 +1,8 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import * as chatModel from "../models/chat-model";
 import * as messageModel from "../models/message-model";
 import * as admin from "firebase-admin";
-import {FieldValue} from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 
 // // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = function() {};
@@ -16,13 +16,13 @@ import {FieldValue} from "firebase-admin/firestore";
 export async function createMessage(req: Request, res: Response) {
   // console.log("Crontroller: Creating message");
   try {
-    const {userId, message, timestamp, chatId} = req.body;
+    const { userId, message, timestamp, chatId } = req.body;
     // console.log("chatId is: ", chatId);
 
     if (!userId || !message || !timestamp) {
-      res.status(400).send(
-        "Missing required field: userId, message, and timestamp."
-      );
+      res
+        .status(400)
+        .send("Missing required field: userId, message, and timestamp.");
       return;
     }
 
@@ -30,8 +30,8 @@ export async function createMessage(req: Request, res: Response) {
     let newChatCreated = false;
 
     if (!currentChatId) {
-      const newChatTitle = message.substring(0, 50) +
-            (message.length > 50 ? "...": "");
+      const newChatTitle =
+        message.substring(0, 50) + (message.length > 50 ? "..." : "");
       const chatRef = await chatModel.createChat(userId, newChatTitle);
       currentChatId = chatRef.id;
       newChatCreated = true;
@@ -45,8 +45,11 @@ export async function createMessage(req: Request, res: Response) {
       // Using existing chat with ID: ${currentChatId}`);
     }
 
-    const newMessageRef = await messageModel
-      .addMessageToChat(userId, currentChatId, {userId, message, timestamp});
+    const newMessageRef = await messageModel.addMessageToChat(
+      userId,
+      currentChatId,
+      { userId, message, timestamp },
+    );
 
     const newDoc = await newMessageRef.get();
     const savedMessage = newDoc.data();
@@ -61,10 +64,11 @@ export async function createMessage(req: Request, res: Response) {
       id: newDoc.id,
       userId: savedMessage?.userId,
       message: savedMessage?.message,
-      timestamp: savedMessage?.timestamp ?
-        (savedMessage.timestamp as admin.firestore.Timestamp)
-          .toDate().toISOString() :
-        new Date().toISOString(),
+      timestamp: savedMessage?.timestamp
+        ? (savedMessage.timestamp as admin.firestore.Timestamp)
+            .toDate()
+            .toISOString()
+        : new Date().toISOString(),
     };
 
     if (newChatCreated) {
@@ -91,14 +95,19 @@ export async function getMessages(req: Request, res: Response) {
   //       of user ${requestedUserId}`);
 
   try {
-    const chatMessages = await messageModel
-      .getMessagesByChatId(requestedUserId, requestedChatId);
+    const chatMessages = await messageModel.getMessagesByChatId(
+      requestedUserId,
+      requestedChatId,
+    );
     res.status(200).json(chatMessages);
     // console.log(`Controller: Fetched
     //     ${chatMessages.length} messages for chat ${requestedChatId}`);
   } catch (error) {
-    console.error(`Controller: Error fetching messages 
-        for chat ${requestedChatId}:`, error);
+    console.error(
+      `Controller: Error fetching messages 
+        for chat ${requestedChatId}:`,
+      error,
+    );
     res.status(500).send(`Internal Server Error: 
       Could not fetch chat messages.`);
   }

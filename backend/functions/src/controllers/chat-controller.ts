@@ -1,7 +1,7 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import * as chatModel from "../models/chat-model";
 // import * as messageModel from "../models/message-model";
-import {FieldValue} from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = function() {};
@@ -11,7 +11,7 @@ import {FieldValue} from "firebase-admin/firestore";
  * @param {express.Request} req The request from a specific user
  * @param {express.Response} res The respons of a server
  */
-export async function getChats(req:Request, res: Response) {
+export async function getChats(req: Request, res: Response) {
   const requestedUserId = req.params.userId;
   // console.log(`Controller: Fetching chats for user: ${requestedUserId}`);
 
@@ -21,10 +21,12 @@ export async function getChats(req:Request, res: Response) {
     // console.log(`Controller: Fetched ${userChats.length}
     //         chats for user ${requestedUserId}`);
   } catch (error) {
-    console.error(`Controller: Error fetching user chats 
-            for ${requestedUserId}:`, error);
-    res.status(500)
-      .send("Internal Server Error: Could not fetch user chats.");
+    console.error(
+      `Controller: Error fetching user chats 
+            for ${requestedUserId}:`,
+      error,
+    );
+    res.status(500).send("Internal Server Error: Could not fetch user chats.");
   }
 }
 
@@ -36,10 +38,10 @@ export async function getChats(req:Request, res: Response) {
  * The response of a server
  * @return {void}
  */
-export async function updateChatTitle(req:Request, res: Response) {
+export async function updateChatTitle(req: Request, res: Response) {
   const requestedUserId = req.params.userId;
   const requestedChatId = req.params.chatId;
-  const {title} = req.body;
+  const { title } = req.body;
 
   // console.log(`Controller: Updating title for chat
   //       ${requestedUserId} to: ${title}`);
@@ -61,9 +63,11 @@ export async function updateChatTitle(req:Request, res: Response) {
       message: "Chat title updated successfully.",
     });
   } catch (error) {
-    console.error(`Controller: Error updating chat title for chat 
-            ${requestedChatId}:`, error);
-    res.status(500)
-      .send("Internal Server Error: Could not update chat title.");
+    console.error(
+      `Controller: Error updating chat title for chat 
+            ${requestedChatId}:`,
+      error,
+    );
+    res.status(500).send("Internal Server Error: Could not update chat title.");
   }
 }

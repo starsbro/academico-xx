@@ -44,7 +44,7 @@ app.use(express.json());
 
 // Add a logging middleware for
 // all incoming requests (keep this for debugging)
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
   // console.log(`Express Main: Incoming Request -
   //   Method: ${req.method},
   //   Path: ${req.path},
@@ -62,8 +62,7 @@ app.use((req, res) => {
   // console.log(`Express Main: Unhandled route -
   //   Method: ${req.method},
   //   Path: ${req.path}`);
-  res.status(404)
-    .send(`Not Found: The requested resource 
+  res.status(404).send(`Not Found: The requested resource 
       could not be found via Express routing.`);
 });
 
@@ -71,4 +70,4 @@ app.use((req, res) => {
 exports.api = functions.https.onRequest(app);
 
 // Export Next.js app function
-export {nextjsApp} from "./nextjs";
+export { nextjsApp } from "./nextjs";

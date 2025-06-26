@@ -16,7 +16,7 @@
   --link-color: var(--primary-accent);
   --code-bg: #e9ecef;
   --spacing: 4px;
-  
+
   /* Chat specific variables */
   --chat-bg: white;
   --chat-container-bg: white;
@@ -41,7 +41,7 @@ html.dark {
   --card-border: #2c3034;
   --link-color: var(--primary-accent);
   --code-bg: #2c3034;
-  
+
   /* Chat specific dark mode variables */
   --chat-bg: #374151;
   --chat-container-bg: #374151;
@@ -137,7 +137,7 @@ html.dark body {
   .main-content-area {
     background-color: white !important;
   }
-  
+
   .dark .chat-area,
   .dark .main-content-area {
     background-color: #374151 !important;
@@ -161,18 +161,20 @@ html.dark body {
     margin-right: 0 !important;
     box-shadow: none !important;
   }
-  
+
   .main-content-area {
     border-left: none !important;
     margin-left: 0 !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
   }
-  
+
   /* Ensure seamless connection */
   .sidebar-container + .main-content-area {
     border-left: none !important;
   }
-  
+
   /* Ensure no gaps between components */
   .flex.h-screen {
     gap: 0 !important;
@@ -219,7 +221,6 @@ html.dark body {
   /* padding: 0;
   margin: 0; */
 }
-
 
 a {
   color: inherit;
@@ -616,7 +617,7 @@ html.dark .error-boundary details {
 
 /* Enhanced chat window styling for better visibility */
 .chat-window-container {
-  box-shadow: 
+  box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.25),
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 0 0 1px rgba(0, 0, 0, 0.05);
@@ -624,7 +625,7 @@ html.dark .error-boundary details {
 }
 
 .dark .chat-window-container {
-  box-shadow: 
+  box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.5),
     0 10px 25px -5px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1);

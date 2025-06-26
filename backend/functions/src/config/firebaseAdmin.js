@@ -1,6 +1,6 @@
 // src/config/firebaseAdmin.js
-import {admin} from "firebase-admin";
-import {readFileSync} from "fs";
+import { admin } from "firebase-admin";
+import { readFileSync } from "fs";
 
 // const serviceAccount = require(
 //   process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH
@@ -18,8 +18,10 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 // Connect to Firestore emulator when running locally
-if (process.env.FUNCTIONS_EMULATOR === "true" ||
-    process.env.NODE_ENV === "development") {
+if (
+  process.env.FUNCTIONS_EMULATOR === "true" ||
+  process.env.NODE_ENV === "development"
+) {
   db.settings({
     host: "localhost:8080",
     ssl: false,

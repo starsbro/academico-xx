@@ -1,4 +1,4 @@
-import {onRequest} from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 
 // Serve Next.js app
 export const nextjsApp = onRequest(
@@ -26,5 +26,5 @@ export const nextjsApp = onRequest(
         </body>
       </html>
     `);
-  }
+  },
 );
