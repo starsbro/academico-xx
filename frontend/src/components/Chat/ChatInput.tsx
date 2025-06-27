@@ -1,7 +1,6 @@
 // Chat Input Component
 
 import React from 'react';
-import { Input } from '../../app/components/ui/input';
 import { ChatMessage } from '../../types/chat.types';
 
 interface ChatInputProps {
@@ -24,18 +23,24 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   selectedChatId,
 }) => {
   return (
-    <div className="border-t border-gray-200 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/30 dark:border-gray-700 rounded-b-3xl shadow-lg chat-input-spacing">
-      <div className="py-16 px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            <Input
-              placeholder="I am thinking about..."
-              className="pr-24 h-20 text-3xl w-full py-6 px-6"
-              value={currentMessage || ''}
-              onChange={(e) => onMessageChange(e.target.value)}
-              onKeyDown={onKeyPress}
-              disabled={!isSignedIn}
-            />
+    <div
+      className="border-t border-gray-200 dark:border-gray-700 rounded-b-3xl shadow-lg overflow-visible"
+      style={{ backgroundColor: 'var(--chat-container-bg)' }}
+    >
+      <div className="py-0 px-0 overflow-visible">
+        <div className="max-w-4xl mx-auto overflow-visible">
+          <div className="relative overflow-visible p-0 m-0">
+            <div className="chat-input-padding p-0 m-0 overflow-visible">
+              <input
+                type="text"
+                placeholder="I am thinking about..."
+                className="relative z-50 pr-24 h-20 text-3xl w-full py-6 px-6 bg-white dark:bg-gray-800 text-black dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400 border-2 border-solid border-blue-500 dark:border-blue-400 rounded-xl shadow-2xl focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600 focus:outline-none my-4"
+                value={currentMessage || ''}
+                onChange={(e) => onMessageChange(e.target.value)}
+                onKeyDown={onKeyPress}
+                disabled={!isSignedIn}
+              />
+            </div>
             <button
               className={`
                 absolute right-4 top-1/2 -translate-y-1/2 

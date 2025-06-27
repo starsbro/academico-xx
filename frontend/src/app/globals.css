@@ -98,6 +98,46 @@ html.dark body {
   background-color: #374151 !important;
 }
 
+/* Force chat input border to always show in all themes */
+.main-content-area input[type="text"] {
+  border: 2px solid #3b82f6 !important; /* Tailwind blue-500 */
+  border-radius: 2.5rem !important; /* Larger border radius */
+  background: #fff !important;
+  margin-bottom: 16px !important;
+  padding-left: 2.5rem !important; /* More left space for text and placeholder */
+  font-size: 1.875rem !important; /* 30px, matches text-3xl */
+}
+
+.main-content-area input[type="text"]::placeholder {
+  font-size: 2rem !important; /* Larger placeholder */
+  color: #9ca3af !important; /* Tailwind gray-400 */
+  opacity: 1;
+  padding-left: 0.25rem; /* Extra left space for placeholder */
+}
+
+.dark .main-content-area input[type="text"] {
+  border: 2px solid #60a5fa !important; /* Tailwind blue-400 */
+  background: #374151 !important; /* Tailwind gray-800 */
+  color: #f3f4f6 !important; /* Tailwind gray-100 */
+  border-radius: 2.5rem !important; /* Larger border radius */
+  margin-bottom: 16px !important;
+  padding-left: 2.5rem !important;
+  font-size: 1.875rem !important;
+}
+
+.dark .main-content-area input[type="text"]::placeholder {
+  font-size: 2rem !important;
+  color: #9ca3af !important;
+  opacity: 1;
+  padding-left: 0.25rem;
+}
+
+/* Add horizontal padding to the input wrapper for proper spacing */
+.main-content-area .chat-input-padding {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 /* Improved chat area scrolling */
 .chat-area {
   scroll-behavior: smooth;

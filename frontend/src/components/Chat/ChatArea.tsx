@@ -90,13 +90,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
 
   return (
     <div
-      className="h-full overflow-y-auto pl-6 pr-4 py-6 chat-area"
+      className="h-full overflow-y-auto pl-6 pr-4 pt-12 pb-6 chat-area"
       style={{
         backgroundColor: 'var(--chat-bg, white)',
         minHeight: '100%',
       }}
     >
       <div className="max-w-4xl mx-auto pr-2">
+        <div className="h-8" />
         {chatHistory.map((chat) => (
           <div
             key={chat.id}
