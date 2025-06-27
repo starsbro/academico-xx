@@ -44,6 +44,10 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
+      - name: Run Prettier check (frontend)
+        working-directory: ./frontend
+        run: npx prettier --check "src/**/*.{ts,tsx,js,jsx,json,css,md}"
+
       - name: Install backend dependencies
         working-directory: ./backend/functions
         run: npm ci

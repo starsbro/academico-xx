@@ -99,7 +99,7 @@ html.dark body {
 }
 
 /* Force chat input border to always show in all themes */
-.main-content-area input[type="text"] {
+.main-content-area input[type='text'] {
   border: 2px solid #3b82f6 !important; /* Tailwind blue-500 */
   border-radius: 2.5rem !important; /* Larger border radius */
   background: #fff !important;
@@ -108,14 +108,14 @@ html.dark body {
   font-size: 1.875rem !important; /* 30px, matches text-3xl */
 }
 
-.main-content-area input[type="text"]::placeholder {
+.main-content-area input[type='text']::placeholder {
   font-size: 2rem !important; /* Larger placeholder */
   color: #9ca3af !important; /* Tailwind gray-400 */
   opacity: 1;
   padding-left: 0.25rem; /* Extra left space for placeholder */
 }
 
-.dark .main-content-area input[type="text"] {
+.dark .main-content-area input[type='text'] {
   border: 2px solid #60a5fa !important; /* Tailwind blue-400 */
   background: #374151 !important; /* Tailwind gray-800 */
   color: #f3f4f6 !important; /* Tailwind gray-100 */
@@ -125,7 +125,7 @@ html.dark body {
   font-size: 1.875rem !important;
 }
 
-.dark .main-content-area input[type="text"]::placeholder {
+.dark .main-content-area input[type='text']::placeholder {
   font-size: 2rem !important;
   color: #9ca3af !important;
   opacity: 1;
