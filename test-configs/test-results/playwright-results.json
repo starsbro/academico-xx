@@ -127,21 +127,2262 @@
       "command": "cd frontend && npm run dev",
       "url": "http://localhost:3000",
       "reuseExistingServer": true,
-      "timeout": 120000
+      "timeout": 120000,
+      "cwd": "/Users/xingxingxiao/Documents/GitHub/academico-ai"
     }
   },
-  "suites": [],
-  "errors": [
+  "suites": [
     {
-      "message": "Error: Process from config.webServer was not able to start. Exit code: 1",
-      "stack": "Error: Process from config.webServer was not able to start. Exit code: 1"
+      "title": "auth/auth.test.ts",
+      "file": "auth/auth.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Sign In Flow",
+          "file": "auth/auth.test.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-25810f2e88b4956d40d0",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-774d56785e3ae64d547f",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-cfc0f9a1d7757c728945",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-f7d88a5d691ea1155337",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-a7a89034ec837ad9ded5",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-22ee64fe923ca58895c5",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-7992c9fabd5a6eb66476",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-e2898f4ee56995fbacb6",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-41a8ed39d6ebdc7ba506",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-9cacc3cf477009dc10c9",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth/signin-flow.spec.ts",
+      "file": "auth/signin-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication Flow",
+          "file": "auth/signin-flow.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display sign-in page correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-5ff093904236d9bfd1e9",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-16918d2d269e6b394364",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should allow typing in form fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-4aadcfefa1913fbe9f89",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in page correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-68c55882a8554ab896ca",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-1e7ed919f37947cd07aa",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should allow typing in form fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-3e1d28d11f4007640bc1",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in page correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-c36f7652e82e2307ed51",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-be3617ec5eb7cdb5dff3",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should allow typing in form fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-1d30b027b6cf3c0a0c12",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in page correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-3077b01fa1e31bb34c9f",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-0963cf81fbedd73d1845",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should allow typing in form fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-243401a1bc24d391aa7c",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should display sign-in page correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-17674c5e8b3814c4fcdb",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should validate required fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-5cdf1ed377c5e8148406",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "should allow typing in form fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "d453cf8fc5cf10be7335-ba3d98d4e13f1cea2895",
+              "file": "auth/signin-flow.spec.ts",
+              "line": 35,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "chat/chat-debug.spec.ts",
+      "file": "chat/chat-debug.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Chat Interface Debug",
+          "file": "chat/chat-debug.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "debug chat page loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-c80bd389f9a7f936fc3c",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "check if page redirects or requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-e08476fe8937d8930ee9",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "debug chat page loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-208270c6522d61b5c37d",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "check if page redirects or requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-eb3b1ab7e2ddb80639da",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "debug chat page loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-e4cbbc26ba07e34ebf5b",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "check if page redirects or requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-233d3f39658dfbe1a306",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "debug chat page loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-0dbac0ce907d2dfdc1e2",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "check if page redirects or requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-57441b3a91b9c2e99d10",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 42,
+              "column": 7
+            },
+            {
+              "title": "debug chat page loading",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-7464981c4d2a0734113a",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "check if page redirects or requires auth",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "bde629b017cbca1f9c5d-56a0b4396e78234b2347",
+              "file": "chat/chat-debug.spec.ts",
+              "line": 42,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "chat/chat-protected.spec.ts",
+      "file": "chat/chat-protected.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Chat Page Protection",
+          "file": "chat/chat-protected.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7238ba1943715a0989b9",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-897be714f4743b647bd8",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7ca2482c8e386177bf60",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-c162f3eab7f539baceab",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-a40420deba3723631d00",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-42c1073f1de5ace6f6bb",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-7feb5f6426806c72bba8",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-e5a81ede5ac6a599a493",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            },
+            {
+              "title": "should redirect unauthenticated users to sign-in",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-f546ce9f41aed121e14d",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should redirect other protected routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "0ed5f6fcd080decae654-002d4d64485f6e6b09e7",
+              "file": "chat/chat-protected.spec.ts",
+              "line": 19,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "chat/chat.test.ts",
+      "file": "chat/chat.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Academic Chat Interface",
+          "file": "chat/chat.test.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "when authenticated",
+              "file": "chat/chat.test.ts",
+              "line": 5,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "should display chat interface correctly",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-f2a8e917b04df2f01872",
+                  "file": "chat/chat.test.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "should allow typing in chat input",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-45daa1ccac9bc05f7f34",
+                  "file": "chat/chat.test.ts",
+                  "line": 37,
+                  "column": 9
+                },
+                {
+                  "title": "should enable submit button when text is entered",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-be4d4ded91ce8c9e5e2c",
+                  "file": "chat/chat.test.ts",
+                  "line": 55,
+                  "column": 9
+                },
+                {
+                  "title": "should handle form submission",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-2ded86633ed7abd13aaa",
+                  "file": "chat/chat.test.ts",
+                  "line": 77,
+                  "column": 9
+                },
+                {
+                  "title": "should display chat interface correctly",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-d0c78113109ef23192a2",
+                  "file": "chat/chat.test.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "should allow typing in chat input",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-76e7029e51519334db28",
+                  "file": "chat/chat.test.ts",
+                  "line": 37,
+                  "column": 9
+                },
+                {
+                  "title": "should enable submit button when text is entered",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-723eb23eefd42a642d64",
+                  "file": "chat/chat.test.ts",
+                  "line": 55,
+                  "column": 9
+                },
+                {
+                  "title": "should handle form submission",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-d69de81c06c42e50c32b",
+                  "file": "chat/chat.test.ts",
+                  "line": 77,
+                  "column": 9
+                },
+                {
+                  "title": "should display chat interface correctly",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-699d9569a04e4c4500f0",
+                  "file": "chat/chat.test.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "should allow typing in chat input",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-66c58cef527442aa5180",
+                  "file": "chat/chat.test.ts",
+                  "line": 37,
+                  "column": 9
+                },
+                {
+                  "title": "should enable submit button when text is entered",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-409d343b01921bb74c91",
+                  "file": "chat/chat.test.ts",
+                  "line": 55,
+                  "column": 9
+                },
+                {
+                  "title": "should handle form submission",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-1e82b9d703806f2bd246",
+                  "file": "chat/chat.test.ts",
+                  "line": 77,
+                  "column": 9
+                },
+                {
+                  "title": "should display chat interface correctly",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-e90fb3cf4e1b3ab6888c",
+                  "file": "chat/chat.test.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "should allow typing in chat input",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-6d95a44bf4eaaccfe2ed",
+                  "file": "chat/chat.test.ts",
+                  "line": 37,
+                  "column": 9
+                },
+                {
+                  "title": "should enable submit button when text is entered",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-f18f35461ec44766aa6a",
+                  "file": "chat/chat.test.ts",
+                  "line": 55,
+                  "column": 9
+                },
+                {
+                  "title": "should handle form submission",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-ad933a98a355d7d054f1",
+                  "file": "chat/chat.test.ts",
+                  "line": 77,
+                  "column": 9
+                },
+                {
+                  "title": "should display chat interface correctly",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-c379af0fafd9600b5bf7",
+                  "file": "chat/chat.test.ts",
+                  "line": 17,
+                  "column": 9
+                },
+                {
+                  "title": "should allow typing in chat input",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-e85e259d71f30cb72862",
+                  "file": "chat/chat.test.ts",
+                  "line": 37,
+                  "column": 9
+                },
+                {
+                  "title": "should enable submit button when text is entered",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-512a2f5a3f7a259f0a7a",
+                  "file": "chat/chat.test.ts",
+                  "line": 55,
+                  "column": 9
+                },
+                {
+                  "title": "should handle form submission",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-ef50122748f2c62b12c5",
+                  "file": "chat/chat.test.ts",
+                  "line": 77,
+                  "column": 9
+                }
+              ]
+            },
+            {
+              "title": "when not authenticated",
+              "file": "chat/chat.test.ts",
+              "line": 103,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "should redirect to sign-in page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-23f4f59073f961c72f86",
+                  "file": "chat/chat.test.ts",
+                  "line": 104,
+                  "column": 9
+                },
+                {
+                  "title": "should redirect to sign-in page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "firefox",
+                      "projectName": "firefox",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-cd1221f6be2bf1ea716c",
+                  "file": "chat/chat.test.ts",
+                  "line": 104,
+                  "column": 9
+                },
+                {
+                  "title": "should redirect to sign-in page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "webkit",
+                      "projectName": "webkit",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-004ddf4800bafd6734e4",
+                  "file": "chat/chat.test.ts",
+                  "line": 104,
+                  "column": 9
+                },
+                {
+                  "title": "should redirect to sign-in page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Chrome",
+                      "projectName": "Mobile Chrome",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-032a8cf86ff45f137a8e",
+                  "file": "chat/chat.test.ts",
+                  "line": 104,
+                  "column": 9
+                },
+                {
+                  "title": "should redirect to sign-in page",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "Mobile Safari",
+                      "projectName": "Mobile Safari",
+                      "results": [],
+                      "status": "skipped"
+                    }
+                  ],
+                  "id": "3e8a15bdc6a17771538f-d13267900d354201be01",
+                  "file": "chat/chat.test.ts",
+                  "line": 104,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "core/app-health.spec.ts",
+      "file": "core/app-health.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Application Health Checks",
+          "file": "core/app-health.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should load homepage without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-a71889dfa53d8b94fc27",
+              "file": "core/app-health.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-50987f2c25064d0bd461",
+              "file": "core/app-health.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "should respond within reasonable time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-5b2ec403d8f9b6aa0e88",
+              "file": "core/app-health.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should not have console errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-58b36b8341415bc6507e",
+              "file": "core/app-health.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "should load homepage without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-1ca05f954a82809f8425",
+              "file": "core/app-health.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-111b733e76b663454188",
+              "file": "core/app-health.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "should respond within reasonable time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-b8a34a490c22063f2de5",
+              "file": "core/app-health.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should not have console errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-201a0878dbe94cad22cb",
+              "file": "core/app-health.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "should load homepage without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-370d27101e8aef967cc7",
+              "file": "core/app-health.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-bf0070fc840173a9cc5e",
+              "file": "core/app-health.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "should respond within reasonable time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-7e17f61d74793fa9993c",
+              "file": "core/app-health.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should not have console errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-0b0cc8c39128601cd846",
+              "file": "core/app-health.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "should load homepage without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-57604ad43990a52ccff2",
+              "file": "core/app-health.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-2d3fc3a2272c98268f70",
+              "file": "core/app-health.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "should respond within reasonable time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-513ef4a0308cca5cf712",
+              "file": "core/app-health.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should not have console errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-853fdee44788a680feac",
+              "file": "core/app-health.spec.ts",
+              "line": 49,
+              "column": 7
+            },
+            {
+              "title": "should load homepage without errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-f1b12a7d989aa17693b1",
+              "file": "core/app-health.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should have proper meta tags",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-48c1aa444c644bb85c56",
+              "file": "core/app-health.spec.ts",
+              "line": 21,
+              "column": 7
+            },
+            {
+              "title": "should respond within reasonable time",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-04c8757ca42036ea94f5",
+              "file": "core/app-health.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "should not have console errors",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "cc1ff4cb0b8636e56a87-9eb528113c0b91b225d0",
+              "file": "core/app-health.spec.ts",
+              "line": 49,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "core/navigation.spec.ts",
+      "file": "core/navigation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Navigation Tests",
+          "file": "core/navigation.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should navigate to sign in page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-f08430b7f154c64b5131",
+              "file": "core/navigation.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign up page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-facc14bbb2d3286c2cc0",
+              "file": "core/navigation.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign in page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-bad1da2dc5690375030b",
+              "file": "core/navigation.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign up page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-ee37cb209258d3d682e6",
+              "file": "core/navigation.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign in page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-3ba94090b0b05632819f",
+              "file": "core/navigation.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign up page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-2a87e301e99dff654626",
+              "file": "core/navigation.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign in page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-f48be0f313a8af8dd34b",
+              "file": "core/navigation.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign up page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-d1acec7373ea1f9e9ff4",
+              "file": "core/navigation.spec.ts",
+              "line": 23,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign in page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-002f267f6ae36fc00582",
+              "file": "core/navigation.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should navigate to sign up page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "9f1ee4e2ceca4af00083-ffc67e58f9933ff8e7b8",
+              "file": "core/navigation.spec.ts",
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "smoke.test.ts",
+      "file": "smoke.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "simple smoke test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a239ced0e52b6754d8b-b371774f0c725a393624",
+          "file": "smoke.test.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "simple smoke test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a239ced0e52b6754d8b-c855712215e6fc926d01",
+          "file": "smoke.test.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "simple smoke test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a239ced0e52b6754d8b-4834b36a002d5aedb16e",
+          "file": "smoke.test.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "simple smoke test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a239ced0e52b6754d8b-e4506fb3c1e00a1008c2",
+          "file": "smoke.test.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "simple smoke test",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "4a239ced0e52b6754d8b-647f48c2f79a72cc7439",
+          "file": "smoke.test.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
     }
   ],
+  "errors": [],
   "stats": {
-    "startTime": "2025-06-22T03:28:05.464Z",
-    "duration": 335.46199999999993,
+    "startTime": "2025-06-24T16:26:08.550Z",
+    "duration": 142.43199999999996,
     "expected": 0,
-    "skipped": 0,
+    "skipped": 105,
     "unexpected": 0,
     "flaky": 0
   }

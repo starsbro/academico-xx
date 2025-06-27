@@ -1,0 +1,26 @@
+{
+  "extends": "../frontend/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../frontend/src/*"],
+      "@/components/*": ["../frontend/src/app/components/*"],
+      "@/utils/*": ["../frontend/src/app/utils/*"],
+      "@/hooks/*": ["../frontend/src/app/hooks/*"],
+      "@/contexts/*": ["../frontend/src/contexts/*"],
+      "@/lib/*": ["../frontend/src/lib/*"],
+      "@/app/*": ["../frontend/src/app/*"]
+    },
+    "types": ["jest", "@testing-library/jest-dom"],
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "../frontend/src/**/*.ts",
+    "../frontend/src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

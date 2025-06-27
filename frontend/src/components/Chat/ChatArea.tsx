@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ChatMessage } from '../../types/chat.types';
-import styles from './ChatArea.module.css';
 
 interface ChatAreaProps {
   chatHistory: ChatMessage[];
@@ -90,72 +89,92 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   }
 
   return (
-    <div className={styles.chatContainer}>
-      <div className={styles.chatWrapper}>
+    <div
+      className="h-full overflow-y-auto pl-6 pr-4 pt-12 pb-6 chat-area"
+      style={{
+        backgroundColor: 'var(--chat-bg, white)',
+        minHeight: '100%',
+      }}
+    >
+      <div className="max-w-4xl mx-auto pr-2">
+        <div className="h-8" />
         {chatHistory.map((chat) => (
           <div
             key={chat.id}
-            className={`${styles.messageContainer} ${
-              chat.userId === userId ? styles.messageContainerEnd : styles.messageContainerStart
-            }`}
+            className={`chat-message-container flex mb-6 ml-4 ${chat.userId === userId ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`${styles.messageBubble} ${
-                chat.userId === userId ? styles.messageBubbleUser : styles.messageBubbleAI
+              className={`max-w-2xl rounded-2xl shadow-lg ${
+                chat.userId === userId
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white'
               }`}
             >
-              <div className={styles.messageContent}>
-                {chat.userId !== userId && (
-                  <div className={`${styles.avatar} ${styles.avatarAI}`}>
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      />
-                    </svg>
-                  </div>
-                )}
-                <div className={styles.messageText}>
-                  <div className={styles.messageHeader}>
+              <div className="p-8">
+                {/* Header with user label and avatar */}
+                <div className="flex items-center justify-between mb-6" style={{ paddingRight: '6px' }}>
+                  <div className="flex items-center gap-3">
+                    {chat.userId !== userId && (
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                          />
+                        </svg>
+                      </div>
+                    )}
                     <span
-                      className={`text-xs font-semibold uppercase tracking-wide ${
-                        chat.userId === userId ? 'text-blue-100' : 'text-gray-500'
+                      className={`text-sm font-semibold uppercase tracking-wide ${
+                        chat.userId === userId ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'
                       }`}
+                      style={{ marginLeft: '6px', paddingLeft: '6px' }}
                     >
                       {chat.userId === userId ? 'You' : 'Academico AI'}
                     </span>
                   </div>
-                  <div className={styles.messageBody}>{chat.message}</div>
+                  {chat.userId === userId && (
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                        />
+                      </svg>
+                    </div>
+                  )}
                 </div>
-                {chat.userId === userId && (
-                  <div className={`${styles.avatar} ${styles.avatarUser}`}>
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </div>
 
-              <div
-                className={`${styles.messageFooter} ${
-                  chat.userId === userId ? styles.messageFooterUser : styles.messageFooterAI
-                }`}
-              >
-                <span className={`text-xs ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400'}`}>
-                  {new Date(chat.timestamp).toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-                </span>
+                {/* Message content with generous padding */}
+                <div
+                  className="text-lg leading-relaxed whitespace-pre-wrap mb-6"
+                  style={{ marginLeft: '6px', paddingLeft: '6px', paddingRight: '6px' }}
+                >
+                  {chat.message}
+                </div>
+
+                {/* Timestamp */}
+                <div
+                  className={`flex justify-end pt-4 border-t ${
+                    chat.userId === userId ? 'border-blue-400/30' : 'border-gray-200 dark:border-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`text-sm ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400 dark:text-gray-500'}`}
+                    style={{ marginRight: '6px', paddingRight: '6px' }}
+                  >
+                    {new Date(chat.timestamp).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

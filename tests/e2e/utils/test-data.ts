@@ -27,7 +27,6 @@ export const TEST_URLS = {
   home: '/',
   signIn: '/auth/signin',
   signUp: '/auth/signup',
-  dashboard: '/dashboard',
   academicChat: '/academic-chat',
 } as const;
 
@@ -41,7 +40,6 @@ export const SELECTORS = {
   // Navigation selectors
   userButton: '[data-testid="user-button"]',
   homeLink: 'text=Home',
-  dashboardLink: 'text=Dashboard',
   chatLink: 'text=Academic Chat',
 
   // Chat selectors
@@ -62,7 +60,6 @@ export const TEST_CONFIG = {
     home: '/',
     signIn: '/sign-in',
     signUp: '/sign-up',
-    dashboard: '/dashboard',
     academicChat: '/academic-chat',
   },
 

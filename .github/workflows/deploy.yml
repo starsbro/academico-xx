@@ -95,6 +95,8 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env.local
+          echo "NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false" >> .env.local
+          echo "NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app" >> .env.local
 
       - name: Build Frontend
         working-directory: ./frontend
@@ -147,6 +149,8 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env.local
+          echo "NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false" >> .env.local
+          echo "NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app" >> .env.local
 
       - name: Build Frontend (for deployment)
         working-directory: ./frontend
@@ -196,6 +200,8 @@ jobs:
           echo "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}" >> .env.local
           echo "NEXT_PUBLIC_FIREBASE_APP_ID=${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}" >> .env.local
+          echo "NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false" >> .env.local
+          echo "NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app" >> .env.local
 
       - name: Build Frontend (for preview)
         working-directory: ./frontend

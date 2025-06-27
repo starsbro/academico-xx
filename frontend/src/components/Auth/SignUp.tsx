@@ -5,7 +5,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, User, Sparkles, UserPlus } from 'lucide-react';
-import styles from './SignUp.module.css';
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -88,14 +87,13 @@ const SignUp: React.FC = () => {
           )}
 
           {/* Sign up form */}
-          <div className={`space-y-8 px-4 sm:px-8 ${styles.formContainer}`} style={{ gap: '0.5rem' }}>
-            <form onSubmit={handleSubmit} className={`space-y-8 ${styles.formContent}`} style={{ gap: '0.5rem' }}>
+          <div className="space-y-8 px-4 sm:px-8 flex flex-col gap-2">
+            <form onSubmit={handleSubmit} className="space-y-8 flex flex-col gap-2">
               {/* Display Name field */}
-              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '0.5rem' }}>
+              <div className="space-y-3 flex flex-col gap-3 mb-2">
                 <label
                   htmlFor="displayName"
-                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
-                  style={{ marginBottom: '0.5rem' }}
+                  className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3"
                 >
                   Display Name (optional)
                 </label>
@@ -118,12 +116,8 @@ const SignUp: React.FC = () => {
               </div>
 
               {/* Email field */}
-              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '0.5rem' }}>
-                <label
-                  htmlFor="email"
-                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
-                  style={{ marginBottom: '0.5rem' }}
-                >
+              <div className="space-y-3 flex flex-col gap-3 mb-2">
+                <label htmlFor="email" className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3">
                   Email address
                 </label>
                 <div className="relative">
@@ -146,12 +140,8 @@ const SignUp: React.FC = () => {
               </div>
 
               {/* Password field */}
-              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '0.5rem' }}>
-                <label
-                  htmlFor="password"
-                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
-                  style={{ marginBottom: '0.5rem' }}
-                >
+              <div className="space-y-3 flex flex-col gap-3 mb-2">
+                <label htmlFor="password" className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3">
                   Password
                 </label>
                 <div className="relative">
@@ -185,11 +175,10 @@ const SignUp: React.FC = () => {
               </div>
 
               {/* Confirm Password field */}
-              <div className={`space-y-3 ${styles.fieldGroup}`} style={{ marginBottom: '2rem' }}>
+              <div className="space-y-3 flex flex-col gap-3 mb-2">
                 <label
                   htmlFor="confirmPassword"
-                  className={`text-lg font-medium text-gray-700 dark:text-gray-300 block ${styles.fieldLabel}`}
-                  style={{ marginBottom: '0.5rem' }}
+                  className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3"
                 >
                   Confirm Password
                 </label>
@@ -224,10 +213,7 @@ const SignUp: React.FC = () => {
               </div>
 
               {/* Create account button */}
-              <div
-                className={`flex justify-center pt-8 ${styles.buttonContainer}`}
-                style={{ marginTop: '0.5rem', marginBottom: '0.5rem' }}
-              >
+              <div className="flex justify-center pt-2 mt-2 mb-2">
                 <button
                   type="submit"
                   disabled={loading}
@@ -251,7 +237,7 @@ const SignUp: React.FC = () => {
             </form>
 
             {/* Divider */}
-            <div className={`relative my-10 ${styles.dividerContainer}`} style={{ margin: '1rem 0' }}>
+            <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200 dark:border-gray-600"></div>
               </div>
@@ -292,7 +278,7 @@ const SignUp: React.FC = () => {
           </div>
 
           {/* Sign in link */}
-          <div className={`mt-5 text-center ${styles.signInContainer}`}>
+          <div className="mt-10 text-center">
             <p className="text-lg text-gray-600 dark:text-gray-400" style={{ padding: '1rem 0' }}>
               Already have an account?{' '}
               <Link
@@ -306,7 +292,7 @@ const SignUp: React.FC = () => {
         </div>
 
         {/* Footer text */}
-        <div className={`mt-10 text-center ${styles.footerContainer}`}>
+        <div className="mt-10 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1">
             <Sparkles className="w-3 h-3" />
             Powered by Academico AI

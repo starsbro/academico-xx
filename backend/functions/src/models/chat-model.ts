@@ -19,12 +19,15 @@ interface UserChat {
  */
 export async function createChat(
   userId: string,
-  title: string
+  title: string,
 ): Promise<admin.firestore.DocumentReference> {
   const db = admin.firestore();
 
-  const chatRef = await db.collection("users").doc(userId)
-    .collection("chats").add({
+  const chatRef = await db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .add({
       title: title,
       createdAt: FieldValue.serverTimestamp(),
       lastUpdatedAt: FieldValue.serverTimestamp(),
@@ -42,14 +45,21 @@ export async function createChat(
  * @param {string} data.lastUpdatedAt the last time of updating a chat
  *
  */
-export async function updateChat(userId: string, chatId: string, data: {
+export async function updateChat(
+  userId: string,
+  chatId: string,
+  data: {
     title?: string;
-    lastUpdatedAt?: admin.firestore.FieldValue
-}): Promise<void> {
+    lastUpdatedAt?: admin.firestore.FieldValue;
+  },
+): Promise<void> {
   const db = admin.firestore();
 
-  const chatRef = db.collection("users").doc(userId)
-    .collection("chats").doc(chatId);
+  const chatRef = db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .doc(chatId);
   await chatRef.update(data);
 }
 
@@ -61,8 +71,11 @@ export async function updateChat(userId: string, chatId: string, data: {
 export async function getChatsByUserId(userId: string): Promise<UserChat[]> {
   const db = admin.firestore();
 
-  const chatsRef = db.collection("users").doc(userId)
-    .collection("chats").orderBy("lastUpdatedAt", "desc");
+  const chatsRef = db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .orderBy("lastUpdatedAt", "desc");
   const snapshot = await chatsRef.get();
   const userChats: UserChat[] = [];
   snapshot.forEach((doc) => {
@@ -71,11 +84,13 @@ export async function getChatsByUserId(userId: string): Promise<UserChat[]> {
       id: doc.id,
       title: data.title || "Untitled Chat",
       createdAt: data.createdAt ?
-        (data.createdAt as admin.firestore
-        .Timestamp).toDate().toISOString() : new Date().toISOString(),
+        (data.createdAt as admin.firestore.Timestamp).toDate().toISOString() :
+        new Date().toISOString(),
       lastUpdatedAt: data.lastUpdatedAt ?
-        (data.lastUpdatedAt as admin.firestore
-        .Timestamp).toDate().toISOString() : new Date().toISOString(),
+        (data.lastUpdatedAt as admin.firestore.Timestamp)
+          .toDate()
+          .toISOString() :
+        new Date().toISOString(),
     });
   });
   return userChats;

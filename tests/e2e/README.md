@@ -7,14 +7,15 @@ This document provides a comprehensive review of the Academico AI frontend E2E t
 ## 🏗️ Test Structure
 
 ```
-frontend/e2e/
+tests/e2e/
 ├── auth/                 # Authentication-related tests
 ├── chat/                 # Chat functionality tests
 ├── core/                 # Core app functionality tests
-├── dashboard/            # Dashboard-specific tests (empty)
+├── dashboard/            # Dashboard-specific tests
 ├── fixtures/             # Test fixtures and mock data (empty)
 ├── routing/              # Navigation and routing tests (empty)
 ├── utils/                # Test utilities and helpers
+├── visual/               # Visual regression tests
 └── smoke.test.ts         # Basic smoke test
 ```
 
@@ -65,7 +66,7 @@ frontend/e2e/
 
 ### **Comprehensive Helper System**
 
-Located in `frontend/e2e/utils/`:
+Located in `tests/e2e/utils/`:
 
 | File | Purpose |
 |------|---------|

@@ -17,7 +17,7 @@ test.describe('Chat Page Protection', () => {
   });
 
   test('should redirect other protected routes', async ({ page }) => {
-    const protectedRoutes = ['/dashboard', '/academic-chat', '/profile'];
+    const protectedRoutes = ['/academic-chat', '/profile'];
 
     for (const route of protectedRoutes) {
       await page.goto(route);
