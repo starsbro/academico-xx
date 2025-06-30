@@ -34,7 +34,7 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
       connectFirestoreEmulator(db, 'localhost', 8080);
     } catch {
       // Emulators already connected or not available
-      console.log('Firebase emulators already connected');
+      // console.log('Firebase emulators already connected');
     }
   }
 }

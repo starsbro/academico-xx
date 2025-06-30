@@ -24,12 +24,17 @@ interface ChatMessage {
 export async function addMessageToChat(
   userId: string,
   chatId: string,
-  messageData: {userId: string; message: string; timestamp: string}
-) : Promise<admin.firestore.DocumentReference> {
+  messageData: { userId: string; message: string; timestamp: string },
+): Promise<admin.firestore.DocumentReference> {
   const db = admin.firestore();
 
-  const newMessageRef = await db.collection("users").doc(userId)
-    .collection("chats").doc(chatId).collection("messages").add({
+  const newMessageRef = await db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .doc(chatId)
+    .collection("messages")
+    .add({
       userId: messageData.userId,
       message: messageData.message,
       timestamp: FieldValue.serverTimestamp(),
@@ -45,12 +50,16 @@ export async function addMessageToChat(
  */
 export async function getMessagesByChatId(
   userId: string,
-  chatId: string
-) : Promise<ChatMessage[]> {
+  chatId: string,
+): Promise<ChatMessage[]> {
   const db = admin.firestore();
 
-  const messagesRef = db.collection("users").doc(userId)
-    .collection("chats").doc(chatId).collection("messages")
+  const messagesRef = db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .doc(chatId)
+    .collection("messages")
     .orderBy("timestamp", "asc");
   const snapshot = await messagesRef.get();
   const chatMessages: ChatMessage[] = [];

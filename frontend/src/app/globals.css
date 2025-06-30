@@ -3,9 +3,19 @@
 @import 'tailwindcss/utilities';
 @tailwind utilities;
 
+/* OVERRIDE Tailwind Preflight for form controls */
+button,
+input,
+select,
+optgroup,
+textarea,
+::file-selector-button {
+  border-radius: 0.75rem; /* Example: 12px, or use your preferred value */
+}
+
 :root {
   /* Global Theme Variables (Light Mode is default) */
-  --page-bg: #f0f4f8;
+  --page-bg: #e2e8f0;
   --page-bg-gradient-start: #e6f4ff;
   --page-bg-gradient-end: #89b2fa;
   --text-color: #2c3e50;
@@ -16,6 +26,12 @@
   --link-color: var(--primary-accent);
   --code-bg: #e9ecef;
   --spacing: 4px;
+
+  /* Chat specific variables */
+  --chat-bg: white;
+  --chat-container-bg: white;
+  --sidebar-bg-start: #374151;
+  --sidebar-bg-end: #4b5563;
 }
 
 html {
@@ -25,7 +41,7 @@ html {
 html.dark {
   color-scheme: dark;
   /* Dark Mode Theme Overrides */
-  --page-bg: #1a202c;
+  --page-bg: #0f172a;
   --page-bg-gradient-start: #191425;
   --page-bg-gradient-end: #0d1117;
   --text-color: #e2e8f0;
@@ -35,12 +51,35 @@ html.dark {
   --card-border: #2c3034;
   --link-color: var(--primary-accent);
   --code-bg: #2c3034;
+
+  /* Chat specific dark mode variables */
+  --chat-bg: #374151;
+  --chat-container-bg: #374151;
+  --sidebar-bg-start: #1f2937;
+  --sidebar-bg-end: #374151;
 }
 
-body {
-  background-image: linear-gradient(to bottom, var(--page-bg-gradient-start), var(--page-bg-gradient-end));
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+/* Chat Input Spacing */
+.main-content-area .chat-input-spacing {
+  margin-left: 40px;
+}
+
+@media (max-width: 1023px) {
+  .app-root .main-content-area .chat-input-spacing {
+    margin-left: 0;
+  }
+  .app-root .chat-area,
+  .app-root .main-content-area {
+    background-color: white;
+  }
+  .app-root.dark .chat-area,
+  .app-root.dark .main-content-area {
+    background-color: #374151;
+  }
+}
+
+.app-root body {
+  background-color: #e2e8f0;
   color: var(--text-color);
   font-family: var(--font-outfit), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -53,46 +92,233 @@ body {
     color 0.2s ease;
 }
 
-/* Apply dark mode variables to body when html.dark is present */
-html.dark body {
+.app-root.dark body {
+  background-color: #0f172a;
   color: var(--text-color);
 }
 
-.main-content-container {
-  width: 100%;
-  max-width: 70rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  flex-grow: 1; /* Ensure main content can grow */
-  display: flex; /* Added to allow children to flex if needed */
-  flex-direction: column; /* Added for default stacking */
+/* Chat component styling with theme-aware backgrounds */
+.app-root .chat-area {
+  background-color: white;
 }
 
-@media (min-width: 640px) {
-  .main-content-container {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+.app-root.dark .chat-area {
+  background-color: #374151;
+}
+
+/* Main content area styling */
+.app-root .main-content-area {
+  background-color: white;
+}
+
+.app-root.dark .main-content-area {
+  background-color: #374151;
+}
+
+/* Force chat input border to always show in all themes */
+.app-root .main-content-area input[type='text'] {
+  border: 2px solid #3b82f6;
+  border-radius: 2.5rem;
+  background: #fff;
+  margin-bottom: 16px;
+  padding-left: 2.5rem;
+  font-size: 1.875rem;
+}
+
+.app-root .main-content-area input[type='text']::placeholder {
+  font-size: 2rem;
+  color: #9ca3af;
+  opacity: 1;
+  padding-left: 0.25rem;
+}
+
+.app-root.dark .main-content-area input[type='text'] {
+  border: 2px solid #60a5fa;
+  background: #374151;
+  color: #f3f4f6;
+  border-radius: 2.5rem;
+  margin-bottom: 1rem;
+  padding-left: 2.5rem;
+  font-size: 1.875rem;
+}
+
+.app-root.dark .main-content-area input[type='text']::placeholder {
+  font-size: 2rem;
+  color: #9ca3af;
+  opacity: 1;
+  padding-left: 0.25rem;
+}
+
+/* Add horizontal padding to the input wrapper for proper spacing */
+.main-content-area .chat-input-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Improved chat area scrolling */
+.chat-area {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  padding-right: 8px; /* Extra space for scrollbar */
+}
+
+.chat-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.chat-area::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* Make sure the main content area can properly contain the scrollable area */
+.main-content-area {
+  overflow: hidden;
+}
+
+/* Responsive background fixes */
+@media (max-width: 1023px) {
+  .app-root .chat-area,
+  .app-root .main-content-area {
+    background-color: white;
+  }
+
+  .app-root.dark .chat-area,
+  .app-root.dark .main-content-area {
+    background-color: #374151;
   }
 }
 
+/* Ensure consistent sidebar styling */
+.chat-sidebar {
+  background: linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end)) !important;
+}
+
+/* Force sidebar container to use same gradient */
+.sidebar-container {
+  background: linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end)) !important;
+}
+
+/* Eliminate any gaps or lines between sidebar and main content */
 @media (min-width: 1024px) {
-  .main-content-container {
+  .app-root .sidebar-container {
+    border-right: none;
+    margin-right: 0;
+    box-shadow: none;
+  }
+  .app-root .main-content-area {
+    border-left: none;
+    margin-left: 0;
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  /* Ensure seamless connection */
+  .app-root .sidebar-container + .main-content-area {
+    border-left: none;
+  }
+  /* Ensure no gaps between components */
+  .app-root .flex.h-screen {
+    gap: 0;
+  }
+  .app-root .main-content-container {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+  .app-root .chat-window-container {
+    height: calc(100vh - 4rem);
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .app-root .main-content-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .app-root .chat-window-container {
+    height: calc(100vh - 3rem);
+    margin-top: 1.5rem;
   }
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Force navigation link padding to work with higher specificity */
+header nav a {
+  padding: 1rem 2rem;
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+header nav a:hover {
+  background-color: rgb(219 234 254);
+  border-color: rgb(191 219 254);
+  color: rgb(37 99 235);
+}
+
+/* Force chat message spacing with higher specificity */
+.chat-area .chat-message-container {
+  margin-bottom: 2rem;
+}
+
+.chat-area .chat-message-container:last-child {
+  margin-bottom: 0;
+}
+
+/* Force sidebar spacing with higher specificity */
+.chat-sidebar.w-80 .sidebar-header {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-header .header-content {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.chat-sidebar.w-80 .sidebar-header .new-chat-button {
+  margin-top: 1.5rem;
+}
+
+.chat-sidebar.w-80 .sidebar-content {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-content .content-inner {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.chat-sidebar.w-80 .sidebar-footer {
+  padding: 2rem;
+}
+
+.chat-sidebar.w-80 .sidebar-footer button {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* ErrorBoundary Fallback UI Styling */
@@ -111,7 +337,7 @@ a {
   margin: 2rem; /* Add some margin if it's inside another container */
 }
 
-html.dark .error-boundary {
+.app-root.dark .error-boundary {
   background-color: var(--card-bg);
   color: var(--text-color);
   border-color: var(--card-border);
@@ -123,7 +349,7 @@ html.dark .error-boundary {
   color: var(--secondary-accent);
 }
 
-html.dark .error-boundary h2 {
+.app-root.dark .error-boundary h2 {
   color: var(--secondary-accent);
 }
 
@@ -137,7 +363,7 @@ html.dark .error-boundary h2 {
   overflow-x: auto; /* For long error messages */
 }
 
-html.dark .error-boundary details {
+.app-root.dark .error-boundary details {
   background-color: var(--code-bg);
   border-color: var(--card-border);
 }
@@ -399,4 +625,46 @@ html.dark .error-boundary details {
 
 .border-animate {
   animation: border-glow 2s ease-in-out infinite;
+}
+
+/* Additional fix for any potential border artifacts */
+.sidebar-container::after,
+.main-content-area::before {
+  display: none !important;
+}
+
+/* Chat window container with proper height calculation */
+.chat-window-container {
+  height: calc(100vh - 2rem); /* Mobile: subtract more for top space */
+  margin-top: 1rem; /* Add explicit top margin */
+}
+
+@media (min-width: 640px) {
+  .chat-window-container {
+    height: calc(100vh - 3rem); /* Small: subtract more for top space */
+    margin-top: 1.5rem; /* Add more top margin */
+  }
+}
+
+@media (min-width: 1024px) {
+  .chat-window-container {
+    height: calc(100vh - 4rem); /* Large: subtract more for top space */
+    margin-top: 2rem; /* Add even more top margin */
+  }
+}
+
+/* Enhanced chat window styling for better visibility */
+.app-root .chat-window-container {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.app-root.dark .chat-window-container {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 10px 25px -5px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }

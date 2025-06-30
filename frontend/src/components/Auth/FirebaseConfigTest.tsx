@@ -10,15 +10,15 @@ export default function FirebaseConfigTest() {
     const testConfig = async () => {
       try {
         // Check if Firebase is properly initialized
-        console.log('Firebase Auth instance:', auth);
-        console.log('Firebase config:', {
-          apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'Set' : 'Missing',
-          authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-          storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-          messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-          appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? 'Set' : 'Missing',
-        });
+        // console.log('Firebase Auth instance:', auth);
+        // console.log('Firebase config:', {
+        //   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? 'Set' : 'Missing',
+        //   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+        //   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        //   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+        //   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+        //   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID ? 'Set' : 'Missing',
+        // });
 
         // Test if we can access Firebase Auth
         await auth.authStateReady;

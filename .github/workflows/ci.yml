@@ -23,10 +23,9 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  frontend:
-    name: Frontend CI
+  ci:
+    name: CI
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,7 +35,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
 
       - name: Install frontend dependencies
         working-directory: ./frontend
@@ -61,21 +62,6 @@ jobs:
           path: frontend/out/
           retention-days: 7
 
-  backend:
-    name: Backend CI
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: backend/functions/package-lock.json
-
       - name: Install backend dependencies
         working-directory: ./backend/functions
         run: npm ci
@@ -94,3 +80,6 @@ jobs:
           name: backend-build-${{ github.sha }}
           path: backend/functions/lib/
           retention-days: 7
+
+      - name: Run comprehensive validation
+        run: npm run validate

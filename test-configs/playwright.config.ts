@@ -12,9 +12,9 @@ export default defineConfig({
   
   // Comprehensive reporting
   reporter: [
-    ['html', { outputFolder: 'test-results/playwright-report', open: 'never' }],
-    ['json', { outputFile: 'test-results/playwright-results.json' }],
-    ['junit', { outputFile: 'test-results/playwright-results.xml' }],
+    ['html', { outputFolder: 'test-configs/test-results/playwright-report', open: 'never' }],
+    ['json', { outputFile: 'test-configs/test-results/playwright-results.json' }],
+    ['junit', { outputFile: 'test-configs/test-results/playwright-results.xml' }],
     ['line'],
     process.env.CI ? ['github'] : ['list']
   ],
@@ -29,6 +29,9 @@ export default defineConfig({
     actionTimeout: 10000,
     navigationTimeout: 30000,
   },
+
+  // Output directories
+  outputDir: 'test-configs/test-results',
 
   projects: [
     // Desktop browsers

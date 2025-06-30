@@ -26,5 +26,5 @@ export const nextjsApp = onRequest(
         </body>
       </html>
     `);
-  }
+  },
 );
