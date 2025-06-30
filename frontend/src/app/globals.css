@@ -4,7 +4,12 @@
 @tailwind utilities;
 
 /* OVERRIDE Tailwind Preflight for form controls */
-button, input, select, optgroup, textarea, ::file-selector-button {
+button,
+input,
+select,
+optgroup,
+textarea,
+::file-selector-button {
   border-radius: 0.75rem; /* Example: 12px, or use your preferred value */
 }
 
