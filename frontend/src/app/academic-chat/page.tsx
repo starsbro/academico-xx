@@ -83,105 +83,108 @@ function AcademicChatContent() {
         <ThemeToggle />
       </div>
 
-      <div
-        className="flex overflow-hidden relative rounded-3xl chat-window-container border-2 border-gray-200 dark:border-gray-600 shadow-2xl"
-        style={{
-          backgroundColor: 'var(--chat-container-bg, white)',
-          gap: '0px',
-        }}
-      >
-        {/* Mobile sidebar toggle */}
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="fixed top-2 left-2 sm:top-4 sm:left-4 lg:top-6 lg:left-6 z-[1000] lg:hidden bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
-        >
-          {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-
-        {/* Sidebar - Responsive and toggleable */}
+      {/* Center the chat window */}
+      <div className="flex justify-center items-center w-full min-h-[80vh]">
         <div
-          className={`
-          sidebar-container
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          fixed lg:relative z-50 lg:z-auto
-          w-80 h-full 
-          bg-gradient-to-b from-gray-700 to-gray-600 dark:from-gray-800 dark:to-gray-700
-          rounded-none lg:rounded-l-3xl shadow-xl
-          transition-transform duration-300 ease-in-out
-          lg:flex-shrink-0 overflow-hidden
-        `}
-          style={{
-            background: 'linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end))',
-          }}
-        >
-          <ChatSidebar
-            userChats={userChats}
-            selectedChatId={selectedChatId}
-            isLoadingChats={isLoadingChats}
-            editingChatId={editingChatId}
-            newChatTitle={newChatTitle}
-            username={username}
-            onNewChat={handleNewChat}
-            onSelectChat={(chatId) => {
-              handleSelectChat(chatId);
-              // Close sidebar on mobile after selecting a chat
-              if (window.innerWidth < 1024) {
-                setSidebarOpen(false);
-              }
-            }}
-            onEditChatTitle={handleEditChatTitle}
-            onSaveChatTitle={handleSaveChatTitle}
-            onCancelEdit={handleCancelEdit}
-            setNewChatTitle={setNewChatTitle}
-          />
-        </div>
-
-        {/* Overlay for mobile sidebar */}
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 z-40 lg:hidden"
-            onClick={() => setSidebarOpen(false)}
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-          />
-        )}
-
-        {/* Main Content Area - Fill remaining space with no gap */}
-        <div
-          className="flex-1 flex flex-col rounded-none lg:rounded-r-3xl shadow-xl main-content-area"
+          className="flex overflow-hidden relative rounded-3xl chat-window-container border-2 border-gray-200 dark:border-gray-600 shadow-2xl w-full max-w-5xl mx-auto"
           style={{
             backgroundColor: 'var(--chat-container-bg, white)',
-            height: '100%',
-            minHeight: 0, // Important: Allow flex child to shrink
+            gap: '0px',
           }}
         >
-          {/* Chat Messages - Scrollable area that takes remaining height */}
+          {/* Mobile sidebar toggle */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="fixed top-2 left-2 sm:top-4 sm:left-4 lg:top-6 lg:left-6 z-[1000] lg:hidden bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+          >
+            {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
+          {/* Sidebar - Responsive and toggleable */}
           <div
-            className="flex-1 min-h-0"
+            className={`
+            sidebar-container
+            ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            fixed lg:relative z-50 lg:z-auto
+            w-80 h-full 
+            bg-gradient-to-b from-gray-700 to-gray-600 dark:from-gray-800 dark:to-gray-700
+            rounded-none lg:rounded-l-3xl shadow-xl
+            transition-transform duration-300 ease-in-out
+            lg:flex-shrink-0 overflow-hidden
+          `}
             style={{
-              backgroundColor: 'var(--chat-container-bg, white)',
+              background: 'linear-gradient(to bottom, var(--sidebar-bg-start), var(--sidebar-bg-end))',
             }}
           >
-            <ChatArea
-              chatHistory={chatHistory}
-              isLoadingMessages={isLoadingMessages}
+            <ChatSidebar
+              userChats={userChats}
               selectedChatId={selectedChatId}
+              isLoadingChats={isLoadingChats}
+              editingChatId={editingChatId}
+              newChatTitle={newChatTitle}
               username={username}
-              userId={user?.uid}
-              chatEndRef={chatEndRef}
+              onNewChat={handleNewChat}
+              onSelectChat={(chatId) => {
+                handleSelectChat(chatId);
+                // Close sidebar on mobile after selecting a chat
+                if (window.innerWidth < 1024) {
+                  setSidebarOpen(false);
+                }
+              }}
+              onEditChatTitle={handleEditChatTitle}
+              onSaveChatTitle={handleSaveChatTitle}
+              onCancelEdit={handleCancelEdit}
+              setNewChatTitle={setNewChatTitle}
             />
           </div>
 
-          {/* Input Area - Fixed at bottom */}
-          <div className="flex-shrink-0">
-            <ChatInput
-              currentMessage={currentMessage}
-              isSignedIn={true}
-              onMessageChange={setCurrentMessage}
-              onSendMessage={handleSendMessage}
-              onKeyPress={handleKeyPress}
-              chatHistory={chatHistory}
-              selectedChatId={selectedChatId}
+          {/* Overlay for mobile sidebar */}
+          {sidebarOpen && (
+            <div
+              className="fixed inset-0 z-40 lg:hidden"
+              onClick={() => setSidebarOpen(false)}
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
             />
+          )}
+
+          {/* Main Content Area - Fill remaining space with no gap */}
+          <div
+            className="flex-1 flex flex-col rounded-none lg:rounded-r-3xl shadow-xl main-content-area"
+            style={{
+              backgroundColor: 'var(--chat-container-bg, white)',
+              height: '100%',
+              minHeight: 0, // Important: Allow flex child to shrink
+            }}
+          >
+            {/* Chat Messages - Scrollable area that takes remaining height */}
+            <div
+              className="flex-1 min-h-0"
+              style={{
+                backgroundColor: 'var(--chat-container-bg, white)',
+              }}
+            >
+              <ChatArea
+                chatHistory={chatHistory}
+                isLoadingMessages={isLoadingMessages}
+                selectedChatId={selectedChatId}
+                username={username}
+                userId={user?.uid}
+                chatEndRef={chatEndRef}
+              />
+            </div>
+
+            {/* Input Area - Fixed at bottom */}
+            <div className="flex-shrink-0">
+              <ChatInput
+                currentMessage={currentMessage}
+                isSignedIn={true}
+                onMessageChange={setCurrentMessage}
+                onSendMessage={handleSendMessage}
+                onKeyPress={handleKeyPress}
+                chatHistory={chatHistory}
+                selectedChatId={selectedChatId}
+              />
+            </div>
           </div>
         </div>
       </div>
