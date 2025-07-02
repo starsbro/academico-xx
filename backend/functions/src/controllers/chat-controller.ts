@@ -1,3 +1,7 @@
+/* eslint-env node */
+// eslint-disable-next-line no-unused-vars
+/* global, console */
+
 import {Request, Response} from "express";
 import * as chatModel from "../models/chat-model";
 // import * as messageModel from "../models/message-model";

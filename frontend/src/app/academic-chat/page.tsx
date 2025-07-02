@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useChat } from '../../hooks/useChat';
-import { ChatSidebar, ChatArea, ChatInput } from '../../components/Chat';
+import { ChatSidebar, ChatArea, ChatInput, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
@@ -70,6 +70,9 @@ function AcademicChatContent() {
 
   // Loading state handled by ProtectedRoute
   const username: string = user?.displayName || user?.email || 'Guest';
+
+  // Load pdf response
+  const [pdfResponse, setPdfResponse] = useState<string | null>(null);
 
   return (
     <div
@@ -163,6 +166,14 @@ function AcademicChatContent() {
                 backgroundColor: 'var(--chat-container-bg, white)',
               }}
             >
+              {/* PDF Chat Upload */}
+              <PdfChatUpload onResponse={(msg: React.SetStateAction<string>) => setPdfResponse(msg)} />
+              {pdfResponse && (
+                <div style={{ marginTop: 16, background: '#f5f5f5', padding: 8 }}>
+                  <strong>PDF Chat Response:</strong>
+                  <div>{pdfResponse}</div>
+                </div>
+              )}
               <ChatArea
                 chatHistory={chatHistory}
                 isLoadingMessages={isLoadingMessages}

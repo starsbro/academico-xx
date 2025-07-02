@@ -12,6 +12,8 @@
   },
   "compileOnSave": true,
   "include": [
-    "src"
-, "src/index.ts"  ]
+    "src",
+    "src/index.ts",
+    "pdfjs-dist-legacy.d.ts"
+  ]
 }

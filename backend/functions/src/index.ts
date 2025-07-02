@@ -33,14 +33,14 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 };
 
-// Apply CORS middleware
-app.use(cors(corsOptions));
+// TEMP: Allow all origins for debugging
+app.use(cors());
 
 // Handle preflight requests explicitly
-app.options("*", cors(corsOptions));
+app.options("*", cors());
 
-// Apply other middlewares
-app.use(express.json());
+// Only apply express.json() to routes that expect JSON, not file uploads
+// app.use(express.json());
 
 // Add a logging middleware for
 // all incoming requests (keep this for debugging)

@@ -2,8 +2,11 @@
 import {Router} from "express";
 import * as chatController from "../controllers/chat-controller";
 import * as messageController from "../controllers/message-controller";
-
+import pdfChat from "./pdfChat";
 const router = Router();
+
+// Register the Route for chat with pdf.
+router.use("/chat-with-pdf", pdfChat);
 
 // Test Route
 router.get("/", (req, res) => {

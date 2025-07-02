@@ -1,0 +1,262 @@
+{
+  "config": {
+    "configFile": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/playwright.config.ts",
+    "rootDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "test-configs/test-results/playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-configs/test-results/playwright-results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-configs/test-results/playwright-results.xml"
+        }
+      ],
+      [
+        "line",
+        null
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.53.2",
+    "workers": 4,
+    "webServer": {
+      "command": "cd frontend && npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "cwd": "/Users/xingxingxiao/Documents/GitHub/academico-ai"
+    }
+  },
+  "suites": [
+    {
+      "title": "auth/auth.test.ts",
+      "file": "auth/auth.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Sign In Flow",
+          "file": "auth/auth.test.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "should display sign-in form correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2536,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "📍 Navigated to Sign In: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                        },
+                        {
+                          "text": "📍 Sign-in form loaded: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-02T02:07:27.260Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-25810f2e88b4956d40d0",
+              "file": "auth/auth.test.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "should handle form submission",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3160,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "📍 Navigated to Sign In: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                        },
+                        {
+                          "text": "📝 Filled sign-in form with: test@example.com\n"
+                        },
+                        {
+                          "text": "🔄 Submitted sign-in form\n"
+                        },
+                        {
+                          "text": "🎯 Sign-in attempt resulted in route: /sign-in/\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-02T02:07:27.258Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "907f3668ee2d1e58d4cc-774d56785e3ae64d547f",
+              "file": "auth/auth.test.ts",
+              "line": 17,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-02T02:07:26.603Z",
+    "duration": 4786.440999999642,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
