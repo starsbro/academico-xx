@@ -1,12 +1,12 @@
 import express from "express";
 import multer from "multer";
-import { chatWithPdf } from "../pdfChatService";
+import {chatWithPdf} from "../pdfChatService";
 import firebaseAdmin from "../config/firebaseAdmin.js";
-import { authenticateFirebaseToken } from "../middleware/auth.js";
-import { genkit } from "genkit";
-import { googleAI } from "@genkit-ai/googleai";
-import type { Request, Response } from "express";
-import { addMessageToChat } from "../models/message-model";
+import {authenticateFirebaseToken} from "../middleware/auth.js";
+import {genkit} from "genkit";
+import {googleAI} from "@genkit-ai/googleai";
+import type {Request, Response} from "express";
+import {addMessageToChat} from "../models/message-model";
 
 const router = express.Router();
 
@@ -52,7 +52,7 @@ router.post(
       let pdfUrl = null;
       const userId = req.user?.uid;
       if (!userId) {
-        res.status(401).json({ error: "User not authenticated" });
+        res.status(401).json({error: "User not authenticated"});
         return;
       }
       // 1. Handle PDF upload if present
@@ -80,17 +80,27 @@ router.post(
       let chatId = req.body.chatId;
       if (!chatId) {
         // Try to find an existing chat
-        const chatsSnap = await db.collection("users").doc(userId).collection("chats").orderBy("createdAt").limit(1).get();
+        const chatsSnap = await db
+          .collection("users")
+          .doc(userId)
+          .collection("chats")
+          .orderBy("createdAt")
+          .limit(1)
+          .get();
         if (!chatsSnap.empty) {
           chatId = chatsSnap.docs[0].id;
         } else {
           // Create a new chat
-          const chatRef = await db.collection("users").doc(userId).collection("chats").add({
-            title: "PDF Chat",
-            createdAt: new Date().toISOString(),
-            lastUpdatedAt: new Date().toISOString(),
-            userId,
-          });
+          const chatRef = await db
+            .collection("users")
+            .doc(userId)
+            .collection("chats")
+            .add({
+              title: "PDF Chat",
+              createdAt: new Date().toISOString(),
+              lastUpdatedAt: new Date().toISOString(),
+              userId,
+            });
           chatId = chatRef.id;
         }
       }
@@ -117,7 +127,10 @@ router.post(
           prompt,
         });
       }
-      res.json({ response, pdfUrl });
+      res.json({
+        response,
+        pdfUrl,
+      });
     } catch (err) {
       if (err instanceof Error) {
         res.status(500).json({error: err.message});
