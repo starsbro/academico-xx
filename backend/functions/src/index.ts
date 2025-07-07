@@ -18,20 +18,6 @@ admin.initializeApp();
 
 const app = express();
 
-// Enhanced CORS configuration for development and production
-const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:3001",
-    "https://academico-ai.web.app",
-    "https://academico-ai.firebaseapp.com",
-  ],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-};
 
 // TEMP: Allow all origins for debugging
 app.use(cors());

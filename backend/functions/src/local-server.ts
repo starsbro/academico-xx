@@ -1,7 +1,12 @@
+import "dotenv/config";
+
 // Polyfill DOMMatrix for pdfjs-dist legacy build in Node.js
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (global as any).DOMMatrix = class {};
 
-import 'dotenv/config';
+// Initialize Firebase Admin SDK for local server
+import "./config/firebaseAdmin.js";
+
 import express from "express";
 import cors from "cors";
 import apiRoutes from "./routes";
@@ -11,8 +16,12 @@ const app = express();
 // Allow all CORS for local testing
 app.use(cors());
 
-// Do NOT use express.json() globally to avoid breaking file uploads
-// app.use(express.json());
+
+// Only use express.json() for routes that expect JSON
+// (e.g., /message, /users, /chats)
+app.use("/message", express.json());
+app.use("/users", express.json());
+app.use("/chats", express.json());
 
 // Logging middleware (optional)
 app.use((req, res, next) => {

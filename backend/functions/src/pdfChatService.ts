@@ -1,9 +1,7 @@
 import {googleAI} from "@genkit-ai/googleai";
 import {genkit} from "genkit";
 import {Buffer} from "buffer";
-// import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
-// @ts-ignore
-const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
 
 // Ensure process.env is available (for Node.js environments)
 declare let process: {
@@ -32,13 +30,19 @@ export async function chatWithPdf(
   buffer: Buffer, prompt: string
 ): Promise<string> {
   // Use pdfjs-dist to extract text
-  const loadingTask = (pdfjsLib as any).getDocument({ data: new Uint8Array(buffer) });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const loadingTask = (pdfjsLib as any).getDocument({
+    data: new Uint8Array(buffer),
+  });
   const pdf = await loadingTask.promise;
   let text = "";
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    const pageText = content.items.map((item: any) => item.str).join(" ");
+    // TextContent and TextItem types from pdfjs-dist
+    const content = await page.getTextContent() as {
+      items: Array<{ str: string }>;
+    };
+    const pageText = content.items.map((item) => item.str).join(" ");
     text += `Page ${i}: ${pageText}\n`;
   }
   const systemPrompt = `${prompt}\nContext:\n${text}`;

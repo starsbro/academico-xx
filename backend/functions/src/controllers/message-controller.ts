@@ -16,8 +16,16 @@ import {FieldValue} from "firebase-admin/firestore";
 export async function createMessage(req: Request, res: Response) {
   // console.log("Crontroller: Creating message");
   try {
-    const {userId, message, timestamp, chatId} = req.body;
+    let {userId, message, timestamp, chatId} = req.body;
+    // If the message is from the AI, store it under the real user's chat
+    // The frontend should always
+    // send the real user's userId for the Firestore path
+    // and set userId: 'ai' only inside the message data, but if not, fix here:
+    if (userId === "ai" && req.body.chatUserId) {
+      userId = req.body.chatUserId;
+    }
     // console.log("chatId is: ", chatId);
+
 
     if (!userId || !message || !timestamp) {
       res
@@ -31,7 +39,8 @@ export async function createMessage(req: Request, res: Response) {
 
     if (!currentChatId) {
       const newChatTitle =
-        message.substring(0, 50) + (message.length > 50 ? "..." : "");
+        message.substring(0, 50) +
+        (message.length > 50 ? "..." : "");
       const chatRef = await chatModel.createChat(userId, newChatTitle);
       currentChatId = chatRef.id;
       newChatCreated = true;
@@ -45,10 +54,14 @@ export async function createMessage(req: Request, res: Response) {
       // Using existing chat with ID: ${currentChatId}`);
     }
 
+    // Always store the message under the real user's chat,
+    // but preserve the sender in the message data
+    const senderId =
+      req.body.senderId || (req.body.userId === "ai" ? "ai" : userId);
     const newMessageRef = await messageModel.addMessageToChat(
       userId,
       currentChatId,
-      {userId, message, timestamp},
+      {userId: senderId, message, timestamp},
     );
 
     const newDoc = await newMessageRef.get();
@@ -104,11 +117,11 @@ export async function getMessages(req: Request, res: Response) {
     //     ${chatMessages.length} messages for chat ${requestedChatId}`);
   } catch (error) {
     console.error(
-      `Controller: Error fetching messages 
-        for chat ${requestedChatId}:`,
+      `Controller: Error fetching messages for chat ${requestedChatId}:`,
       error,
     );
-    res.status(500).send(`Internal Server Error: 
-      Could not fetch chat messages.`);
+    res.status(500).send(
+      "Internal Server Error: Could not fetch chat messages."
+    );
   }
 }

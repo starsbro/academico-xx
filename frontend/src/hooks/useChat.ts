@@ -1,11 +1,22 @@
+import { ChatMessage, UserChat } from '../types/chat.types';
 // Custom hook for managing chat state and operations
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { ChatMessage, UserChat } from '../types/chat.types';
 import { ChatService } from '../services/chatService';
 
 export const useChat = () => {
+  // Optimistically add a message to chat history (for user or AI thinking placeholder)
+  const addMessageToChat = (msg: Partial<ChatMessage> & { userId: string; message: string }) => {
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        id: `local-${Date.now()}-${Math.random()}`,
+        timestamp: new Date().toISOString(),
+        ...msg,
+      } as ChatMessage,
+    ]);
+  };
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
@@ -220,6 +231,10 @@ export const useChat = () => {
     handleCancelEdit,
     handleKeyPress,
     fetchUserChats,
+    fetchMessagesForChat,
+
+    // Optimistic UI
+    addMessageToChat,
 
     // User data
     user,

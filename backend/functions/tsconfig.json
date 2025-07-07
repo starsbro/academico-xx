@@ -8,12 +8,18 @@
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es2017",
+    "types": ["node", "./src/types/modules", "./src/types/express/index"]
   },
   "compileOnSave": true,
   "include": [
     "src",
     "src/index.ts",
-    "pdfjs-dist-legacy.d.ts"
+    "pdfjs-dist-legacy.d.ts",
+    "src/types"
+  ],
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src/types"
   ]
 }
