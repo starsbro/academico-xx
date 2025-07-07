@@ -2,9 +2,9 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useChat } from '../../hooks/useChat';
-import { ChatSidebar, ChatArea, ChatInput } from '../../components/Chat';
+import { ChatSidebar, ChatArea, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
@@ -44,7 +44,6 @@ function AcademicChatContent() {
   const {
     // State
     chatHistory,
-    currentMessage,
     selectedChatId,
     userChats,
     isLoadingChats,
@@ -54,22 +53,28 @@ function AcademicChatContent() {
     chatEndRef,
 
     // Actions
-    setCurrentMessage,
     setNewChatTitle,
     handleNewChat,
     handleSelectChat,
-    handleSendMessage,
     handleSaveChatTitle,
     handleEditChatTitle,
     handleCancelEdit,
-    handleKeyPress,
+    fetchMessagesForChat,
 
     // User data
     user,
   } = useChat();
 
+  // Local state for AI thinking placeholder
+  const [aiThinkingMessage, setAiThinkingMessage] = useState<null | { userId: string; message: string }>(null);
+
+  // Ref for chat container (for scroll-to-latest)
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
   // Loading state handled by ProtectedRoute
   const username: string = user?.displayName || user?.email || 'Guest';
+
+  // Removed unused pdfResponse state
 
   return (
     <div
@@ -86,10 +91,10 @@ function AcademicChatContent() {
       {/* Center the chat window */}
       <div className="flex justify-center items-center w-full min-h-[80vh]">
         <div
-          className="flex overflow-hidden relative rounded-3xl chat-window-container border-2 border-gray-200 dark:border-gray-600 shadow-2xl w-full max-w-5xl mx-auto"
+          className="flex overflow-hidden relative rounded-3xl chat-window-container border-2 border-gray-200 dark:border-gray-600 shadow-2xl w-full max-w-5xl mx-auto px-2 sm:px-4 md:px-8 lg:px-12 xl:px-20 2xl:px-32 gap-x-0 lg:gap-x-8 xl:gap-x-12"
           style={{
             backgroundColor: 'var(--chat-container-bg, white)',
-            gap: '0px',
+            paddingRight: '1.5rem',
           }}
         >
           {/* Mobile sidebar toggle */}
@@ -163,26 +168,66 @@ function AcademicChatContent() {
                 backgroundColor: 'var(--chat-container-bg, white)',
               }}
             >
-              <ChatArea
-                chatHistory={chatHistory}
-                isLoadingMessages={isLoadingMessages}
-                selectedChatId={selectedChatId}
-                username={username}
-                userId={user?.uid}
-                chatEndRef={chatEndRef}
-              />
+              {/* Chat messages container with ref for scroll-to-latest */}
+              <div
+                ref={chatContainerRef}
+                className="chat-messages-container h-full overflow-y-auto pr-2"
+                style={{ maxHeight: '80vh' }}
+              >
+                <ChatArea
+                  chatHistory={
+                    aiThinkingMessage && !isLoadingMessages
+                      ? [
+                          ...chatHistory,
+                          {
+                            ...aiThinkingMessage,
+                            id: 'ai-thinking',
+                            userId: 'ai',
+                            timestamp: new Date().toISOString(),
+                          },
+                        ]
+                      : chatHistory
+                  }
+                  isLoadingMessages={isLoadingMessages}
+                  selectedChatId={selectedChatId}
+                  username={username}
+                  userId={user?.uid}
+                  chatEndRef={chatEndRef}
+                />
+              </div>
             </div>
 
             {/* Input Area - Fixed at bottom */}
             <div className="flex-shrink-0">
-              <ChatInput
-                currentMessage={currentMessage}
-                isSignedIn={true}
-                onMessageChange={setCurrentMessage}
-                onSendMessage={handleSendMessage}
-                onKeyPress={handleKeyPress}
-                chatHistory={chatHistory}
-                selectedChatId={selectedChatId}
+              <PdfChatUpload
+                onSubmitPdfChat={async ({ message, file }) => {
+                  if (!user?.uid) return;
+                  if (!message.trim()) return;
+                  // 1. Optimistically add AI thinking placeholder
+                  setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
+                  // 2. Send user message and file to /chat-with-pdf
+                  const formData = new FormData();
+                  if (file) formData.append('pdf', file);
+                  formData.append('message', message);
+                  if (selectedChatId) formData.append('chatId', selectedChatId);
+                  const apiUrl = process.env.NEXT_PUBLIC_PDF_CHAT_API_URL || '/api/chat-with-pdf';
+                  const idToken = await (await import('../../utils/getIdToken')).getIdToken();
+                  await fetch(apiUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: idToken ? { Authorization: `Bearer ${idToken}` } : undefined,
+                  });
+                  // 3. Wait a moment for Firestore to update, then fetch all messages and clear placeholder
+                  if (selectedChatId) {
+                    setTimeout(async () => {
+                      await fetchMessagesForChat(selectedChatId);
+                      setAiThinkingMessage(null);
+                    }, 700);
+                  } else {
+                    setAiThinkingMessage(null);
+                  }
+                }}
+                chatContainerRef={chatContainerRef}
               />
             </div>
           </div>

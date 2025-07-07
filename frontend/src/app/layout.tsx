@@ -3,6 +3,7 @@ import { Outfit } from 'next/font/google';
 import './globals.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthProvider } from '../contexts/AuthContext';
+import { Toaster } from 'react-hot-toast';
 //import { UserButton } from '../components/Auth/UserButton';
 
 const outfit = Outfit({
@@ -25,6 +26,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en" className={`${outfit.variable}`}>
         <body suppressHydrationWarning={true}>
+          <Toaster />
           <ErrorBoundary>
             <div className="main-content-container">{children}</div>
           </ErrorBoundary>

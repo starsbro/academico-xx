@@ -18,29 +18,15 @@ admin.initializeApp();
 
 const app = express();
 
-// Enhanced CORS configuration for development and production
-const corsOptions = {
-  origin: [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:3001",
-    "https://academico-ai.web.app",
-    "https://academico-ai.firebaseapp.com",
-  ],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-};
 
-// Apply CORS middleware
-app.use(cors(corsOptions));
+// TEMP: Allow all origins for debugging
+app.use(cors());
 
 // Handle preflight requests explicitly
-app.options("*", cors(corsOptions));
+app.options("*", cors());
 
-// Apply other middlewares
-app.use(express.json());
+// Only apply express.json() to routes that expect JSON, not file uploads
+// app.use(express.json());
 
 // Add a logging middleware for
 // all incoming requests (keep this for debugging)
