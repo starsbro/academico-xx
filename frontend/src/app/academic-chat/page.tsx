@@ -205,14 +205,12 @@ function AcademicChatContent() {
                 onSubmitPdfChat={async ({ message, file }) => {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
-                  if (!file) {
-                    alert('Please select a PDF file.');
-                    return;
-                  }
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
                   const formData = new FormData();
-                  formData.append('pdf', file);
                   formData.append('message', message);
+                  if (file) {
+                    formData.append('pdf', file);
+                  }
                   if (selectedChatId) formData.append('chatId', selectedChatId);
                   // Enhanced debug: log file and FormData details
                   console.log('PDF upload debug:', {
@@ -234,9 +232,7 @@ function AcademicChatContent() {
                   });
                   if (!response.ok) {
                     const error = await response.text();
-                    // Replace alert with a user-friendly notification
                     setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
-                    // Optionally, you can add a timeout to clear the error after a few seconds
                     setTimeout(() => setAiThinkingMessage(null), 4000);
                   }
                   if (selectedChatId) {
