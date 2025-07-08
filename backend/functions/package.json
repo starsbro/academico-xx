@@ -1,9 +1,9 @@
 {
   "name": "functions",
   "scripts": {
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "./lint-wrapper.sh",
     "lint:fix": "eslint --ext .js,.ts . --fix",
-    "build": "npm run lint && tsc",
+    "build": "./build-wrapper.sh",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
