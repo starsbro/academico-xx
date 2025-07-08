@@ -1,6 +1,8 @@
 import {googleAI} from "@genkit-ai/googleai";
 import {genkit} from "genkit";
 import {Buffer} from "buffer";
+// Polyfill DOMMatrix for pdfjs-dist legacy build in Node.js
+// (global as any).DOMMatrix = class {};
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
 
 // Ensure process.env is available (for Node.js environments)

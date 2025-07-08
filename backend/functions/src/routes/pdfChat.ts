@@ -1,12 +1,13 @@
 import express from "express";
 import multer from "multer";
 import {chatWithPdf} from "../pdfChatService";
-import firebaseAdmin from "../config/firebaseAdmin.js";
-import {authenticateFirebaseToken} from "../middleware/auth.js";
+import firebaseAdmin from "../config/firebaseAdmin";
+import {authenticateFirebaseToken} from "../middleware/auth";
 import {genkit} from "genkit";
 import {googleAI} from "@genkit-ai/googleai";
 import type {Request, Response} from "express";
 import {addMessageToChat} from "../models/message-model";
+import * as functions from "firebase-functions";
 
 const router = express.Router();
 
@@ -16,7 +17,9 @@ const upload = multer({limits: {fileSize: 10 * 1024 * 1024}});
 const generalAi = genkit({
   plugins: [
     googleAI({
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey:
+        process.env.GEMINI_API_KEY ||
+        (functions.config().gemini && functions.config().gemini.api_key),
     }),
   ],
   model: googleAI.model("gemini-2.5-flash"),
@@ -36,18 +39,17 @@ async function generalChat(prompt: string): Promise<string> {
 
 router.post(
   "/",
+  upload.single("pdf"),
   authenticateFirebaseToken,
-  upload.any(),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      console.log("DEBUG req.files:", req.files);
+      console.log("DEBUG req.file:", req.file);
       console.log("DEBUG req.body:", req.body);
       const prompt =
         req.body.prompt ||
         req.body.message ||
         "Answer questions about this PDF.";
-      const files = req.files as Express.Multer.File[];
-      const file = files && files.length > 0 ? files[0] : null;
+      const file = req.file as Express.Multer.File | undefined;
       let response;
       let pdfUrl = null;
       const userId = req.user?.uid;
@@ -73,8 +75,6 @@ router.post(
       } else {
         response = await generalChat(prompt);
       }
-
-
       // 2. Use chatId from frontend if provided, otherwise create/find one
       const db = firebaseAdmin.db;
       let chatId = req.body.chatId;
@@ -104,7 +104,6 @@ router.post(
           chatId = chatRef.id;
         }
       }
-
       // 3. Store user message
       await addMessageToChat(userId, chatId, {
         userId,
@@ -117,7 +116,6 @@ router.post(
         message: response,
         timestamp: new Date().toISOString(),
       });
-
       // Save PDF URL in Firestore with the chat/message if available
       if (pdfUrl) {
         await firebaseAdmin.db.collection("pdfUploads").add({
@@ -132,6 +130,7 @@ router.post(
         pdfUrl,
       });
     } catch (err) {
+      console.error("[PDF Chat Route Error]", err);
       if (err instanceof Error) {
         res.status(500).json({error: err.message});
       } else {
@@ -140,5 +139,17 @@ router.post(
     }
   }
 );
+
+// Minimal test route for debugging file upload issues
+
+router.post(
+  "/test-upload",
+  upload.single("pdf"),
+  (req: Request, res: Response): void => {
+    console.log("[TEST UPLOAD] req.file:", req.file);
+    res.json({file: !!req.file, fileInfo: req.file});
+  }
+);
+
 
 export default router;

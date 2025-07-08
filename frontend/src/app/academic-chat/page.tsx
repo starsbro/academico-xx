@@ -8,6 +8,7 @@ import { ChatSidebar, ChatArea, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
+import GetIdTokenButton from '../components/GetIdTokenButton';
 
 export default function AcademicChatPage() {
   return (
@@ -141,6 +142,7 @@ function AcademicChatContent() {
               onCancelEdit={handleCancelEdit}
               setNewChatTitle={setNewChatTitle}
             />
+            <GetIdTokenButton />
           </div>
 
           {/* Overlay for mobile sidebar */}
@@ -203,21 +205,40 @@ function AcademicChatContent() {
                 onSubmitPdfChat={async ({ message, file }) => {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
-                  // 1. Optimistically add AI thinking placeholder
+                  if (!file) {
+                    alert('Please select a PDF file.');
+                    return;
+                  }
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
-                  // 2. Send user message and file to /chat-with-pdf
                   const formData = new FormData();
-                  if (file) formData.append('pdf', file);
+                  formData.append('pdf', file);
                   formData.append('message', message);
                   if (selectedChatId) formData.append('chatId', selectedChatId);
-                  const apiUrl = process.env.NEXT_PUBLIC_PDF_CHAT_API_URL || '/api/chat-with-pdf';
+                  // Enhanced debug: log file and FormData details
+                  console.log('PDF upload debug:', {
+                    file,
+                    fileType: file && file.constructor && file.constructor.name,
+                    fileSize: file && file.size,
+                    fileMime: file && file.type,
+                    formDataKeys: Array.from(formData.keys()),
+                  });
+                  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
-                  await fetch(apiUrl, {
+                  const headers: Record<string, string> = {};
+                  if (idToken) headers['Authorization'] = `Bearer ${idToken}`;
+                  // DO NOT set Content-Type header here!
+                  const response = await fetch(apiUrl, {
                     method: 'POST',
                     body: formData,
-                    headers: idToken ? { Authorization: `Bearer ${idToken}` } : undefined,
+                    headers,
                   });
-                  // 3. Wait a moment for Firestore to update, then fetch all messages and clear placeholder
+                  if (!response.ok) {
+                    const error = await response.text();
+                    // Replace alert with a user-friendly notification
+                    setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
+                    // Optionally, you can add a timeout to clear the error after a few seconds
+                    setTimeout(() => setAiThinkingMessage(null), 4000);
+                  }
                   if (selectedChatId) {
                     setTimeout(async () => {
                       await fetchMessagesForChat(selectedChatId);

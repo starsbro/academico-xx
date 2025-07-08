@@ -1,15 +1,17 @@
-import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
+import {https} from "firebase-functions/v2";
 import express from "express";
 import cors from "cors";
 import apiRoutes from "./routes";
+
+// Add logging for all incoming requests
+console.log("[BOOT] Express app starting up...");
 // import {FieldValue} from "firebase-admin/firestore";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 // console.log = function() {};
 
 // Initialize Firebase Admin SDK
-admin.initializeApp();
+// admin.initializeApp(); // Initialization handled in firebaseAdmin.ts
 
 // console.log("Admin initialized:", !!admin);
 // console.log("Admin.firestore:", !!admin.firestore);
@@ -17,6 +19,13 @@ admin.initializeApp();
 //   FieldValue);
 
 const app = express();
+
+// Log every incoming request (method, path, headers)
+app.use((req, res, next) => {
+  console.log(`[REQ] ${req.method} ${req.originalUrl}`);
+  console.log(`[REQ-HEADERS] ${JSON.stringify(req.headers)}`);
+  next();
+});
 
 
 // TEMP: Allow all origins for debugging
@@ -45,15 +54,11 @@ app.use("/", apiRoutes);
 
 // Generic 404 handler for Express routes not matched by apiRoutes
 app.use((req, res) => {
-  // console.log(`Express Main: Unhandled route -
-  //   Method: ${req.method},
-  //   Path: ${req.path}`);
-  res.status(404).send(`Not Found: The requested resource 
-      could not be found via Express routing.`);
+  console.log(`[404] ${req.method} ${req.originalUrl}`);
+  res.status(404).send(
+    "Not Found: The requested resource could not be found via Express routing."
+  );
 });
 
-// Export the Express app as an HTTP Cloud Function
-exports.api = functions.https.onRequest(app);
-
-// Export Next.js app function
-export {nextjsApp} from "./nextjs";
+// Export the Express app as an HTTP Cloud Function (2nd gen compatible)
+export const api = https.onRequest({region: "us-central1"}, app);
