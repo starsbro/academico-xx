@@ -42,9 +42,13 @@ export default function PdfChatUpload({
     if (loading || !message.trim()) return; // Prevent double submit
     setLoading(true);
     // 1. Optimistically show AI thinking placeholder only (handled by parent)
-    onSubmitPdfChat({ message, file });
+    await onSubmitPdfChat({ message, file });
     scrollToLatest();
-    setFile(null); // Clear file after send
+    // Reset file input and state after send
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
     setMessage(''); // Clear message after send
     setLoading(false);
   };

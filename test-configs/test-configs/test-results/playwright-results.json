@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 2
+      "actualWorkers": 1
     },
     "preserveOutput": "always",
     "reporter": [
@@ -54,7 +54,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "chromium",
         "name": "chromium",
@@ -70,7 +70,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "firefox",
         "name": "firefox",
@@ -86,7 +86,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "webkit",
         "name": "webkit",
@@ -102,7 +102,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
@@ -118,7 +118,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 1
         },
         "id": "Mobile Safari",
         "name": "Mobile Safari",
@@ -133,7 +133,7 @@
     "shard": null,
     "updateSnapshots": "missing",
     "updateSourceMethod": "3way",
-    "version": "1.53.2",
+    "version": "1.53.1",
     "workers": 4,
     "webServer": {
       "command": "cd frontend && npm run dev",
@@ -145,21 +145,21 @@
   },
   "suites": [
     {
-      "title": "auth/auth.test.ts",
-      "file": "auth/auth.test.ts",
+      "title": "routing/routing.test.ts",
+      "file": "routing/routing.test.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Sign In Flow",
-          "file": "auth/auth.test.ts",
-          "line": 4,
+          "title": "Routing",
+          "file": "routing/routing.test.ts",
+          "line": 6,
           "column": 6,
           "specs": [
             {
-              "title": "should display sign-in form correctly",
-              "ok": true,
+              "title": "Academic Chat page loads (authenticated)",
+              "ok": false,
               "tags": [],
               "tests": [
                 {
@@ -170,79 +170,81 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
+                      "workerIndex": 15,
                       "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2536,
-                      "errors": [],
+                      "status": "failed",
+                      "duration": 6147,
+                      "error": {
+                        "message": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText(/chat|upload|pdf/i)\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/chat|upload|pdf/i)\u001b[22m\n",
+                        "stack": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText(/chat|upload|pdf/i)\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/chat|upload|pdf/i)\u001b[22m\n\n    at /Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts:26:54",
+                        "location": {
+                          "file": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts",
+                          "column": 54,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m\n \u001b[90m 25 |\u001b[39m     \u001b[90m// Check for a unique element or heading on the chat page\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/chat|upload|pdf/i\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 28 |\u001b[39m\n \u001b[90m 29 |\u001b[39m   test(\u001b[32m'404 page for unknown route'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts",
+                            "column": 54,
+                            "line": 26
+                          },
+                          "message": "Error: \u001b[31mTimed out 5000ms waiting for \u001b[39m\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m\n\nLocator: getByText(/chat|upload|pdf/i)\nExpected: visible\nReceived: <element(s) not found>\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByText(/chat|upload|pdf/i)\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m\n \u001b[90m 25 |\u001b[39m     \u001b[90m// Check for a unique element or heading on the chat page\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByText(\u001b[35m/chat|upload|pdf/i\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 28 |\u001b[39m\n \u001b[90m 29 |\u001b[39m   test(\u001b[32m'404 page for unknown route'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at /Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts:26:54\u001b[22m"
+                        }
+                      ],
                       "stdout": [
                         {
-                          "text": "📍 Navigated to Sign In: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                          "text": "🔐 Authentication status: Authenticated\n"
                         },
                         {
-                          "text": "📍 Sign-in form loaded: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                          "text": "✅ Already authenticated\n"
+                        },
+                        {
+                          "text": "🔑 Authenticated: \u001b[33mtrue\u001b[39m\n"
+                        },
+                        {
+                          "text": "🌐 URL after login: about:blank\n"
+                        },
+                        {
+                          "text": "🌐 URL after goto /academic-chat: http://localhost:3000/academic-chat/\n"
                         }
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-07-02T02:07:27.260Z",
+                      "startTime": "2025-07-09T00:31:18.128Z",
                       "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "907f3668ee2d1e58d4cc-25810f2e88b4956d40d0",
-              "file": "auth/auth.test.ts",
-              "line": 5,
-              "column": 7
-            },
-            {
-              "title": "should handle form submission",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 3160,
-                      "errors": [],
-                      "stdout": [
+                      "attachments": [
                         {
-                          "text": "📍 Navigated to Sign In: \"academico-ai\" at /sign-in/, URL is http://localhost:3000/sign-in/.\n"
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/test-failed-1.png"
                         },
                         {
-                          "text": "📝 Filled sign-in form with: test@example.com\n"
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/video.webm"
                         },
                         {
-                          "text": "🔄 Submitted sign-in form\n"
-                        },
-                        {
-                          "text": "🎯 Sign-in attempt resulted in route: /sign-in/\n"
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/xingxingxiao/Documents/GitHub/academico-ai/test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/error-context.md"
                         }
                       ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-07-02T02:07:27.258Z",
-                      "annotations": [],
-                      "attachments": []
+                      "errorLocation": {
+                        "file": "/Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts",
+                        "column": 54,
+                        "line": 26
+                      }
                     }
                   ],
-                  "status": "expected"
+                  "status": "unexpected"
                 }
               ],
-              "id": "907f3668ee2d1e58d4cc-774d56785e3ae64d547f",
-              "file": "auth/auth.test.ts",
-              "line": 17,
+              "id": "c1e4ceeea336f70992f2-04ce2f3cc0f36768222f",
+              "file": "routing/routing.test.ts",
+              "line": 14,
               "column": 7
             }
           ]
@@ -252,11 +254,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-07-02T02:07:26.603Z",
-    "duration": 4786.440999999642,
-    "expected": 2,
+    "startTime": "2025-07-09T00:31:17.531Z",
+    "duration": 7595.01099999994,
+    "expected": 0,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }

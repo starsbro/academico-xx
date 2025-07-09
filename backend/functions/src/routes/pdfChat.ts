@@ -1,17 +1,19 @@
 import express from "express";
 import multer from "multer";
-import {chatWithPdf} from "../pdfChatService";
+import { chatWithPdf } from "../pdfChatService";
 import firebaseAdmin from "../config/firebaseAdmin";
-import {authenticateFirebaseToken} from "../middleware/auth";
-import {genkit} from "genkit";
-import {googleAI} from "@genkit-ai/googleai";
-import type {Request, Response} from "express";
-import {addMessageToChat} from "../models/message-model";
+import { authenticateFirebaseToken } from "../middleware/auth";
+import { genkit } from "genkit";
+import { googleAI } from "@genkit-ai/googleai";
+import type { Request, Response } from "express";
+import { addMessageToChat } from "../models/message-model";
 import * as functions from "firebase-functions";
 
 const router = express.Router();
 
-const upload = multer({limits: {fileSize: 10 * 1024 * 1024}});
+
+import bodyParser from "body-parser";
+const upload = multer({ limits: { fileSize: 10 * 1024 * 1024 } });
 
 // Gemini general chat setup
 const generalAi = genkit({
@@ -37,11 +39,26 @@ async function generalChat(prompt: string): Promise<string> {
   return response.text;
 }
 
+
+// Support both multipart/form-data (file upload)
+// and application/json (text-only)
 router.post(
   "/",
-  upload.single("pdf"),
+  (req, res, next) => {
+    if (req.is("multipart/form-data")) {
+      upload.single("pdf")(req, res, next);
+      return;
+    } else if (req.is("application/json")) {
+      bodyParser.json()(req, res, next);
+      return;
+    } else {
+      // Unsupported content type: do not proceed to handler!
+      return res.status(400).json({error: "Unsupported Content-Type"});
+    }
+  },
   authenticateFirebaseToken,
   async (req: Request, res: Response): Promise<void> => {
+    console.log("PDF Chat route hit!");
     try {
       console.log("DEBUG req.file:", req.file);
       console.log("DEBUG req.body:", req.body);
@@ -57,7 +74,6 @@ router.post(
         res.status(401).json({error: "User not authenticated"});
         return;
       }
-      // 1. Handle PDF upload if present
       if (file && file.buffer) {
         const bucket = firebaseAdmin.storage.bucket();
         const fileName = `pdfs/${userId}/${Date.now()}-${file.originalname}`;
@@ -75,11 +91,9 @@ router.post(
       } else {
         response = await generalChat(prompt);
       }
-      // 2. Use chatId from frontend if provided, otherwise create/find one
       const db = firebaseAdmin.db;
       let chatId = req.body.chatId;
       if (!chatId) {
-        // Try to find an existing chat
         const chatsSnap = await db
           .collection("users")
           .doc(userId)
@@ -90,7 +104,6 @@ router.post(
         if (!chatsSnap.empty) {
           chatId = chatsSnap.docs[0].id;
         } else {
-          // Create a new chat
           const chatRef = await db
             .collection("users")
             .doc(userId)
@@ -104,19 +117,16 @@ router.post(
           chatId = chatRef.id;
         }
       }
-      // 3. Store user message
       await addMessageToChat(userId, chatId, {
         userId,
         message: prompt,
         timestamp: new Date().toISOString(),
       });
-      // 4. Store AI response
       await addMessageToChat(userId, chatId, {
         userId: "ai",
         message: response,
         timestamp: new Date().toISOString(),
       });
-      // Save PDF URL in Firestore with the chat/message if available
       if (pdfUrl) {
         await firebaseAdmin.db.collection("pdfUploads").add({
           userId,
@@ -147,9 +157,15 @@ router.post(
   upload.single("pdf"),
   (req: Request, res: Response): void => {
     console.log("[TEST UPLOAD] req.file:", req.file);
-    res.json({file: !!req.file, fileInfo: req.file});
+    res.json({ file: !!req.file, fileInfo: req.file });
   }
 );
+
+router.post("/debug-raw", (req, res) => {
+  let size = 0;
+  req.on("data", (chunk) => size += chunk.length);
+  req.on("end", () => res.json({ size }));
+});
 
 
 export default router;

@@ -206,30 +206,40 @@ function AcademicChatContent() {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
-                  const formData = new FormData();
-                  formData.append('message', message);
-                  if (file) {
-                    formData.append('pdf', file);
-                  }
-                  if (selectedChatId) formData.append('chatId', selectedChatId);
-                  // Enhanced debug: log file and FormData details
-                  console.log('PDF upload debug:', {
-                    file,
-                    fileType: file && file.constructor && file.constructor.name,
-                    fileSize: file && file.size,
-                    fileMime: file && file.type,
-                    formDataKeys: Array.from(formData.keys()),
-                  });
+
                   const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
-                  const headers: Record<string, string> = {};
-                  if (idToken) headers['Authorization'] = `Bearer ${idToken}`;
-                  // DO NOT set Content-Type header here!
-                  const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    body: formData,
-                    headers,
-                  });
+                  const headers = idToken ? { Authorization: `Bearer ${idToken}` } : {};
+
+                  let response;
+                  if (file) {
+                    // Send as FormData if file is present
+                    const formData = new FormData();
+                    formData.append('message', message);
+                    formData.append('pdf', file);
+                    if (selectedChatId) formData.append('chatId', selectedChatId);
+
+                    response = await fetch(apiUrl, {
+                      method: 'POST',
+                      body: formData,
+                      ...(idToken ? { headers: { Authorization: `Bearer ${idToken}` } } : {}),
+                      // headers, // Do NOT set Content-Type here!
+                    });
+                  } else {
+                    // Send as JSON if no file
+                    response = await fetch(apiUrl, {
+                      method: 'POST',
+                      headers: {
+                        ...headers,
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        message,
+                        ...(selectedChatId ? { chatId: selectedChatId } : {}),
+                      }),
+                    });
+                  }
+
                   if (!response.ok) {
                     const error = await response.text();
                     setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
