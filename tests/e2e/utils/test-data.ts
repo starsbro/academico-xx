@@ -1,8 +1,8 @@
 export const TEST_USERS = {
   valid: {
-    email: 'test@academico-ai.com',
-    password: 'Test123456!',
-    fullName: 'Test User',
+    email: 'xiao.xingx@northeastern.edu',
+    password: '186369xx',
+    fullName: 'Xingxing Xiao',
   },
   invalid: {
     email: 'invalid@email.com',

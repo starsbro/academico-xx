@@ -1,5 +1,12 @@
 {
   "projects": {
     "default": "academico-ai"
-  }
+  },
+  "targets": {},
+  "etags": {
+    "academico-ai": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
 }

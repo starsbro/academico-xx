@@ -4,6 +4,8 @@
   "description": "Centralized test suite for Academico AI",
   "scripts": {
     "test": "jest",
+    "test:backend": "jest --config jest.config.backend.js",
+    "test:frontend": "jest --config jest.config.frontend.js",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },

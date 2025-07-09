@@ -8,6 +8,7 @@ import { ChatSidebar, ChatArea, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
+import GetIdTokenButton from '../components/GetIdTokenButton';
 
 export default function AcademicChatPage() {
   return (
@@ -141,6 +142,7 @@ function AcademicChatContent() {
               onCancelEdit={handleCancelEdit}
               setNewChatTitle={setNewChatTitle}
             />
+            <GetIdTokenButton />
           </div>
 
           {/* Overlay for mobile sidebar */}
@@ -203,21 +205,46 @@ function AcademicChatContent() {
                 onSubmitPdfChat={async ({ message, file }) => {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
-                  // 1. Optimistically add AI thinking placeholder
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
-                  // 2. Send user message and file to /chat-with-pdf
-                  const formData = new FormData();
-                  if (file) formData.append('pdf', file);
-                  formData.append('message', message);
-                  if (selectedChatId) formData.append('chatId', selectedChatId);
-                  const apiUrl = process.env.NEXT_PUBLIC_PDF_CHAT_API_URL || '/api/chat-with-pdf';
+
+                  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
-                  await fetch(apiUrl, {
-                    method: 'POST',
-                    body: formData,
-                    headers: idToken ? { Authorization: `Bearer ${idToken}` } : undefined,
-                  });
-                  // 3. Wait a moment for Firestore to update, then fetch all messages and clear placeholder
+                  const headers = idToken ? { Authorization: `Bearer ${idToken}` } : {};
+
+                  let response;
+                  if (file) {
+                    // Send as FormData if file is present
+                    const formData = new FormData();
+                    formData.append('message', message);
+                    formData.append('pdf', file);
+                    if (selectedChatId) formData.append('chatId', selectedChatId);
+
+                    response = await fetch(apiUrl, {
+                      method: 'POST',
+                      body: formData,
+                      ...(idToken ? { headers: { Authorization: `Bearer ${idToken}` } } : {}),
+                      // headers, // Do NOT set Content-Type here!
+                    });
+                  } else {
+                    // Send as JSON if no file
+                    response = await fetch(apiUrl, {
+                      method: 'POST',
+                      headers: {
+                        ...headers,
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        message,
+                        ...(selectedChatId ? { chatId: selectedChatId } : {}),
+                      }),
+                    });
+                  }
+
+                  if (!response.ok) {
+                    const error = await response.text();
+                    setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
+                    setTimeout(() => setAiThinkingMessage(null), 4000);
+                  }
                   if (selectedChatId) {
                     setTimeout(async () => {
                       await fetchMessagesForChat(selectedChatId);

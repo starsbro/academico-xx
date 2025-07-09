@@ -1,18 +1,51 @@
-<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="4.786440999999642">
-<testsuite name="auth/auth.test.ts" timestamp="2025-07-02T02:07:26.913Z" hostname="chromium" tests="2" failures="0" skipped="0" time="5.696" errors="0">
-<testcase name="Sign In Flow › should display sign-in form correctly" classname="auth/auth.test.ts" time="2.536">
-<system-out>
-<![CDATA[📍 Navigated to Sign In: "academico-ai" at /sign-in/, URL is http://localhost:3000/sign-in/.
-📍 Sign-in form loaded: "academico-ai" at /sign-in/, URL is http://localhost:3000/sign-in/.
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="7.59501099999994">
+<testsuite name="routing/routing.test.ts" timestamp="2025-07-09T00:31:17.889Z" hostname="chromium" tests="1" failures="1" skipped="0" time="6.147" errors="0">
+<testcase name="Routing › Academic Chat page loads (authenticated)" classname="routing/routing.test.ts" time="6.147">
+<failure message="routing.test.ts:14:7 Academic Chat page loads (authenticated)" type="FAILURE">
+<![CDATA[  [chromium] › routing/routing.test.ts:14:7 › Routing › Academic Chat page loads (authenticated) ───
+
+    Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+
+    Locator: getByText(/chat|upload|pdf/i)
+    Expected: visible
+    Received: <element(s) not found>
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByText(/chat|upload|pdf/i)
+
+
+      24 |
+      25 |     // Check for a unique element or heading on the chat page
+    > 26 |     await expect(page.getByText(/chat|upload|pdf/i)).toBeVisible();
+         |                                                      ^
+      27 |   });
+      28 |
+      29 |   test('404 page for unknown route', async ({ page }) => {
+        at /Users/xingxingxiao/Documents/GitHub/academico-ai/tests/e2e/routing/routing.test.ts:26:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../test-configs/test-configs/test-results/routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/error-context.md
 ]]>
-</system-out>
-</testcase>
-<testcase name="Sign In Flow › should handle form submission" classname="auth/auth.test.ts" time="3.16">
+</failure>
 <system-out>
-<![CDATA[📍 Navigated to Sign In: "academico-ai" at /sign-in/, URL is http://localhost:3000/sign-in/.
-📝 Filled sign-in form with: test@example.com
-🔄 Submitted sign-in form
-🎯 Sign-in attempt resulted in route: /sign-in/
+<![CDATA[🔐 Authentication status: Authenticated
+✅ Already authenticated
+🔑 Authenticated: [33mtrue[39m
+🌐 URL after login: about:blank
+🌐 URL after goto /academic-chat: http://localhost:3000/academic-chat/
+
+[[ATTACHMENT|routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/test-failed-1.png]]
+
+[[ATTACHMENT|routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/video.webm]]
+
+[[ATTACHMENT|routing-routing-Routing-Ac-8c492-t-page-loads-authenticated--chromium/error-context.md]]
 ]]>
 </system-out>
 </testcase>

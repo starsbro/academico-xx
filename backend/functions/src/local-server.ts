@@ -5,7 +5,7 @@ import "dotenv/config";
 (global as any).DOMMatrix = class {};
 
 // Initialize Firebase Admin SDK for local server
-import "./config/firebaseAdmin.js";
+import "./config/firebaseAdmin";
 
 import express from "express";
 import cors from "cors";
