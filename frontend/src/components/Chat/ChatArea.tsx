@@ -1,10 +1,11 @@
 // Chat Messages Area Component
 
 import React from 'react';
-import { ChatMessage } from '../../types/chat.types';
+import ChatMessage from './ChatMessage';
+import type { ChatMessage as ChatMessageType } from '../../types/chat.types';
 
 interface ChatAreaProps {
-  chatHistory: ChatMessage[];
+  chatHistory: ChatMessageType[];
   isLoadingMessages: boolean;
   selectedChatId: string | null;
   username: string;
@@ -48,7 +49,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Welcome to Academico AI</h2>
           <p className="text-gray-600 mb-6">Your intelligent academic companion</p>
           <p className="text-gray-500 text-sm">
-            Ready to help with research, writing, analysis, and academic questions. Start by typing your first message
+            Ready to help with research, writing, analysis, and academic questions. Start by typing your first question
             below.
           </p>
           <div className="mt-6 inline-flex items-center gap-2 text-sm text-gray-600 bg-gray-50 rounded-full px-4 py-2">
@@ -99,85 +100,7 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
       <div className="max-w-4xl mx-auto pr-2">
         <div className="h-8" />
         {chatHistory.map((chat) => (
-          <div
-            key={chat.id}
-            className={`chat-message-container flex mb-6 ml-4 ${chat.userId === userId ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-2xl rounded-2xl shadow-lg ${
-                chat.userId === userId
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white'
-              }`}
-            >
-              <div className="p-8">
-                {/* Header with user label and avatar */}
-                <div className="flex items-center justify-between mb-6" style={{ paddingRight: '6px' }}>
-                  <div className="flex items-center gap-3">
-                    {chat.userId !== userId && (
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                          />
-                        </svg>
-                      </div>
-                    )}
-                    <span
-                      className={`text-sm font-semibold uppercase tracking-wide ${
-                        chat.userId === userId ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'
-                      }`}
-                      style={{ marginLeft: '6px', paddingLeft: '6px' }}
-                    >
-                      {chat.userId === userId ? 'You' : 'Academico AI'}
-                    </span>
-                  </div>
-                  {chat.userId === userId && (
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-
-                {/* Message content with generous padding */}
-                <div
-                  className="text-lg leading-relaxed whitespace-pre-wrap mb-6"
-                  style={{ marginLeft: '6px', paddingLeft: '6px', paddingRight: '6px' }}
-                >
-                  {chat.message}
-                </div>
-
-                {/* Timestamp */}
-                <div
-                  className={`flex justify-end pt-4 border-t ${
-                    chat.userId === userId ? 'border-blue-400/30' : 'border-gray-200 dark:border-gray-600'
-                  }`}
-                >
-                  <span
-                    className={`text-sm ${chat.userId === userId ? 'text-blue-100' : 'text-gray-400 dark:text-gray-500'}`}
-                    style={{ marginRight: '6px', paddingRight: '6px' }}
-                  >
-                    {new Date(chat.timestamp).toLocaleString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ChatMessage key={chat.id} message={chat} userId={userId} username={username} />
         ))}
         <div ref={chatEndRef} />
       </div>

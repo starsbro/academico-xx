@@ -1,7 +1,7 @@
 // Define API routes
 import {Router} from "express";
-import * as chatController from "../controllers/chat-controller";
-import * as messageController from "../controllers/message-controller";
+import * as chatService from "../services/chat-service";
+import * as messageService from "../services/message-service";
 import pdfChat from "./pdfChat";
 const router = Router();
 
@@ -9,17 +9,22 @@ const router = Router();
 router.use("/chat-with-pdf", pdfChat);
 
 // Message Routes
-router.post("/message", messageController.createMessage);
+router.post("/message", messageService.createMessage);
 router.get(
   "/users/:userId/chats/:chatId/messages",
-  messageController.getMessages,
+  messageService.getMessages,
 );
 
 // Chat Routes
-router.get("/users/:userId/chats", chatController.getChats);
+router.get("/users/:userId/chats", chatService.getChats);
 router.put(
   "/users/:userId/chats/:chatId/title",
-  chatController.updateChatTitle,
+  chatService.updateChatTitle,
+);
+// Delete a chat and all its messages
+router.delete(
+  "/users/:userId/chats/:chatId",
+  chatService.deleteChat
 );
 
 export default router;

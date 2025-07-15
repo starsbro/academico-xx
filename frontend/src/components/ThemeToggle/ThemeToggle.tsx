@@ -43,16 +43,16 @@ export function ThemeToggle() {
     // Listen for window resize events that might affect theme
     const handleResize = () => {
       const nowDark = document.documentElement.classList.contains('dark');
-      console.log('Window resize detected:', {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        isDarkClass: nowDark,
-        isDarkState: isDark,
-      });
+      // console.log('Window resize detected:', {
+      //   width: window.innerWidth,
+      //   height: window.innerHeight,
+      //   isDarkClass: nowDark,
+      //   isDarkState: isDark,
+      // });
 
       // Force sync if they're out of sync
       if (nowDark !== isDark) {
-        console.log('Theme sync mismatch detected, forcing sync');
+        // console.log('Theme sync mismatch detected, forcing sync');
         setIsDark(nowDark);
       }
     };

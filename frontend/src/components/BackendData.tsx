@@ -1,7 +1,7 @@
 // components/BackendData.tsx
 'use client';
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 //1. Define an interface for the shape of my backend data.
 //   Customize this to match the actual JSON response from my API.

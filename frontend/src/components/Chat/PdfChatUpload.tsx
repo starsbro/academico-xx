@@ -74,15 +74,16 @@ export default function PdfChatUpload({
         <button
           type="button"
           onClick={handleUploadClick}
-          className="p-2 rounded-full hover:bg-blue-50 border border-blue-200 bg-blue-100 text-blue-700 flex items-center gap-1 cursor-pointer"
+          className="p-2 rounded-full border border-blue-200 bg-blue-100 text-blue-700 flex items-center gap-1 cursor-pointer"
           title={file ? file.name : 'Attach PDF'}
           disabled={loading}
         >
           <Paperclip size={20} />
-          <span className="ml-1 text-lg font-medium">Add PDF...</span>
+          <span className="ml-1 text-lg font-medium ">Add PDF...</span>
         </button>
         {file && <span className="text-lg text-blue-700 truncate max-w-[240px]">{file.name}</span>}
       </div>
+
       {/* Textarea and send button row */}
       <div className="flex items-end gap-2 w-full">
         <textarea
@@ -100,7 +101,7 @@ export default function PdfChatUpload({
               }
             }
           }}
-          placeholder="Type your message..."
+          placeholder="Type your request..."
           rows={1}
           disabled={loading}
           style={{ minHeight: 40, maxHeight: 120 }}

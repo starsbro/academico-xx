@@ -1,14 +1,13 @@
 // Refactored Chat Page - Clean and Modular
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useChat } from '../../hooks/useChat';
 import { ChatSidebar, ChatArea, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
-import { ThemeToggle } from '../components/ThemeToggle/ThemeToggle';
+import { ThemeToggle } from '../../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
-import GetIdTokenButton from '../components/GetIdTokenButton';
+// import GetIdTokenButton from '../components/GetIdTokenButton';
 
 export default function AcademicChatPage() {
   return (
@@ -42,6 +41,7 @@ function AcademicChatContent() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
   const {
     // State
     chatHistory,
@@ -54,6 +54,7 @@ function AcademicChatContent() {
     chatEndRef,
 
     // Actions
+    addMessageToChat,
     setNewChatTitle,
     handleNewChat,
     handleSelectChat,
@@ -61,6 +62,7 @@ function AcademicChatContent() {
     handleEditChatTitle,
     handleCancelEdit,
     fetchMessagesForChat,
+    handleDeleteChat,
 
     // User data
     user,
@@ -71,6 +73,22 @@ function AcademicChatContent() {
 
   // Ref for chat container (for scroll-to-latest)
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when chat changes, using chatEndRef for accuracy
+  const prevChatId = useRef<string | null>(null);
+  useEffect(() => {
+    if (chatEndRef && chatEndRef.current) {
+      if (selectedChatId !== prevChatId.current) {
+        // Use setTimeout to ensure DOM is fully rendered before jumping for long chats
+        setTimeout(() => {
+          chatEndRef.current?.scrollIntoView({ behavior: 'auto' });
+        }, 0);
+      } else {
+        chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    prevChatId.current = selectedChatId;
+  }, [chatHistory, aiThinkingMessage, selectedChatId, chatEndRef]);
 
   // Loading state handled by ProtectedRoute
   const username: string = user?.displayName || user?.email || 'Guest';
@@ -141,8 +159,8 @@ function AcademicChatContent() {
               onSaveChatTitle={handleSaveChatTitle}
               onCancelEdit={handleCancelEdit}
               setNewChatTitle={setNewChatTitle}
+              onDeleteChat={handleDeleteChat}
             />
-            <GetIdTokenButton />
           </div>
 
           {/* Overlay for mobile sidebar */}
@@ -205,26 +223,38 @@ function AcademicChatContent() {
                 onSubmitPdfChat={async ({ message, file }) => {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
+                  // Optimistically add user's prompt
+                  addMessageToChat({
+                    userId: user.uid,
+                    message,
+                  });
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
 
                   const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
                   const headers = idToken ? { Authorization: `Bearer ${idToken}` } : {};
 
-                  let response;
+                  let response, data;
                   if (file) {
                     // Send as FormData if file is present
                     const formData = new FormData();
                     formData.append('message', message);
-                    formData.append('pdf', file);
+                    formData.append('pdf', file, file.name);
+                    // console.log('DEBUG file:', file, 'name:', file.name, 'type:', typeof file);
+                    // Only append chatId if continuing an existing chat
                     if (selectedChatId) formData.append('chatId', selectedChatId);
 
                     response = await fetch(apiUrl, {
                       method: 'POST',
                       body: formData,
                       ...(idToken ? { headers: { Authorization: `Bearer ${idToken}` } } : {}),
-                      // headers, // Do NOT set Content-Type here!
                     });
+                    data = await response.json();
+                    // Always set selectedChatId to the returned chatId
+                    if (data.chatId) {
+                      handleSelectChat(data.chatId);
+                      await fetchMessagesForChat(data.chatId);
+                    }
                   } else {
                     // Send as JSON if no file
                     response = await fetch(apiUrl, {
@@ -238,21 +268,21 @@ function AcademicChatContent() {
                         ...(selectedChatId ? { chatId: selectedChatId } : {}),
                       }),
                     });
+                    data = await response.json();
+                    if (data.chatId) {
+                      handleSelectChat(data.chatId);
+                      await fetchMessagesForChat(data.chatId);
+                    }
                   }
 
                   if (!response.ok) {
-                    const error = await response.text();
+                    const error = data?.error || (await response.text());
                     setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
                     setTimeout(() => setAiThinkingMessage(null), 4000);
+                    return;
                   }
-                  if (selectedChatId) {
-                    setTimeout(async () => {
-                      await fetchMessagesForChat(selectedChatId);
-                      setAiThinkingMessage(null);
-                    }, 700);
-                  } else {
-                    setAiThinkingMessage(null);
-                  }
+
+                  setAiThinkingMessage(null);
                 }}
                 chatContainerRef={chatContainerRef}
               />

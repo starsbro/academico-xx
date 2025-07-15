@@ -61,4 +61,7 @@ app.use((req, res) => {
 });
 
 // Export the Express app as an HTTP Cloud Function (2nd gen compatible)
-export const api = https.onRequest({region: "us-central1"}, app);
+// Allow up to 32MB request size for file uploads
+export const api = https.onRequest({
+  region: "us-central1",
+}, app);

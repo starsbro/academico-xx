@@ -9,6 +9,8 @@ interface ChatMessage {
   userId: string;
   message: string;
   timestamp: string;
+  source?: string;
+  pdfFilename?: string;
 }
 
 /**
@@ -24,7 +26,13 @@ interface ChatMessage {
 export async function addMessageToChat(
   userId: string,
   chatId: string,
-  messageData: { userId: string; message: string; timestamp: string },
+  messageData: {
+    userId: string;
+    message: string;
+    timestamp: string;
+    source?: string;
+    pdfFilename?: string;
+  }
 ): Promise<admin.firestore.DocumentReference> {
   const db = admin.firestore();
 
@@ -38,6 +46,12 @@ export async function addMessageToChat(
       userId: messageData.userId,
       message: messageData.message,
       timestamp: FieldValue.serverTimestamp(),
+      ...(messageData.source ? { source: messageData.source } : {}),
+      ...(messageData.pdfFilename ?
+        {
+          pdfFilename: messageData.pdfFilename,
+        } :
+        {}),
     });
   return newMessageRef;
 }
@@ -72,6 +86,8 @@ export async function getMessagesByChatId(
       timestamp: data.timestamp ?
         (data.timestamp as admin.firestore.Timestamp).toDate().toISOString() :
         new Date().toISOString(),
+      ...(data.source ? { source: data.source } : {}),
+      ...(data.pdfFilename ? { pdfFilename: data.pdfFilename } : {}),
     });
   });
   return chatMessages;
