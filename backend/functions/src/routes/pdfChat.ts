@@ -165,11 +165,14 @@ function handleMultipartPdfChat(req: Request, res: Response) {
         res.status(401).json({ error: "User not authenticated" });
         return;
       }
-       // Defensive check: ensure a file was uploaded
+      // Defensive check: ensure a file was uploaded
       if (!pdfBuffer || !pdfInfo) {
-        res.status(400).json({ error: "No PDF file uploaded. Please attach a PDF file." });
+        res.status(400).json({
+          error: "No PDF file uploaded. Please attach a PDF file.",
+        });
         return;
       }
+
       let pdfUrl = null;
       const hasPrompt = message && message.trim().length > 0;
       const hasPdf = !!pdfBuffer && !!pdfInfo;
@@ -273,7 +276,13 @@ function handleMultipartPdfChat(req: Request, res: Response) {
       }
     }
   });
-  req.pipe(busboy);
+  // For Cloud Functions 2nd gen: use req.rawBody if available
+  const reqWithRawBody = req as Request & { rawBody?: Buffer };
+  if (reqWithRawBody.rawBody) {
+    busboy.end(reqWithRawBody.rawBody);
+  } else {
+    req.pipe(busboy);
+  }
 }
 
 /**
