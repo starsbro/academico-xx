@@ -15,7 +15,7 @@ if (!admin.apps.length) {
     // Local development: use service account key
     const serviceAccountPath = process.env.SERVICE_ACCOUNT_KEY_PATH;
     const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, "utf8"));
-    console.log("Using service account:", serviceAccountPath);
+    // console.log("Using service account:", serviceAccountPath);
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
       storageBucket,

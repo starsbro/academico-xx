@@ -56,38 +56,37 @@ const SignIn: React.FC = () => {
 
       <div className="relative w-full max-w-xl mx-2 animate-fade-in">
         {/* Main card */}
-        <div className="bg-white/90 dark:bg-gray-800/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/30 dark:border-gray-700/40 px-8 sm:px-12 lg:px-16 py-16 sm:py-24 transition-transform duration-300 hover:scale-[1.01] hover:shadow-3xl space-y-8">
+        <div className="bg-white/90 dark:bg-gray-800/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/30 dark:border-gray-700/40 px-6 sm:px-10 md:px-16 lg:px-24 py-20 sm:py-28 transition-transform duration-300 hover:scale-[1.01] hover:shadow-3xl space-y-12">
           {/* Header */}
-          <div className="text-center mb-14">
+          <div className="text-center mb-20">
             {/* Increased bottom margin */}
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl shadow-xl mb-7 animate-fade-in-down">
               <GraduationCap className="w-10 h-10 text-white" />
             </div>
             {/* Slightly increased bottom margin */}
-            <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4 animate-fade-in-down">
+            <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-6 animate-fade-in-down">
               Welcome back!
             </h1>
             {/* Added bottom margin */}
-            <p className="text-gray-600 dark:text-gray-400 text-lg animate-fade-in-down mb-2">
+            <p className="text-gray-600 dark:text-gray-400 text-lg animate-fade-in-down mb-4">
               Sign in to continue your academic journey
             </p>
           </div>
 
           {/* Error message */}
           {error && (
-            <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl animate-fade-in">
-              {/* Increased bottom margin */}
+            <div className="mb-10 p-5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl animate-fade-in">
               <p className="text-red-700 dark:text-red-400 text-base font-medium">{error}</p>
             </div>
           )}
 
           {/* Sign in form */}
-          <div className="space-y-6 px-4 sm:px-8 flex flex-col">
+          <div className="space-y-8 px-2 sm:px-6 md:px-8 flex flex-col">
             {/* Increased vertical spacing */}
-            <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
+            <form onSubmit={handleSubmit} className="space-y-8 flex flex-col">
               {/* Email field */}
-              <div className="space-y-3 flex flex-col gap-3 mb-3">
-                <label htmlFor="email" className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3">
+              <div className="space-y-4 flex flex-col gap-4 mb-6">
+                <label htmlFor="email" className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3 pl-2">
                   Email address
                 </label>
                 <div className="relative">
@@ -102,7 +101,7 @@ const SignIn: React.FC = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pr-4 py-5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl shadow-sm focus:shadow-lg"
+                    className="block w-full pr-6 pl-10 py-6 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl shadow-sm focus:shadow-lg"
                     placeholder="Enter your email"
                     style={{ paddingLeft: '2rem' }}
                   />
@@ -110,8 +109,11 @@ const SignIn: React.FC = () => {
               </div>
 
               {/* Password field */}
-              <div className="space-y-3 flex flex-col gap-3 mb-10">
-                <label htmlFor="password" className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3">
+              <div className="space-y-4 flex flex-col gap-4 mb-12">
+                <label
+                  htmlFor="password"
+                  className="text-lg font-medium text-gray-700 dark:text-gray-300 block mb-3 pl-2"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -126,7 +128,7 @@ const SignIn: React.FC = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pr-16 py-5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl shadow-sm focus:shadow-lg"
+                    className="block w-full pr-16 pl-10 py-6 border border-gray-200 dark:border-gray-600 rounded-xl bg-white/70 dark:bg-gray-700/70 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-xl shadow-sm focus:shadow-lg"
                     placeholder="Enter your password"
                     style={{ paddingLeft: '2rem' }}
                   />
@@ -145,7 +147,7 @@ const SignIn: React.FC = () => {
               </div>
 
               {/* Forgot password */}
-              <div className="flex justify-end mb-4">
+              <div className="flex justify-end mb-6">
                 {/* Increased bottom margin */}
                 <Link
                   href="/reset-password"
@@ -156,7 +158,7 @@ const SignIn: React.FC = () => {
               </div>
 
               {/* Sign in button */}
-              <div className="flex justify-center pt-2 mt-2 mb-4">
+              <div className="flex justify-center pt-4 mt-4 mb-8">
                 {/* Increased bottom margin */}
                 <button
                   type="submit"
@@ -181,7 +183,7 @@ const SignIn: React.FC = () => {
             </form>
 
             {/* Divider */}
-            <div className="relative my-10">
+            <div className="relative my-14">
               {/* Increased vertical margin */}
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200 dark:border-gray-600"></div>
@@ -198,7 +200,7 @@ const SignIn: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-3 px-6 py-5 border-2 border-gray-200 dark:border-gray-600 rounded-2xl bg-white/90 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300 font-semibold hover:bg-white dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl hover:scale-[1.01] text-xl backdrop-blur-sm shadow-sm"
+              className="w-full flex items-center justify-center gap-3 px-8 py-6 border-2 border-gray-200 dark:border-gray-600 rounded-2xl bg-white/90 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300 font-semibold hover:bg-white dark:hover:bg-gray-600 hover:border-gray-300 dark:hover:border-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:shadow-xl hover:scale-[1.01] text-xl backdrop-blur-sm shadow-sm"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -223,7 +225,7 @@ const SignIn: React.FC = () => {
           </div>
 
           {/* Sign up link */}
-          <div className="mt-14 text-center">
+          <div className="mt-20 text-center">
             {/* Increased top margin */}
             <p className="text-lg text-gray-600 dark:text-gray-400 py-4">
               Don&apos;t have an account?{' '}
@@ -238,7 +240,7 @@ const SignIn: React.FC = () => {
         </div>
 
         {/* Footer text */}
-        <div className="mt-14 text-center">
+        <div className="mt-20 text-center">
           {/* Increased top margin */}
           <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1">
             <Sparkles className="w-3 h-3" />

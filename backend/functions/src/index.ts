@@ -1,22 +1,11 @@
 import {https} from "firebase-functions/v2";
 import express from "express";
+import type { Request, Response } from "express";
 import cors from "cors";
 import apiRoutes from "./routes";
 
 // Add logging for all incoming requests
 console.log("[BOOT] Express app starting up...");
-// import {FieldValue} from "firebase-admin/firestore";
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-// console.log = function() {};
-
-// Initialize Firebase Admin SDK
-// admin.initializeApp(); // Initialization handled in firebaseAdmin.ts
-
-// console.log("Admin initialized:", !!admin);
-// console.log("Admin.firestore:", !!admin.firestore);
-// console.log("Admin.firestore.FieldValue (after init):",
-//   FieldValue);
 
 const app = express();
 
@@ -28,8 +17,10 @@ app.use((req, res, next) => {
 });
 
 
-// TEMP: Allow all origins for debugging
-app.use(cors());
+// Only allow trusted origins in production
+app.use(cors({
+  origin: process.env.NODE_ENV === "production" ? ["https://academico-ai.web.app"] : true,
+}));
 
 // Handle preflight requests explicitly
 app.options("*", cors());
@@ -37,20 +28,13 @@ app.options("*", cors());
 // Only apply express.json() to routes that expect JSON, not file uploads
 // app.use(express.json());
 
-// Add a logging middleware for
-// all incoming requests (keep this for debugging)
-app.use((req, res, next) => {
-  // console.log(`Express Main: Incoming Request -
-  //   Method: ${req.method},
-  //   Path: ${req.path},
-  //   Origin: ${req.headers.origin},
-  //   Headers: ${JSON.stringify(req.headers, null, 2)},
-  //   Body: ${JSON.stringify(req.body)}`
-  // );
-  next();
-});
-
 app.use("/", apiRoutes);
+
+// Centralized error handler
+app.use((err: unknown, req: Request, res: Response) => {
+  console.error("[ERROR]", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
 
 // Generic 404 handler for Express routes not matched by apiRoutes
 app.use((req, res) => {

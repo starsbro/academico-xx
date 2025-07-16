@@ -11,7 +11,8 @@ interface ChatMessageProps {
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, userId, username }) => {
   const isPdf = message.source === 'pdf';
   const isUser = message.userId === userId;
-  const senderLabel = isUser ? 'You' : username || 'Academico AI';
+  // const senderLabel = isUser ? username : message.userId === 'ai' ? 'AI Response' : username || 'Academico AI';
+  const senderLabel = isUser ? username : 'Academico AI';
   return (
     <div className={`chat-message-container flex mb-6 ml-4 ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
@@ -64,7 +65,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, userId, username }) 
           {isPdf && (
             <span
               style={{
-                color: '#2563eb',
+                color: isUser ? '#fff' : '#2563eb',
                 fontWeight: 600,
                 fontSize: '0.9rem',
                 marginRight: 8,

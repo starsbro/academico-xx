@@ -1,11 +1,3 @@
-/**
- * Handles application/json chat requests (general chat, no PDF).
- * @param {Request} req - Express request object.
- * @param {Response} res - Express response object.
- */
-function handleJsonChat(req: Request, res: Response) {
-  res.status(501).json({ error: "Not implemented" });
-}
 import express from "express";
 import type { Request, Response } from "express";
 import { genkit } from "genkit";
@@ -13,12 +5,10 @@ import { googleAI } from "@genkit-ai/googleai";
 import * as functions from "firebase-functions";
 import { FieldValue } from "firebase-admin/firestore";
 
-
 import firebaseAdmin from "../config/firebaseAdmin";
 import { chatWithPdf } from "../services/pdfChatService";
 import { authenticateFirebaseToken } from "../middleware/auth";
 import { addMessageToChat } from "../models/message-model";
-
 
 const router = express.Router();
 
@@ -175,6 +165,11 @@ function handleMultipartPdfChat(req: Request, res: Response) {
         res.status(401).json({ error: "User not authenticated" });
         return;
       }
+       // Defensive check: ensure a file was uploaded
+      if (!pdfBuffer || !pdfInfo) {
+        res.status(400).json({ error: "No PDF file uploaded. Please attach a PDF file." });
+        return;
+      }
       let pdfUrl = null;
       const hasPrompt = message && message.trim().length > 0;
       const hasPdf = !!pdfBuffer && !!pdfInfo;
@@ -279,6 +274,66 @@ function handleMultipartPdfChat(req: Request, res: Response) {
     }
   });
   req.pipe(busboy);
+}
+
+/**
+ * Handles application/json chat requests (general chat, no PDF).
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ */
+async function handleJsonChat(req: Request, res: Response) {
+  try {
+    const userId = req.user?.uid;
+    if (!userId) {
+      res.status(401).json({ error: "User not authenticated" });
+      return;
+    }
+    const { message, chatId } = req.body;
+    if (!message || !message.trim()) {
+      res.status(400).json({ error: "Message is required" });
+      return;
+    }
+
+    const db = firebaseAdmin.db;
+    let finalChatId = chatId;
+    if (!finalChatId) {
+      const chatRef = await db
+        .collection("users")
+        .doc(userId)
+        .collection("chats")
+        .add({
+          title: "Chat",
+          createdAt: FieldValue.serverTimestamp(),
+          lastUpdatedAt: FieldValue.serverTimestamp(),
+          userId,
+        });
+      finalChatId = chatRef.id;
+    }
+
+    const response = await generalChat(message);
+
+    await addMessageToChat(userId, finalChatId, {
+      userId,
+      message,
+      timestamp: new Date().toISOString(),
+      source: "chat",
+    });
+    await addMessageToChat(userId, finalChatId, {
+      userId: "ai",
+      message: response,
+      timestamp: new Date().toISOString(),
+      source: "chat",
+    });
+
+    res.json({ response, chatId: finalChatId });
+  } catch (err) {
+    console.error("[JSON Chat Route Error]", err);
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: "An unknown error occurred." });
+    }
+  }
 }
 
 export default router;
