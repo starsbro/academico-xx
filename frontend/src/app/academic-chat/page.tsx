@@ -232,7 +232,7 @@ function AcademicChatContent() {
 
                   const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
-                  const headers = idToken ? { Authorization: `Bearer ${idToken}` } : {};
+                  const headers: Record<string, string> = idToken ? { Authorization: `Bearer ${idToken}` } : {};
 
                   let response, data;
                   if (file) {

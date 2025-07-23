@@ -8,7 +8,7 @@ export default function PdfChatUpload({
   chatContainerRef,
 }: {
   onSubmitPdfChat: (payload: { message: string; file?: File }) => void;
-  chatContainerRef?: React.RefObject<HTMLDivElement>;
+  chatContainerRef?: React.RefObject<HTMLDivElement | null>;
 }) {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
@@ -42,7 +42,7 @@ export default function PdfChatUpload({
     if (loading || !message.trim()) return; // Prevent double submit
     setLoading(true);
     // 1. Optimistically show AI thinking placeholder only (handled by parent)
-    await onSubmitPdfChat({ message, file });
+    await onSubmitPdfChat({ message, file: file || undefined });
     scrollToLatest();
     // Reset file input and state after send
     setFile(null);

@@ -10,7 +10,7 @@ interface ChatAreaProps {
   selectedChatId: string | null;
   username: string;
   userId?: string;
-  chatEndRef: React.RefObject<HTMLDivElement>;
+  chatEndRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ChatArea: React.FC<ChatAreaProps> = ({

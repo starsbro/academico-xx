@@ -21,7 +21,7 @@ export default function FirebaseConfigTest() {
         // });
 
         // Test if we can access Firebase Auth
-        await auth.authStateReady;
+        await auth?.authStateReady;
         setConfigStatus('✅ Firebase Authentication is properly configured!');
       } catch (error) {
         console.error('Firebase config error:', error);

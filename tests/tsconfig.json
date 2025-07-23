@@ -4,9 +4,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["../frontend/src/*"],
-      "@/components/*": ["../frontend/src/app/components/*"],
-      "@/utils/*": ["../frontend/src/app/utils/*"],
-      "@/hooks/*": ["../frontend/src/app/hooks/*"],
+      "@/components/*": ["../frontend/src/components/*"],
+      "@/utils/*": ["../frontend/src/utils/*"],
+      "@/hooks/*": ["../frontend/src/hooks/*"],
       "@/contexts/*": ["../frontend/src/contexts/*"],
       "@/lib/*": ["../frontend/src/lib/*"],
       "@/app/*": ["../frontend/src/app/*"]

@@ -16,13 +16,22 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   
-  // Comprehensive reporting
-  reporter: [
-    ['html', { outputFolder: './test-results/playwright-html-report', open: 'never' }],
+  // Increase test timeout for Firebase operations
+  timeout: 60000, // 60 seconds for individual tests
+  expect: {
+    timeout: 10000, // 10 seconds for assertions
+  },
+  
+  // Comprehensive reporting with error handling  
+  reporter: process.stdout.isTTY ? [
+    ['html', { outputFolder: './playwright-report', open: 'never' }],
     ['json', { outputFile: './test-results/playwright-results.json' }],
     ['junit', { outputFile: './test-results/playwright-results.xml' }],
-    ['line'],
-    process.env.CI ? ['github'] : ['list']
+    ['list'] // Use list reporter for local development with TTY
+  ] : [
+    ['json', { outputFile: './test-results/playwright-results.json' }],
+    ['junit', { outputFile: './test-results/playwright-results.xml' }],
+    ['null'] // Null reporter for piped output to completely avoid EPIPE errors
   ],
   
   use: {

@@ -31,7 +31,7 @@ async function globalSetup() {
         lastError = error;
         retries--;
         if (retries > 0) {
-          console.log(`❌ Connection failed, retrying in 5 seconds... (${error.message})`);
+          console.log(`❌ Connection failed, retrying in 5 seconds... (${error instanceof Error ? error.message : error})`);
           await page.waitForTimeout(5000);
         }
       }
@@ -39,7 +39,7 @@ async function globalSetup() {
     
     if (retries === 0) {
       console.error('❌ Failed to connect to server after multiple attempts');
-      console.error('Last error:', lastError?.message);
+      console.error('Last error:', lastError && typeof lastError === 'object' && 'message' in lastError ? lastError.message : lastError);
       throw new Error(`Server at ${baseURL} is not responding`);
     }
     
