@@ -63,7 +63,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !!process.env.PLAYWRIGHT_TEST || !process.env.CI,
     timeout: 120 * 1000,
     cwd: path.join(__dirname, '../../frontend'), // Set working directory to frontend folder
   }
