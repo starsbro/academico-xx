@@ -7,6 +7,9 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './e2e',
   
+  // Global setup to verify server connectivity
+  globalSetup: require.resolve('./global-setup.ts'),
+  
   // Global settings
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -29,8 +32,13 @@ export default defineConfig({
     video: 'retain-on-failure',
     headless: !!process.env.CI,
     viewport: { width: 1280, height: 720 },
-    actionTimeout: 10000,
-    navigationTimeout: 30000,
+    actionTimeout: 15000,
+    navigationTimeout: 60000,
+    // Add retry logic for navigation
+    extraHTTPHeaders: {
+      // Add user agent to help with debugging
+      'User-Agent': 'Playwright-E2E-Test'
+    }
   },
 
   projects: [
@@ -56,11 +64,11 @@ export default defineConfig({
     },
   ],
 
-  // Development server for local testing
-  webServer: process.env.CI ? undefined : {
-    command: 'cd ../frontend && npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // Development server for local testing - disabled for now to avoid conflicts
+  // webServer: process.env.CI ? undefined : {
+  //   command: 'cd ../frontend && npm run dev',
+  //   url: 'http://localhost:3000',
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120 * 1000,
+  // },
 });

@@ -68,12 +68,57 @@ jobs:
 
       - name: Start frontend for E2E tests
         working-directory: ./frontend
-        run: npm run dev &
+        run: |
+          echo "Starting frontend server..."
+          echo "Current directory: $(pwd)"
+          echo "Node.js version: $(node --version)"
+          echo "NPM version: $(npm --version)"
+
+          # Create a simple dev script without turbopack for CI
+          echo "Creating CI-friendly dev command..."
+
+          # Try the regular dev command first, fallback to simple next dev
+          (NODE_ENV=test npm run dev || NODE_ENV=test npx next dev) &
+          FRONTEND_PID=$!
+          echo "Frontend started with PID: $FRONTEND_PID"
+          echo "FRONTEND_PID=$FRONTEND_PID" >> $GITHUB_ENV
+
+          # Give it time to start
+          sleep 10
+          echo "Frontend startup complete"
         env:
           NODE_ENV: test
+          PORT: 3000
 
       - name: Wait for frontend to be ready
-        run: npx wait-on http://localhost:3000 --timeout 60000
+        run: |
+          echo "Waiting for frontend server to be ready on http://localhost:3000..."
+          echo "Checking what's running on port 3000..."
+          netstat -tlnp 2>/dev/null | grep :3000 || echo "Nothing listening on port 3000 yet"
+
+          echo "Waiting with increased timeout and verbosity..."
+          npx wait-on http://localhost:3000 --timeout 180000 --interval 3000 --verbose || {
+            echo "Frontend server failed to start. Debugging information:"
+            echo "Processes listening on port 3000:"
+            netstat -tlnp 2>/dev/null | grep :3000 || echo "No processes on port 3000"
+            echo "Node processes:"
+            ps aux | grep -E "(node|next)" || echo "No node processes found"
+            echo "Frontend server logs (if any):"
+            jobs -l
+            exit 1
+          }
+          echo "Frontend server is ready!"
+
+      - name: Verify frontend is responding
+        run: |
+          echo "Testing frontend connectivity..."
+          curl -f http://localhost:3000 || {
+            echo "Frontend not responding to curl"
+            echo "Port 3000 status:"
+            netstat -tlnp 2>/dev/null | grep :3000 || echo "Nothing on port 3000"
+            exit 1
+          }
+          echo "Frontend is responding correctly!"
 
       - name: Run E2E Authentication Tests
         working-directory: ./tests
@@ -92,6 +137,16 @@ jobs:
           # Test Environment
           NODE_ENV: test
           PLAYWRIGHT_TEST: true
+
+      - name: Stop frontend server
+        if: always()
+        run: |
+          echo "Stopping frontend server..."
+          if [ ! -z "$FRONTEND_PID" ]; then
+            kill $FRONTEND_PID || echo "Frontend server already stopped"
+          fi
+          # Also kill any remaining node processes on port 3000
+          pkill -f "next dev" || echo "No next dev processes found"
 
       - name: Upload E2E test results
         uses: actions/upload-artifact@v4

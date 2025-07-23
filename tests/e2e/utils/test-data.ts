@@ -54,6 +54,43 @@ export const SELECTORS = {
 export const TEST_CONFIG = {
   baseURL: 'http://localhost:3000',
   timeout: 30000,
+  routes: {
+    home: '/',
+    signIn: '/sign-in',
+    signUp: '/sign-up',
+    academicChat: '/academic-chat',
+  },
+  users: {
+    valid: {
+      email: 'test@academico-ai.com',
+      password: 'TestPassword123!',
+      name: 'Test User',
+    },
+    invalid: {
+      email: 'invalid@email.com',
+      password: 'wrongpassword',
+    },
+  },
+  selectors: {
+    // Auth selectors
+    emailInput: '#email',
+    passwordInput: '#password',
+    signInButton: 'button:has-text("Sign in")',
+    signUpButton: 'button:has-text("Create account")',
+
+    // Navigation selectors
+    userButton: '[data-testid="user-button"]',
+    homeLink: 'text=Home',
+    chatLink: 'text=Academic Chat',
+
+    // Chat selectors
+    chatInput: 'textarea, input[type="text"]',
+    searchButton: '[data-testid="search-button"]',
+
+    // Common selectors
+    loadingSpinner: '.animate-spin, [data-testid="loading"]',
+    errorMessage: '[data-testid="error"]',
+  },
 } as const;
 
 export const TEST_TIMEOUTS = {
