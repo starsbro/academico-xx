@@ -43,6 +43,14 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
+      - name: Install tests dependencies
+        working-directory: ./tests
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./tests
+        run: npx playwright install --with-deps chromium
+
       - name: Run frontend linter
         working-directory: ./frontend
         run: npm run lint
@@ -52,13 +60,11 @@ jobs:
         run: npm run test:ci || echo "No tests configured yet"
 
       - name: Run unified tests
-        run: npm run test:unit || echo "No unified tests configured yet"
+        working-directory: ./tests
+        run: npm run test
         env:
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
 
       - name: Start frontend for E2E tests
         working-directory: ./frontend
@@ -70,7 +76,8 @@ jobs:
         run: npx wait-on http://localhost:3000 --timeout 60000
 
       - name: Run E2E Authentication Tests
-        run: npm run test:e2e -- tests/e2e/auth/ --reporter=line
+        working-directory: ./tests
+        run: npm run test:e2e -- e2e/auth/ --reporter=line
         env:
           # Firebase Test Configuration
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_TEST_API_KEY }}

@@ -41,7 +41,12 @@ jobs:
         working-directory: frontend
         run: npm ci
 
+      - name: Install tests dependencies
+        working-directory: tests
+        run: npm ci
+
       - name: Install Playwright browsers
+        working-directory: tests
         run: npx playwright install ${{ matrix.browser }} --with-deps
 
       - name: Build application
@@ -56,7 +61,8 @@ jobs:
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID || 'dummy-app' }}
 
       - name: Run Playwright tests
-        run: npx playwright test --config=tests/config/playwright.config.ts --project=${{ matrix.browser }}
+        working-directory: tests
+        run: npx playwright test --project=${{ matrix.browser }}
         env:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key' }}
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dummy-domain' }}

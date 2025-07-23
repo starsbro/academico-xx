@@ -1,7 +1,7 @@
 module.exports = {
   testEnvironment: 'node',
-  roots: ['<rootDir>/../unit/backend', '<rootDir>/integration/backend'],
-  setupFilesAfterEnv: ['<rootDir>/../jest.setup.ts'],
+  roots: ['<rootDir>/../unit/backend'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.backend.ts'],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/e2e/',
