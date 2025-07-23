@@ -48,6 +48,9 @@ next-env.d.ts
 
 GITHUB_SECRETS_SETUP.md
 
+# GitHub secrets documentation (contains sensitive Firebase config)
+docs/setup/github-secrets.md
+
 setup-github-secrets.sh
 
 .firebase/
