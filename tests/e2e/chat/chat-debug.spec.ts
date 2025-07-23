@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.describe('Chat Interface Debug', () => {
   test('debug chat page loading', async ({ page }) => {
@@ -9,8 +9,36 @@ test.describe('Chat Interface Debug', () => {
     await page.goto('/academic-chat');
     await page.waitForLoadState('networkidle');
 
+    
     // Take a screenshot to see what we're working with
     await page.screenshot({ path: 'debug-chat-page.png', fullPage: true });
+
+    // Check if we're redirected to sign-in (expected behavior for protected route)
+    const currentUrl = page.url();
+    const isOnSignIn = currentUrl.includes('/sign-in');
+    const isOnChat = currentUrl.includes('/academic-chat');
+    
+    console.log('📄 Page title:', await page.title());
+    console.log('🔗 Current URL:', currentUrl);
+    console.log('🔐 On sign-in page:', isOnSignIn);
+    console.log('💬 On chat page:', isOnChat);
+
+    // The test passes if EITHER:
+    // 1. We're redirected to sign-in (expected for protected route)
+    // 2. We're on chat page and see the welcome message (if somehow authenticated)
+    if (isOnSignIn) {
+      console.log('✅ Correctly redirected to sign-in page (protected route working)');
+      await expect(page.getByRole('heading', { name: /welcome back/i })).toBeVisible();
+    } else if (isOnChat) {
+      console.log('✅ On chat page - checking for content');
+      // If we're authenticated somehow, look for chat content
+      await expect(page.getByRole('heading', { name: /welcome to academico ai|academic chat/i })).toBeVisible();
+    } else {
+      console.log('❓ Unexpected page - checking for any heading');
+      // Fallback: just check the page loaded properly
+      await expect(page).toHaveTitle(/academico/i);
+    }
+
 
     // Debug: What's actually on the page?
     // const pageContent = await page.content();

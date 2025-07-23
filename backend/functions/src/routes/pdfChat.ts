@@ -66,6 +66,29 @@ router.post(
  * @param {Response} res - Express response object.
  */
 function handleMultipartPdfChat(req: Request, res: Response) {
+  /**
+   * Extracts a filename string from various possible representations.
+   * @param {unknown} fn - The filename value, which may be a string or object.
+   * @return {string} The extracted filename as a string,
+   * or a fallback if not found.
+   */
+  function extractFilename(fn: unknown): string {
+    if (typeof fn === "string") return fn;
+    if (fn && typeof fn === "object") {
+      const obj = fn as Record<string, unknown>;
+      if (typeof obj.name === "string") return obj.name;
+      if (typeof obj.filename === "string") return obj.filename;
+      if (typeof obj.value === "string") return obj.value;
+      if (
+        typeof obj.toString === "function" &&
+        obj.toString() !== "[object Object]"
+      ) {
+        return obj.toString();
+      }
+    }
+    return "[unknown-filename]";
+  }
+
   // Use Busboy as a factory function (no 'new')
   // Use Busboy as a factory function (not a constructor)
   // eslint-disable-next-line new-cap
@@ -89,50 +112,7 @@ function handleMultipartPdfChat(req: Request, res: Response) {
       mimetype: string
     ) => {
       if (fieldname === "pdf") {
-        // Robustly extract filename as string
-        let realFilename = filename;
-        if (filename && typeof filename === "object") {
-          if (
-            "name" in filename &&
-            typeof (filename as { name?: unknown }).name === "string"
-          ) {
-            realFilename = (filename as { name: string }).name;
-          } else if (
-            "filename" in filename &&
-            typeof (filename as { filename?: unknown }).filename === "string"
-          ) {
-            realFilename = (filename as { filename: string }).filename;
-          } else if (
-            "value" in filename &&
-            typeof (filename as { value?: unknown }).value === "string"
-          ) {
-            realFilename = (filename as { value: string }).value;
-          } else if (
-            typeof (filename as unknown as { toString?: unknown })
-              .toString === "function"
-          ) {
-            const str = (filename as unknown as { toString: () => string })
-              .toString?.();
-            if (str && str !== "[object Object]") {
-              realFilename = str;
-            }
-          } else {
-            for (const key of Object.keys(
-              filename as unknown as Record<string, unknown>
-            )) {
-              const value = (
-                filename as unknown as Record<string, unknown>
-              )[key];
-              if (typeof value === "string") {
-                realFilename = value;
-                break;
-              }
-            }
-            if (typeof realFilename !== "string") {
-              realFilename = "[unknown-filename]";
-            }
-          }
-        }
+        const realFilename = extractFilename(filename);
         pdfInfo = { filename: String(realFilename), mimetype };
         const chunks: Buffer[] = [];
         file.on("data", (data: Buffer) => chunks.push(data));
@@ -163,13 +143,6 @@ function handleMultipartPdfChat(req: Request, res: Response) {
       const userId = req.user?.uid;
       if (!userId) {
         res.status(401).json({ error: "User not authenticated" });
-        return;
-      }
-      // Defensive check: ensure a file was uploaded
-      if (!pdfBuffer || !pdfInfo) {
-        res.status(400).json({
-          error: "No PDF file uploaded. Please attach a PDF file.",
-        });
         return;
       }
 
@@ -223,6 +196,7 @@ function handleMultipartPdfChat(req: Request, res: Response) {
             pdfInfo!.filename :
             String(pdfInfo!.filename),
         });
+
         await addMessageToChat(userId, finalChatId, {
           userId: "ai",
           message: response,
@@ -232,6 +206,7 @@ function handleMultipartPdfChat(req: Request, res: Response) {
             pdfInfo!.filename :
             String(pdfInfo!.filename),
         });
+
         await db
           .collection("pdfUploads")
           .add({
@@ -276,6 +251,7 @@ function handleMultipartPdfChat(req: Request, res: Response) {
       }
     }
   });
+
   // For Cloud Functions 2nd gen: use req.rawBody if available
   const reqWithRawBody = req as Request & { rawBody?: Buffer };
   if (reqWithRawBody.rawBody) {
@@ -297,6 +273,7 @@ async function handleJsonChat(req: Request, res: Response) {
       res.status(401).json({ error: "User not authenticated" });
       return;
     }
+
     const { message, chatId } = req.body;
     if (!message || !message.trim()) {
       res.status(400).json({ error: "Message is required" });

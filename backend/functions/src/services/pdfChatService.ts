@@ -1,4 +1,3 @@
-// This file was moved from src/ to src/services/ for better organization.
 import {googleAI} from "@genkit-ai/googleai";
 import {genkit} from "genkit";
 import {Buffer} from "buffer";
@@ -24,7 +23,6 @@ const ai = genkit({
   model: googleAI.model("gemini-2.5-flash"),
 });
 
-
 /**
  * Chat with a PDF document using an AI model.
  * @param {Buffer} buffer The PDF file as a Buffer.
@@ -41,24 +39,4 @@ export async function chatWithPdf(
   const response = await ai.generate(systemPrompt);
 
   return response.text;
-
-  // // Use pdfjs-dist to extract text
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const loadingTask = (pdfjsLib as any).getDocument({
-  //   data: new Uint8Array(buffer),
-  // });
-  // const pdf = await loadingTask.promise;
-  // let text = "";
-  // for (let i = 1; i <= pdf.numPages; i++) {
-  //   const page = await pdf.getPage(i);
-  //   // TextContent and TextItem types from pdfjs-dist
-  //   const content = await page.getTextContent() as {
-  //     items: Array<{ str: string }>;
-  //   };
-  //   const pageText = content.items.map((item) => item.str).join(" ");
-  //   text += `Page ${i}: ${pageText}\n`;
-  // }
-  // const systemPrompt = `${prompt}\nContext:\n${text}`;
-  // const response = await ai.generate(systemPrompt);
-  // return response.text;
 }

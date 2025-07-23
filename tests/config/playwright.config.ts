@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 
 export default defineConfig({
-  testDir: path.join(__dirname, '../tests/e2e'),
+  testDir: path.join(__dirname, '../e2e'),
   
   // Global settings
   fullyParallel: true,
@@ -12,9 +12,9 @@ export default defineConfig({
   
   // Comprehensive reporting
   reporter: [
-    ['html', { outputFolder: 'test-configs/test-results/playwright-report', open: 'never' }],
-    ['json', { outputFile: 'test-configs/test-results/playwright-results.json' }],
-    ['junit', { outputFile: 'test-configs/test-results/playwright-results.xml' }],
+    ['html', { outputFolder: '../test-results/playwright-html-report', open: 'never' }],
+    ['json', { outputFile: '../test-results/playwright-results.json' }],
+    ['junit', { outputFile: '../test-results/playwright-results.xml' }],
     ['line'],
     process.env.CI ? ['github'] : ['list']
   ],
@@ -31,7 +31,7 @@ export default defineConfig({
   },
 
   // Output directories
-  outputDir: 'test-configs/test-results',
+  outputDir: '../test-results/playwright-artifacts',
 
   projects: [
     // Desktop browsers
@@ -61,10 +61,10 @@ export default defineConfig({
 
   // Development server
   webServer: {
-    command: 'cd frontend && npm run dev',
+    command: 'npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
-    cwd: path.join(__dirname, '..'), // Set working directory to root
-  },
+    cwd: path.join(__dirname, '../../frontend'), // Set working directory to frontend folder
+  }
 });

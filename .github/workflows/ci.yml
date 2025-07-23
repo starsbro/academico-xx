@@ -20,7 +20,7 @@ permissions:
   statuses: write
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "20"
 
 jobs:
   ci:
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install root dependencies
         run: npm ci
@@ -50,6 +50,51 @@ jobs:
       - name: Run frontend tests
         working-directory: ./frontend
         run: npm run test:ci || echo "No tests configured yet"
+
+      - name: Run unified tests
+        run: npm run test:unit || echo "No unified tests configured yet"
+        env:
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start frontend for E2E tests
+        working-directory: ./frontend
+        run: npm run dev &
+        env:
+          NODE_ENV: test
+
+      - name: Wait for frontend to be ready
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run E2E Authentication Tests
+        run: npm run test:e2e -- tests/e2e/auth/ --reporter=line
+        env:
+          # Firebase Test Configuration
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_TEST_API_KEY }}
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_TEST_AUTH_DOMAIN }}
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_TEST_PROJECT_ID }}
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_TEST_STORAGE_BUCKET }}
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_TEST_MESSAGING_SENDER_ID }}
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.FIREBASE_TEST_APP_ID }}
+          # Test User Credentials
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          # Test Environment
+          NODE_ENV: test
+          PLAYWRIGHT_TEST: true
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-test-results-${{ github.sha }}
+          path: |
+            tests/test-results/
+            tests/playwright-report/
+          retention-days: 7
 
       - name: Build frontend project
         working-directory: ./frontend

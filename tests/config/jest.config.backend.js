@@ -1,6 +1,12 @@
 module.exports = {
   testEnvironment: 'node',
-  roots: ['<rootDir>/unit/backend', '<rootDir>/integration/backend'],
+  roots: ['<rootDir>/../unit/backend', '<rootDir>/integration/backend'],
+  setupFilesAfterEnv: ['<rootDir>/../jest.setup.ts'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/e2e/',
+  ],
+  moduleDirectories: ['node_modules', '<rootDir>/../../node_modules'],
   moduleNameMapper: {
     '^backend/functions/(.*)$': '<rootDir>/../../backend/functions/src/$1',
     '^pdfjs-dist/legacy/build/pdf.js$': '<rootDir>/__mocks__/pdfjs-dist.js',

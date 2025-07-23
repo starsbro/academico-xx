@@ -1,3 +1,5 @@
+// Setup file for Jest tests. Move shared setup logic here if needed.
+// You can import this from both frontend and backend configs.
 import '@testing-library/jest-dom';
 
 // Setup environment variables for tests

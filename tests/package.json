@@ -4,12 +4,22 @@
   "description": "Centralized test suite for Academico AI",
   "scripts": {
     "test": "jest",
+    "test:unit": "jest --config jest.config.unit.js",
+    "test:integration": "jest --config jest.config.integration.js",
     "test:backend": "jest --config jest.config.backend.js",
     "test:frontend": "jest --config jest.config.frontend.js",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
+    "test:auth": "playwright test --config=config/auth.config.ts",
+    "test:auth:headed": "playwright test --config=config/auth.config.ts --headed",
+    "test:auth:debug": "playwright test --config=config/auth.config.ts --debug"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",

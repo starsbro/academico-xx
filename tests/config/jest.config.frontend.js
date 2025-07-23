@@ -1,8 +1,15 @@
 module.exports = {
   testEnvironment: 'jsdom',
-  roots: ['<rootDir>/unit/frontend', '<rootDir>/integration/frontend'],
+    roots: ['<rootDir>/../unit', '<rootDir>/../integration'],
+    testMatch: [
+      '**/tests/**/*.(test|spec).(ts|tsx|js|jsx)'
+    ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  moduleDirectories: ['node_modules', '<rootDir>/node_modules', '<rootDir>/../frontend/node_modules'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/tests/e2e/',
+  ],
+  moduleDirectories: ['node_modules', '<rootDir>/../../node_modules', '<rootDir>/../frontend/node_modules'],
   moduleNameMapper: {
     '^@/components/(.*)$': '<rootDir>/../frontend/src/app/components/$1',
     '^@/utils/(.*)$': '<rootDir>/../frontend/src/app/utils/$1',
