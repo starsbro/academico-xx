@@ -6,7 +6,7 @@
 **Backend**: Firebase Functions with TypeScript  
 **Testing**: Playwright for E2E, Local-first approach  
 **Deployment**: Firebase Hosting + Cloud Functions  
-**Environment**: Auto-detection (localhost ↔ production)  
+**Environment**: Auto-detection (localhost ↔ production)
 
 ---
 
@@ -29,6 +29,7 @@ git status
 ```
 
 #### **Option A: Frontend Only Development**
+
 ```bash
 # Terminal 1: Frontend (auto-connects to production backend)
 cd frontend
@@ -38,6 +39,7 @@ npm run dev
 ```
 
 #### **Option B: Full Local Development**
+
 ```bash
 # Terminal 1: Frontend
 cd frontend
@@ -215,6 +217,7 @@ git add . && git commit -m "fix: resolve chat message ordering" && git push
 ## 🔧 **Key File Locations**
 
 ### **Frontend Structure**
+
 ```
 frontend/
 ├── src/
@@ -237,6 +240,7 @@ frontend/
 ```
 
 ### **Backend Structure**
+
 ```
 backend/functions/
 ├── src/
@@ -250,6 +254,7 @@ backend/functions/
 ```
 
 ### **Testing Structure**
+
 ```
 tests/
 ├── e2e/                       # End-to-end tests
@@ -264,6 +269,7 @@ tests/
 ## 📊 **Environment Detection Details**
 
 ### **Automatic URL Switching**
+
 ```typescript
 // src/lib/env-config.ts handles this automatically:
 
@@ -279,6 +285,7 @@ Build time (npm run build):
 ```
 
 ### **Environment Verification**
+
 ```bash
 # Check current environment config
 cd frontend
@@ -297,6 +304,7 @@ npm run dev
 ## 🚨 **Troubleshooting Guide**
 
 ### **❌ dev-check.sh Fails**
+
 ```bash
 # 1. Check specific error:
 ./scripts/dev-check.sh
@@ -311,6 +319,7 @@ cd backend/functions && npm run lint --fix
 ```
 
 ### **❌ Local Testing Fails**
+
 ```bash
 # 1. Verify servers are running:
 curl http://localhost:3000      # Frontend
@@ -326,6 +335,7 @@ npm run local:performance -- --headed
 ```
 
 ### **❌ Environment Detection Issues**
+
 ```bash
 # 1. Check current detection:
 cd frontend
@@ -343,23 +353,27 @@ npm run build
 ## 🎯 **Daily Checklist**
 
 ### **🌅 Start of Day**
+
 - [ ] `git pull origin main`
 - [ ] Start development servers
 - [ ] Check current branch/status
 
 ### **💻 During Development**
+
 - [ ] Make incremental commits
 - [ ] Test changes in browser
 - [ ] Use auto environment detection
 - [ ] No manual .env.local editing
 
 ### **🚀 Before Push**
+
 - [ ] `./scripts/dev-check.sh` (ESSENTIAL)
 - [ ] All tests pass
 - [ ] Commit with descriptive message
 - [ ] Push to appropriate branch
 
 ### **🧪 For Major Features**
+
 - [ ] Start both frontend and backend
 - [ ] `./scripts/test-with-servers.sh`
 - [ ] All comprehensive tests pass
@@ -405,7 +419,7 @@ You'll know your workflow is working when:
 ✅ **CI/CD pipelines rarely fail**  
 ✅ **Environment switching is automatic**  
 ✅ **Testing is optional but comprehensive when needed**  
-✅ **Deployments are one-command: `git push`**  
+✅ **Deployments are one-command: `git push`**
 
 ---
 
