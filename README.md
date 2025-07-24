@@ -37,11 +37,19 @@ npm run test:coverage     # Coverage report
 
 ## 📚 Documentation
 
-For detailed setup guides, troubleshooting, and architecture decisions:
+For comprehensive guides and detailed information:
 
-- **[Setup Guides](./docs/setup/)** - CI/CD, Firebase, GitHub secrets
-- **[Troubleshooting](./docs/troubleshooting/)** - Common issues and solutions
-- **[Architecture](./docs/architecture/)** - Testing decisions and migration plans
+### 🚀 **Quick Access**
+- **[Complete Documentation](./docs/)** - Full documentation hub
+- **[Development Workflow](./docs/developer/DETAILED_DEVELOPMENT_WORKFLOW.md)** - Complete development guide
+- **[Quick Start](./docs/getting-started/quick-start.md)** - Get running in 5 minutes
+
+### 📁 **By Category**
+- **[Developer Guides](./docs/developer/)** - Development workflow, local setup, testing
+- **[Setup & Configuration](./docs/setup/)** - Environment setup, auto-detection, Firebase
+- **[Troubleshooting](./docs/troubleshooting/)** - Common issues and solutions  
+- **[Architecture](./docs/architecture/)** - Technical design and decisions
+- **[API Reference](./docs/api/)** - Complete API documentation
 
 ## 🛠 Development Tools
 

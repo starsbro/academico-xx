@@ -12,11 +12,20 @@ Welcome to the comprehensive documentation for Academico-AI, an AI-powered acade
 
 ### 💻 **For Developers**
 
+- [**Development Workflow**](developer/DETAILED_DEVELOPMENT_WORKFLOW.md) - Complete development guide
+- [**Local Development**](developer/LOCAL_DEVELOPMENT_GUIDE.md) - Set up local development environment
+- [**Local Testing**](developer/LOCAL_TESTING_GUIDE.md) - Local testing strategies
 - [**Architecture Overview**](developer/architecture.md) - Technical system design
 - [**API Reference**](api/endpoints.md) - Complete API documentation
-- [**Glossary**](GLOSSARY.md) - Technical terms and definitions
 - [**Frontend Guide**](developer/frontend-guide.md) - Frontend development guide
 - [**Contributing Guide**](developer/contributing.md) - How to contribute to the project
+
+### ⚙️ **Setup & Configuration**
+
+- [**Environment Setup**](setup/LOCAL_ENVIRONMENT_SETUP.md) - Complete environment configuration
+- [**Auto Environment Detection**](setup/ENVIRONMENT_AUTO_DETECTION.md) - Automatic environment switching
+- [**Firebase Setup**](setup/FIREBASE_TEST_ACCOUNT_SETUP.md) - Firebase configuration
+- [**GitHub Secrets**](setup/github-secrets.md) - CI/CD secrets configuration
 
 ### ✨ **Features & Functionality**
 
