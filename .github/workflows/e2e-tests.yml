@@ -1,4 +1,4 @@
-# DISABLED: E2E Tests - Using local testing instead  
+# DISABLED: E2E Tests - Using local testing instead
 # This workflow has been disabled in favor of local testing approach
 # Run E2E tests locally using: npm run local:accessibility, npm run local:performance
 #
