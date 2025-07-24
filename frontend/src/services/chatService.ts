@@ -1,8 +1,9 @@
 // Chat API service functions
 
 import { UserChat, ChatMessage } from '../types/chat.types';
+import { getBackendUrl } from '../lib/env-config';
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL!;
+const backendUrl = getBackendUrl();
 
 export class ChatService {
   static async fetchUserChats(userId: string): Promise<UserChat[]> {

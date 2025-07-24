@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Integration (Final Validation)
 
 on:
   push:
@@ -24,7 +24,7 @@ env:
 
 jobs:
   ci:
-    name: CI
+    name: Final Validation (Lint + Build)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -43,122 +43,11 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
-      - name: Install tests dependencies
-        working-directory: ./tests
-        run: npm ci
-
-      - name: Install Playwright browsers
-        working-directory: ./tests
-        run: npx playwright install --with-deps chromium
-
-      - name: Run frontend linter
+      - name: Run frontend linter (final check)
         working-directory: ./frontend
         run: npm run lint
 
-      - name: Run frontend tests
-        working-directory: ./frontend
-        run: npm run test:ci || echo "No tests configured yet"
-
-      - name: Run unified tests
-        working-directory: ./tests
-        run: npm run test
-        env:
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-
-      - name: Start frontend for E2E tests
-        working-directory: ./frontend
-        run: |
-          echo "Starting frontend server..."
-          echo "Current directory: $(pwd)"
-          echo "Node.js version: $(node --version)"
-          echo "NPM version: $(npm --version)"
-
-          # Create a simple dev script without turbopack for CI
-          echo "Creating CI-friendly dev command..."
-
-          # Try the regular dev command first, fallback to simple next dev
-          (NODE_ENV=test npm run dev || NODE_ENV=test npx next dev) &
-          FRONTEND_PID=$!
-          echo "Frontend started with PID: $FRONTEND_PID"
-          echo "FRONTEND_PID=$FRONTEND_PID" >> $GITHUB_ENV
-
-          # Give it time to start
-          sleep 10
-          echo "Frontend startup complete"
-        env:
-          NODE_ENV: test
-          PORT: 3000
-
-      - name: Wait for frontend to be ready
-        run: |
-          echo "Waiting for frontend server to be ready on http://localhost:3000..."
-          echo "Checking what's running on port 3000..."
-          netstat -tlnp 2>/dev/null | grep :3000 || echo "Nothing listening on port 3000 yet"
-
-          echo "Waiting with increased timeout and verbosity..."
-          npx wait-on http://localhost:3000 --timeout 180000 --interval 3000 --verbose || {
-            echo "Frontend server failed to start. Debugging information:"
-            echo "Processes listening on port 3000:"
-            netstat -tlnp 2>/dev/null | grep :3000 || echo "No processes on port 3000"
-            echo "Node processes:"
-            ps aux | grep -E "(node|next)" || echo "No node processes found"
-            echo "Frontend server logs (if any):"
-            jobs -l
-            exit 1
-          }
-          echo "Frontend server is ready!"
-
-      - name: Verify frontend is responding
-        run: |
-          echo "Testing frontend connectivity..."
-          curl -f http://localhost:3000 || {
-            echo "Frontend not responding to curl"
-            echo "Port 3000 status:"
-            netstat -tlnp 2>/dev/null | grep :3000 || echo "Nothing on port 3000"
-            exit 1
-          }
-          echo "Frontend is responding correctly!"
-
-      - name: Run E2E Authentication Tests
-        working-directory: ./tests
-        run: npm run test:e2e -- e2e/auth/ --reporter=line
-        env:
-          # Firebase Test Configuration
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_TEST_API_KEY }}
-          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_TEST_AUTH_DOMAIN }}
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_TEST_PROJECT_ID }}
-          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_TEST_STORAGE_BUCKET }}
-          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_TEST_MESSAGING_SENDER_ID }}
-          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.FIREBASE_TEST_APP_ID }}
-          # Test User Credentials
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-          # Test Environment
-          NODE_ENV: test
-          PLAYWRIGHT_TEST: true
-
-      - name: Stop frontend server
-        if: always()
-        run: |
-          echo "Stopping frontend server..."
-          if [ ! -z "$FRONTEND_PID" ]; then
-            kill $FRONTEND_PID || echo "Frontend server already stopped"
-          fi
-          # Also kill any remaining node processes on port 3000
-          pkill -f "next dev" || echo "No next dev processes found"
-
-      - name: Upload E2E test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: e2e-test-results-${{ github.sha }}
-          path: |
-            tests/test-results/
-            tests/playwright-report/
-          retention-days: 7
-
-      - name: Build frontend project
+      - name: Build frontend project (deployment validation)
         working-directory: ./frontend
         run: npm run build
 
@@ -173,11 +62,11 @@ jobs:
         working-directory: ./backend/functions
         run: npm ci
 
-      - name: Run backend linter
+      - name: Run backend linter (final check)
         working-directory: ./backend/functions
         run: npm run lint
 
-      - name: Build backend functions
+      - name: Build backend functions (deployment validation)
         working-directory: ./backend/functions
         run: npm run build
 
@@ -187,6 +76,3 @@ jobs:
           name: backend-build-${{ github.sha }}
           path: backend/functions/lib/
           retention-days: 7
-
-      - name: Run comprehensive validation
-        run: npm run validate

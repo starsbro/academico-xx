@@ -7,6 +7,7 @@ import { ChatSidebar, ChatArea, PdfChatUpload } from '../../components/Chat';
 import { ProtectedRoute } from '../../components/Auth/ProtectedRoute';
 import { ThemeToggle } from '../../components/ThemeToggle/ThemeToggle';
 import { Menu, X } from 'lucide-react';
+import { getBackendUrl } from '../../lib/env-config';
 // import GetIdTokenButton from '../components/GetIdTokenButton';
 
 export default function AcademicChatPage() {
@@ -55,6 +56,7 @@ function AcademicChatContent() {
 
     // Actions
     addMessageToChat,
+    clearOptimisticMessages,
     setNewChatTitle,
     handleNewChat,
     handleSelectChat,
@@ -223,6 +225,13 @@ function AcademicChatContent() {
                 onSubmitPdfChat={async ({ message, file }) => {
                   if (!user?.uid) return;
                   if (!message.trim()) return;
+
+                  const requestStartTime = Date.now();
+                  console.log(`[CHAT-REQUEST] Starting chat request at ${new Date().toISOString()}`);
+
+                  // Clear any existing optimistic state first
+                  setAiThinkingMessage(null);
+
                   // Optimistically add user's prompt
                   addMessageToChat({
                     userId: user.uid,
@@ -230,55 +239,122 @@ function AcademicChatContent() {
                   });
                   setAiThinkingMessage({ userId: 'ai', message: 'Thinking...' });
 
-                  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`;
+                  const apiUrl = `${getBackendUrl()}/chat-with-pdf`;
                   const idToken = await (await import('../../utils/getIdToken')).getIdToken();
                   const headers: Record<string, string> = idToken ? { Authorization: `Bearer ${idToken}` } : {};
 
                   let response, data;
-                  if (file) {
-                    // Send as FormData if file is present
-                    const formData = new FormData();
-                    formData.append('message', message);
-                    formData.append('pdf', file, file.name);
-                    // console.log('DEBUG file:', file, 'name:', file.name, 'type:', typeof file);
-                    // Only append chatId if continuing an existing chat
-                    if (selectedChatId) formData.append('chatId', selectedChatId);
+                  try {
+                    // Create AbortController for timeout
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => {
+                      console.log('[CHAT-TIMEOUT] Request timeout after 120 seconds');
+                      controller.abort();
+                    }, 120000); // 2 minutes timeout
 
-                    response = await fetch(apiUrl, {
-                      method: 'POST',
-                      body: formData,
-                      ...(idToken ? { headers: { Authorization: `Bearer ${idToken}` } } : {}),
-                    });
+                    if (file) {
+                      // Send as FormData if file is present
+                      const formData = new FormData();
+                      formData.append('message', message);
+                      formData.append('pdf', file, file.name);
+                      // Only append chatId if continuing an existing chat
+                      if (selectedChatId) formData.append('chatId', selectedChatId);
+
+                      response = await fetch(apiUrl, {
+                        method: 'POST',
+                        body: formData,
+                        signal: controller.signal,
+                        ...(idToken ? { headers: { Authorization: `Bearer ${idToken}` } } : {}),
+                      });
+                    } else {
+                      // Send as JSON if no file
+                      response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                          ...headers,
+                          'Content-Type': 'application/json',
+                        },
+                        signal: controller.signal,
+                        body: JSON.stringify({
+                          message,
+                          ...(selectedChatId ? { chatId: selectedChatId } : {}),
+                        }),
+                      });
+                    }
+
+                    clearTimeout(timeoutId);
+
+                    const requestDuration = Date.now() - requestStartTime;
+                    console.log(`[CHAT-RESPONSE] Received response after ${requestDuration}ms`);
+
+                    if (!response.ok) {
+                      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
                     data = await response.json();
+
+                    const totalDuration = Date.now() - requestStartTime;
+                    console.log(`[CHAT-COMPLETE] Full request completed in ${totalDuration}ms`);
+
+                    // Clear AI thinking state first
+                    setAiThinkingMessage(null);
+
                     // Always set selectedChatId to the returned chatId
                     if (data.chatId) {
                       handleSelectChat(data.chatId);
-                      await fetchMessagesForChat(data.chatId);
-                    }
-                  } else {
-                    // Send as JSON if no file
-                    response = await fetch(apiUrl, {
-                      method: 'POST',
-                      headers: {
-                        ...headers,
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        message,
-                        ...(selectedChatId ? { chatId: selectedChatId } : {}),
-                      }),
-                    });
-                    data = await response.json();
-                    if (data.chatId) {
-                      handleSelectChat(data.chatId);
-                      await fetchMessagesForChat(data.chatId);
-                    }
-                  }
 
-                  if (!response.ok) {
-                    const error = data?.error || (await response.text());
-                    setAiThinkingMessage({ userId: 'ai', message: `Upload failed: ${error}` });
-                    setTimeout(() => setAiThinkingMessage(null), 4000);
+                      // Add environment-aware delay for database consistency
+                      // Production Firebase needs longer delays due to network latency and distributed systems
+                      const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+                      const isProduction =
+                        hostname.includes('web.app') ||
+                        hostname.includes('firebaseapp.com') ||
+                        hostname.includes('academico-ai') ||
+                        (hostname !== 'localhost' && hostname !== '127.0.0.1');
+
+                      const baseDelay = isProduction ? 300 : 50; // Minimal delay for local development since ordering is precise
+                      const delay = requestDuration < 3000 ? baseDelay : Math.min(baseDelay + 50, 200);
+
+                      console.log(
+                        `[CHAT-SYNC] ${isProduction ? 'PRODUCTION' : 'LOCAL'} mode (hostname: ${hostname}): Waiting ${delay}ms for database sync (response took ${requestDuration}ms)`
+                      );
+
+                      setTimeout(async () => {
+                        // Clear optimistic messages just before fetching fresh data
+                        clearOptimisticMessages();
+                        await fetchMessagesForChat(data.chatId);
+                      }, delay);
+                    } else {
+                      // If no chatId, clear optimistic messages immediately
+                      clearOptimisticMessages();
+                    }
+                  } catch (error) {
+                    const errorDuration = Date.now() - requestStartTime;
+                    console.error(`[CHAT-ERROR] Request failed after ${errorDuration}ms:`, error);
+
+                    // Clear optimistic messages and AI thinking message, then show error
+                    clearOptimisticMessages();
+                    if (error instanceof Error) {
+                      if (error.name === 'AbortError') {
+                        setAiThinkingMessage({
+                          userId: 'ai',
+                          message: 'Request timed out. Please try again with a shorter message.',
+                        });
+                      } else {
+                        setAiThinkingMessage({ userId: 'ai', message: `Error: ${error.message}` });
+                      }
+                    } else {
+                      setAiThinkingMessage({
+                        userId: 'ai',
+                        message: 'An unexpected error occurred. Please try again.',
+                      });
+                    }
+
+                    // Clear error message after 5 seconds
+                    setTimeout(() => {
+                      setAiThinkingMessage(null);
+                    }, 5000);
+                    setTimeout(() => setAiThinkingMessage(null), 5000);
                     return;
                   }
 

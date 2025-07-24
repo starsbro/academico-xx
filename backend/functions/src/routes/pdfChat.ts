@@ -36,8 +36,21 @@ const generalAi = genkit({
  */
 async function generalChat(prompt: string): Promise<string> {
   if (!prompt || prompt.trim() === "") return "Please enter a question.";
-  const response = await generalAi.generate(prompt);
-  return response.text;
+
+  const startTime = Date.now();
+  console.log(`[AI-REQUEST] Starting Gemini 
+    API call for prompt length: ${prompt.length}`);
+  try {
+    const response = await generalAi.generate(prompt);
+    const duration = Date.now() - startTime;
+    console.log(`[AI-SUCCESS] Gemini API call completed in ${duration}ms`);
+    return response.text;
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    console.error(`[AI-ERROR] Gemini API call
+      failed after ${duration}ms:`, error);
+    throw error;
+  }
 }
 
 // Support both multipart/form-data (file upload)
@@ -187,10 +200,19 @@ function handleMultipartPdfChat(req: Request, res: Response) {
         pdfUrl = url;
         response = await chatWithPdf(pdfBuffer!, prompt);
 
+        // Store messages with correct chronological timestamps
+        const baseTime = Date.now();
+        const userTimestamp = new Date(baseTime).toISOString();
+        // AI message 1ms later
+        const aiTimestamp = new Date(baseTime + 1).toISOString();
+
+        console.log(`[TIMESTAMP-FIX] PDF Chat - User: ${userTimestamp}, ` +
+          `AI: ${aiTimestamp}, Diff: ${baseTime + 1 - baseTime}ms`);
+
         await addMessageToChat(userId, finalChatId, {
           userId,
           message: prompt,
-          timestamp: new Date().toISOString(),
+          timestamp: userTimestamp,
           source: "pdf",
           pdfFilename: typeof pdfInfo!.filename === "string" ?
             pdfInfo!.filename :
@@ -200,7 +222,7 @@ function handleMultipartPdfChat(req: Request, res: Response) {
         await addMessageToChat(userId, finalChatId, {
           userId: "ai",
           message: response,
-          timestamp: new Date().toISOString(),
+          timestamp: aiTimestamp,
           source: "pdf",
           pdfFilename: typeof pdfInfo!.filename === "string" ?
             pdfInfo!.filename :
@@ -224,19 +246,41 @@ function handleMultipartPdfChat(req: Request, res: Response) {
       }
 
       if (hasPrompt) {
+        console.log(`[CHAT-START] Processing 
+          general chat for user ${userId}`);
+        const chatStartTime = Date.now();
         response = await generalChat(message);
-        await addMessageToChat(userId, finalChatId, {
-          userId,
-          message: message,
-          timestamp: new Date().toISOString(),
-          source: "chat",
-        });
-        await addMessageToChat(userId, finalChatId, {
-          userId: "ai",
-          message: response,
-          timestamp: new Date().toISOString(),
-          source: "chat",
-        });
+
+        const chatDuration = Date.now() - chatStartTime;
+        console.log(`[CHAT-COMPLETE] General 
+          chat processed in ${chatDuration}ms`);
+
+        // Run database operations in parallel
+        // for better performance
+        // Generate timestamps to ensure correct chronological order
+        const baseTime = Date.now();
+        const userTimestamp = new Date(baseTime).toISOString();
+        // AI message 1ms later
+        const aiTimestamp = new Date(baseTime + 1).toISOString();
+
+        console.log(`[TIMESTAMP-FIX] General Chat - User: ${userTimestamp}, ` +
+          `AI: ${aiTimestamp}, Diff: ${baseTime + 1 - baseTime}ms`);
+
+        await Promise.all([
+          addMessageToChat(userId, finalChatId, {
+            userId,
+            message: message,
+            timestamp: userTimestamp,
+            source: "chat",
+          }),
+          addMessageToChat(userId, finalChatId, {
+            userId: "ai",
+            message: response,
+            timestamp: aiTimestamp,
+            source: "chat",
+          }),
+        ]);
+
         res.json({ response, chatId: finalChatId });
         return;
       }
@@ -298,18 +342,32 @@ async function handleJsonChat(req: Request, res: Response) {
 
     const response = await generalChat(message);
 
-    await addMessageToChat(userId, finalChatId, {
-      userId,
-      message,
-      timestamp: new Date().toISOString(),
-      source: "chat",
-    });
-    await addMessageToChat(userId, finalChatId, {
-      userId: "ai",
-      message: response,
-      timestamp: new Date().toISOString(),
-      source: "chat",
-    });
+    // Run database operations in parallel
+    // for better performance
+    // Generate timestamps to
+    // ensure correct chronological order
+    const baseTime = Date.now();
+    const userTimestamp = new Date(baseTime).toISOString();
+    // AI message 1ms later
+    const aiTimestamp = new Date(baseTime + 1).toISOString();
+
+    console.log(`[TIMESTAMP-FIX] JSON Chat - User: ${userTimestamp}, ` +
+      `AI: ${aiTimestamp}, Diff: ${baseTime + 1 - baseTime}ms`);
+
+    await Promise.all([
+      addMessageToChat(userId, finalChatId, {
+        userId,
+        message,
+        timestamp: userTimestamp,
+        source: "chat",
+      }),
+      addMessageToChat(userId, finalChatId, {
+        userId: "ai",
+        message: response,
+        timestamp: aiTimestamp,
+        source: "chat",
+      }),
+    ]);
 
     res.json({ response, chatId: finalChatId });
   } catch (err) {

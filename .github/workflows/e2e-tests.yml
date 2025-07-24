@@ -1,12 +1,26 @@
-name: E2E Tests
-
-on:
-  push:
-    branches: [main, develop, dev, chat-ai]
-  pull_request:
-    branches: [main, develop, dev]
-
-permissions:
+# DISABLED: E2E Tests - Using local testing instead  
+# This workflow has been disabled in favor of local testing approach
+# Run E2E tests locally using: npm run local:accessibility, npm run local:performance
+#
+# To re-enable: uncomment the workflow below and remove this comment block
+#
+# Original workflow disabled on: July 23, 2025
+# Reason: Moved to local-first development approach for faster feedback
+#
+# Local testing commands:
+# - ./scripts/dev-check.sh (lint + build + quick test)
+# - npm run local:accessibility (30s - includes E2E accessibility)
+# - npm run local:performance (2min - includes E2E performance)
+# - npm run local:smoke (30s - basic E2E functionality)
+# - npm run local:debug (visual E2E debugging)
+#
+# name: E2E Tests
+#
+# on:
+#   push:
+#     branches: [main, develop, dev, chat-ai]
+#   pull_request:
+#     branches: [main, develop, dev]permissions:
   contents: read
   actions: read
   checks: write

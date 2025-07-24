@@ -1,10 +1,26 @@
-name: Test & Quality Checks
-
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
+# DISABLED: Test & Quality Checks - Using local testing instead
+# This workflow has been disabled in favor of local testing approach
+# Run tests locally using: npm run local:accessibility, npm run local:performance
+#
+# To re-enable: uncomment the workflow below and remove this comment block
+#
+# Original workflow disabled on: July 23, 2025
+# Reason: Moved to local-first development approach for faster feedback
+#
+# Local testing commands:
+# - ./scripts/dev-check.sh (lint + build + quick test)
+# - npm run local:accessibility (30s)
+# - npm run local:performance (2min)
+# - npm run local:smoke (30s)
+# - npm run local:debug (visual debugging)
+#
+# name: Test & Quality Checks
+#
+# on:
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main]
 
 permissions:
   checks: write

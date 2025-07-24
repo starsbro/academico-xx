@@ -46,6 +46,10 @@ app.use((req, res) => {
 
 // Export the Express app as an HTTP Cloud Function (2nd gen compatible)
 // Allow up to 32MB request size for file uploads
+// and increase timeout for AI processing
 export const api = https.onRequest({
   region: "us-central1",
+  timeoutSeconds: 300, // 5 minutes for AI processing
+  memory: "1GiB", // Increase memory for better performance
+  maxInstances: 10, // Limit concurrent instances to prevent rate limiting
 }, app);

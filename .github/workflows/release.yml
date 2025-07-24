@@ -1,9 +1,14 @@
-name: Release
+name: Release (Production Deployment)
 
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+
+# Note: Release tags should only be created after thorough local testing:
+# - All local validation passed (./scripts/dev-check.sh)
+# - All local tests passed (npm run local:accessibility, local:performance)
+# - Manual testing completed on staging/development environment
 
 permissions:
   checks: write
@@ -13,13 +18,13 @@ permissions:
   statuses: write
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "20"
 
 jobs:
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,7 +33,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: |
             frontend/package-lock.json
             backend/functions/package-lock.json
@@ -82,7 +87,7 @@ jobs:
             ## Changes in this Release
             - Auto-generated release from tag ${{ github.ref }}
             - Deployed to Firebase: https://academico-ai.web.app
-            
+
             ## Deployment URLs
             - **Production**: https://academico-ai.web.app
             - **Firebase Console**: https://console.firebase.google.com/project/academico-ai

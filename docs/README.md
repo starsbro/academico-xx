@@ -14,6 +14,7 @@ Welcome to the comprehensive documentation for Academico-AI, an AI-powered acade
 
 - [**Architecture Overview**](developer/architecture.md) - Technical system design
 - [**API Reference**](api/endpoints.md) - Complete API documentation
+- [**Glossary**](GLOSSARY.md) - Technical terms and definitions
 - [**Frontend Guide**](developer/frontend-guide.md) - Frontend development guide
 - [**Contributing Guide**](developer/contributing.md) - How to contribute to the project
 
@@ -40,6 +41,7 @@ Welcome to the comprehensive documentation for Academico-AI, an AI-powered acade
 ### 💻 Developer Documentation (`developer/`)
 
 - [Architecture Overview](./developer/architecture.md) - System design and technology stack
+- [Glossary](./GLOSSARY.md) - Technical terms and definitions
 - [Frontend Guide](./developer/frontend-guide.md) - React/Next.js development
 - [Backend Guide](./developer/backend-guide.md) - Firebase Functions and API development
 - [Contributing Guide](./developer/contributing.md) - How to contribute code

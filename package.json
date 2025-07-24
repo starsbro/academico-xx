@@ -21,6 +21,7 @@
     "serve": "firebase emulators:start",
     "dev": "firebase emulators:start --import=./emulator-data --export-on-exit",
     "dev:reset": "firebase emulators:start --import=./emulator-data --export-on-exit --wipe-on-start",
+    "dev:local": "cd backend/functions && npx ts-node src/local-server.ts",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "test:unit": "jest --config=tests/config/jest.config.frontend.js && jest --config=tests/config/jest.config.backend.js",
     "test:unit:frontend": "jest --config=tests/config/jest.config.frontend.js",
@@ -49,7 +50,6 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.8.2",
     "@lhci/cli": "^0.15.1",
-    "@playwright/test": "^1.53.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.6.1",

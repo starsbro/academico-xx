@@ -2,6 +2,7 @@ import { ChatMessage, UserChat } from '../types/chat.types';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { ChatService } from '../services/chatService';
+import { getBackendUrl } from '../lib/env-config';
 
 export const useChat = () => {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -29,6 +30,18 @@ export const useChat = () => {
     ]);
   };
 
+  // Clear optimistic messages (messages with IDs starting with 'local-')
+  const clearOptimisticMessages = () => {
+    setChatHistory((prev) => {
+      const optimisticCount = prev.filter((msg) => msg.id.startsWith('local-')).length;
+      const filteredMessages = prev.filter((msg) => !msg.id.startsWith('local-'));
+      console.log(
+        `[CLEAR-OPTIMISTIC] Removed ${optimisticCount} optimistic messages, ${filteredMessages.length} remain`
+      );
+      return filteredMessages;
+    });
+  };
+
   // Fetch all chats for the user
   const fetchUserChats = useCallback(async () => {
     if (!user?.uid) {
@@ -53,8 +66,29 @@ export const useChat = () => {
       if (!user?.uid) return;
       setIsLoadingMessages(true);
       try {
+        console.log(`[FETCH-MESSAGES] Fetching messages for chat ${chatId}`);
         const data = await ChatService.fetchChatMessages(chatId, user.uid);
-        setChatHistory(data);
+        console.log(`[FETCH-MESSAGES] Retrieved ${data.length} messages from server`);
+
+        // Debug: Log raw timestamps before sorting
+        console.log('[FETCH-MESSAGES] Raw message timestamps:');
+        data.forEach((msg, idx) => {
+          console.log(
+            `  ${idx + 1}. ${msg.userId === user.uid ? 'User' : 'AI'}: "${msg.message.substring(0, 30)}..." - ${msg.timestamp} (${new Date(msg.timestamp).getTime()})`
+          );
+        });
+
+        // Sort messages by timestamp to ensure correct order
+        const sortedData = data.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        console.log(
+          `[FETCH-MESSAGES] Message order after sorting: ${sortedData
+            .map(
+              (msg, idx) =>
+                `${idx + 1}. ${msg.userId === user.uid ? 'User' : 'AI'}: "${msg.message.substring(0, 30)}..."`
+            )
+            .join(', ')}`
+        );
+        setChatHistory(sortedData);
       } catch (error) {
         console.error(`Failed to fetch chat history for chat ${chatId}:`, error);
         setChatHistory([]);
@@ -83,7 +117,7 @@ export const useChat = () => {
       if (!idToken) throw new Error('No auth token available');
       const formData = new FormData();
       formData.append('userId', user.uid);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat-with-pdf`, {
+      const response = await fetch(`${getBackendUrl()}/chat-with-pdf`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -211,6 +245,7 @@ export const useChat = () => {
 
     setCurrentMessage,
     setNewChatTitle,
+    clearOptimisticMessages,
     handleNewChat,
     handleSelectChat,
     handleSaveChatTitle,

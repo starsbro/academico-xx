@@ -56,7 +56,7 @@ export default function PdfChatUpload({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full bg-white !border-2 !border-gray-200 focus-within:!border-blue-500 rounded-xl shadow-xl p-2 flex flex-col gap-2 my-3 !mb-6 transition-colors"
+      className="w-full bg-white dark:bg-gray-800 !border-2 !border-gray-200 dark:!border-gray-600 focus-within:!border-blue-500 rounded-xl shadow-xl p-2 flex flex-col gap-2 my-3 !mb-6 transition-colors"
       style={{ boxSizing: 'border-box', position: 'sticky', bottom: 0, zIndex: 10 }}
     >
       {/* Upload button row */}
@@ -74,20 +74,27 @@ export default function PdfChatUpload({
         <button
           type="button"
           onClick={handleUploadClick}
-          className="p-2 rounded-full border border-blue-200 bg-blue-100 text-blue-700 flex items-center gap-1 cursor-pointer"
-          title={file ? file.name : 'Attach PDF'}
+          className="p-2 rounded-full border border-blue-200 dark:border-blue-700 bg-blue-100 dark:bg-blue-900 !text-blue-700 dark:!text-blue-300 flex items-center gap-1 cursor-pointer"
+          title={file ? `Selected: ${file.name}` : 'Attach PDF file'}
+          aria-label={file ? `Selected PDF: ${file.name}` : 'Attach PDF file'}
           disabled={loading}
         >
           <Paperclip size={20} />
-          <span className="ml-1 text-lg font-medium ">Add PDF...</span>
+          <span className="ml-1 text-lg font-medium !text-blue-700 dark:!text-blue-300">Add PDF...</span>
         </button>
-        {file && <span className="text-lg text-blue-700 truncate max-w-[240px]">{file.name}</span>}
+        {file && <span className="text-lg text-blue-700 dark:text-blue-300 truncate max-w-[240px]">{file.name}</span>}
       </div>
 
       {/* Textarea and send button row */}
       <div className="flex items-end gap-2 w-full">
         <textarea
-          className="flex-1 resize-none rounded-md border border-transparent px-3 py-2 text-sm shadow-none min-h-[40px] max-h-[120px] transition-all focus:outline-none focus:border-blue-500"
+          className="flex-1 resize-none rounded-md border border-transparent px-3 py-2 text-sm !text-gray-900 dark:!text-white bg-transparent shadow-none min-h-[40px] max-h-[120px] transition-all focus:outline-none focus:border-blue-500 !placeholder:text-gray-500 dark:!placeholder:text-gray-400"
+          style={{
+            color: 'var(--foreground)',
+            minHeight: 40,
+            maxHeight: 120,
+            backgroundColor: 'transparent',
+          }}
           value={message}
           onChange={handleMessageChange}
           onKeyDown={(e) => {
@@ -102,16 +109,17 @@ export default function PdfChatUpload({
             }
           }}
           placeholder="Type your request..."
+          aria-label="Type your message or question"
           rows={1}
           disabled={loading}
-          style={{ minHeight: 40, maxHeight: 120 }}
         />
         <button
           type="submit"
           disabled={loading || !message.trim()}
           className="p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white flex items-center justify-center disabled:bg-gray-300"
           style={{ height: 40, width: 40 }}
-          title="Send"
+          title="Send message"
+          aria-label="Send message"
         >
           {loading ? (
             <span className="loader border-t-2 border-white border-solid rounded-full w-5 h-5 block" />
