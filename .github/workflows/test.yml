@@ -13,191 +13,25 @@
 # - npm run local:performance (2min)
 # - npm run local:smoke (30s)
 # - npm run local:debug (visual debugging)
-#
-# name: Test & Quality Checks
-#
-# on:
-#   push:
-#     branches: [main, develop]
-#   pull_request:
-#     branches: [main]
-#
-# permissions:
-#   checks: write
-#   contents: read
-#   pull-requests: write
-#   actions: read
-#   statuses: write
-#
-# env:
-#   NODE_VERSION: "20"
-#
-# jobs:
-#   frontend-tests:
-#     name: Frontend Tests
-#     runs-on: ubuntu-latest
-#
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#
-#       - name: Setup Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: ${{ env.NODE_VERSION }}
-#           cache: "npm"
-#           cache-dependency-path: frontend/package-lock.json
-#
-#       - name: Install dependencies
-#         working-directory: ./frontend
-#         run: npm ci
-#
-#       - name: Run ESLint
-#         working-directory: ./frontend
-#         run: npm run lint
-#
-#       - name: Run Prettier check
-#         working-directory: ./frontend
-#         run: npx prettier --check "src/**/*.{ts,tsx,js,jsx,json,css,md}"
-#
-#       - name: Type check
-#         working-directory: ./frontend
-#         run: npx tsc --noEmit
-#
-#       - name: Run tests
-#         working-directory: ./frontend
-#         run: npm run test:ci || echo "No tests configured yet"
-#
-#       - name: Test build
-#         working-directory: ./frontend
-#         run: npm run build
-#
-#   unit-tests:
-# name: Unit & Integration Tests
-# runs-on: ubuntu-latest
 
-# steps:
-# - name: Checkout code
-# uses: actions/checkout@v4
+# This is a minimal valid workflow that does nothing (workflow is disabled)
+name: "DISABLED - Test & Quality Checks"
+on:
+  workflow_dispatch: # Only manual trigger, no automatic triggers
 
-# - name: Setup Node.js
-# uses: actions/setup-node@v4
-# with:
-# node-version: ${{ env.NODE_VERSION }}
-# cache: "npm"
+jobs:
+  disabled-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Workflow Disabled Info
+        run: |
+          echo "ℹ️  This workflow has been disabled in favor of local testing."
+          echo "🚀 Use local testing instead:"
+          echo "   ./scripts/dev-check.sh (lint + build + quick test)"
+          echo "   npm run local:accessibility (30s)"
+          echo "   npm run local:performance (2min)"
+          echo "   npm run local:smoke (30s)"
+          echo "   npm run local:debug (visual debugging)"
 
-# - name: Install root dependencies
-# run: npm ci
-
-# - name: Install frontend dependencies
-# working-directory: ./frontend
-# run: npm ci
-
-# - name: Install backend dependencies
-# working-directory: ./backend/functions
-# run: npm ci
-
-# - name: Run unit tests
-# run: npm run test:unit
-# env:
-# TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-# TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-
-# - name: Run integration tests
-# run: npm run test:integration
-# env:
-# TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-# TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-
-# - name: Upload test results
-# uses: actions/upload-artifact@v4
-# if: always()
-# with:
-# name: jest-test-results
-# path: tests/test-results/
-# retention-days: 7
-
-# backend-tests:
-# name: Backend Tests
-# runs-on: ubuntu-latest
-
-# steps:
-# - name: Checkout code
-# uses: actions/checkout@v4
-
-# - name: Setup Node.js
-# uses: actions/setup-node@v4
-# with:
-# node-version: ${{ env.NODE_VERSION }}
-# cache: "npm"
-# cache-dependency-path: backend/functions/package-lock.json
-
-# - name: Install dependencies
-# working-directory: ./backend/functions
-# run: npm ci
-
-# - name: Run ESLint
-# working-directory: ./backend/functions
-# run: npm run lint
-
-# - name: Type check and build
-# working-directory: ./backend/functions
-# run: npm run build
-
-# security-audit:
-# name: Security Audit
-# runs-on: ubuntu-latest
-
-# steps:
-# - name: Checkout code
-# uses: actions/checkout@v4
-
-# - name: Setup Node.js
-# uses: actions/setup-node@v4
-# with:
-# node-version: ${{ env.NODE_VERSION }}
-
-# - name: Audit Frontend Dependencies
-# working-directory: ./frontend
-# run: |
-# npm ci
-# npm audit --audit-level=high
-
-# - name: Audit Backend Dependencies
-# working-directory: ./backend/functions
-# run: |
-# npm ci
-# npm audit --audit-level=high
-
-# centralized-tests:
-# name: Centralized Test Suite
-# runs-on: ubuntu-latest
-
-# steps:
-# - name: Checkout code
-# uses: actions/checkout@v4
-
-# - name: Setup Node.js
-# uses: actions/setup-node@v4
-# with:
-# node-version: ${{ env.NODE_VERSION }}
-# cache: "npm"
-# cache-dependency-path: tests/package-lock.json
-
-# - name: Install test dependencies
-# working-directory: ./tests
-# run: npm ci
-
-# - name: Run unit tests
-# working-directory: ./tests
-# run: npm test
-
-# - name: Run tests with coverage
-# working-directory: ./tests
-# run: npm run test:coverage
-
-# - name: Upload coverage reports
-# uses: codecov/codecov-action@v3
-# with:
-# directory: ./tests/coverage
-# fail_ci_if_error: false
+# Original workflow content has been moved to documentation
+# To restore full workflow, see git history or DETAILED_DEVELOPMENT_WORKFLOW.md
