@@ -40,16 +40,34 @@ npm run test:coverage     # Coverage report
 For comprehensive guides and detailed information:
 
 ### 🚀 **Quick Access**
+
 - **[Complete Documentation](./docs/)** - Full documentation hub
 - **[Development Workflow](./docs/developer/DETAILED_DEVELOPMENT_WORKFLOW.md)** - Complete development guide
 - **[Quick Start](./docs/getting-started/quick-start.md)** - Get running in 5 minutes
 
 ### 📁 **By Category**
+
 - **[Developer Guides](./docs/developer/)** - Development workflow, local setup, testing
 - **[Setup & Configuration](./docs/setup/)** - Environment setup, auto-detection, Firebase
-- **[Troubleshooting](./docs/troubleshooting/)** - Common issues and solutions  
+- **[Troubleshooting](./docs/troubleshooting/)** - Common issues and solutions
 - **[Architecture](./docs/architecture/)** - Technical design and decisions
 - **[API Reference](./docs/api/)** - Complete API documentation
+
+## ⚡ **Essential Scripts**
+
+### **Daily Development**
+
+```bash
+./scripts/dev-check.sh           # Pre-push validation (30s) - ESSENTIAL
+./scripts/test-with-servers.sh   # Comprehensive testing (5min) - Optional
+```
+
+### **Setup & Configuration**
+
+```bash
+./scripts/setup-real-firebase.sh    # Firebase authentication setup
+./scripts/setup-github-secrets.sh   # CI/CD secrets configuration
+```
 
 ## 🛠 Development Tools
 
