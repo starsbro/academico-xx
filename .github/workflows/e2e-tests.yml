@@ -20,116 +20,118 @@
 #   push:
 #     branches: [main, develop, dev, chat-ai]
 #   pull_request:
-#     branches: [main, develop, dev]permissions:
-  contents: read
-  actions: read
-  checks: write
-  pull-requests: write
-  statuses: write
+#     branches: [main, develop, dev]
+#
+# permissions:
+# contents: read
+# actions: read
+# checks: write
+# pull-requests: write
+# statuses: write
 
-jobs:
-  e2e-tests:
-    runs-on: ubuntu-latest
+# jobs:
+# e2e-tests:
+# runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        browser: [chromium, firefox, webkit]
+# strategy:
+# matrix:
+# browser: [chromium, firefox, webkit]
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# steps:
+# - name: Checkout code
+# uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: |
-            frontend/package-lock.json
-            package-lock.json
+# - name: Setup Node.js
+# uses: actions/setup-node@v4
+# with:
+# node-version: "20"
+# cache: "npm"
+# cache-dependency-path: |
+# frontend/package-lock.json
+# package-lock.json
 
-      - name: Install root dependencies
-        run: npm ci
+# - name: Install root dependencies
+# run: npm ci
 
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm ci
+# - name: Install frontend dependencies
+# working-directory: frontend
+# run: npm ci
 
-      - name: Install tests dependencies
-        working-directory: tests
-        run: npm ci
+# - name: Install tests dependencies
+# working-directory: tests
+# run: npm ci
 
-      - name: Install Playwright browsers
-        working-directory: tests
-        run: npx playwright install ${{ matrix.browser }} --with-deps
+# - name: Install Playwright browsers
+# working-directory: tests
+# run: npx playwright install ${{ matrix.browser }} --with-deps
 
-      - name: Build application
-        working-directory: frontend
-        run: npm run build
-        env:
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key' }}
-          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dummy-domain' }}
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dummy-project' }}
-          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'dummy-bucket' }}
-          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'dummy-sender' }}
-          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID || 'dummy-app' }}
+# - name: Build application
+# working-directory: frontend
+# run: npm run build
+# env:
+# NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key' }}
+# NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dummy-domain' }}
+# NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dummy-project' }}
+# NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'dummy-bucket' }}
+# NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'dummy-sender' }}
+# NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID || 'dummy-app' }}
 
-      - name: Run Playwright tests
-        working-directory: tests
-        run: npx playwright test --project=${{ matrix.browser }}
-        env:
-          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key' }}
-          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dummy-domain' }}
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dummy-project' }}
-          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'dummy-bucket' }}
-          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'dummy-sender' }}
-          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID || 'dummy-app' }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+# - name: Run Playwright tests
+# working-directory: tests
+# run: npx playwright test --project=${{ matrix.browser }}
+# env:
+# NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key' }}
+# NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'dummy-domain' }}
+# NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'dummy-project' }}
+# NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'dummy-bucket' }}
+# NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'dummy-sender' }}
+# NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID || 'dummy-app' }}
+# TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+# TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report-${{ matrix.browser }}
-          path: tests/test-results/playwright-html-report/
-          retention-days: 30
+# - name: Upload test results
+# uses: actions/upload-artifact@v4
+# if: always()
+# with:
+# name: playwright-report-${{ matrix.browser }}
+# path: tests/test-results/playwright-html-report/
+# retention-days: 30
 
-      - name: Upload test videos
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: playwright-videos-${{ matrix.browser }}
-          path: tests/test-results/
-          retention-days: 7
+# - name: Upload test videos
+# uses: actions/upload-artifact@v4
+# if: failure()
+# with:
+# name: playwright-videos-${{ matrix.browser }}
+# path: tests/test-results/
+# retention-days: 7
 
-      - name: Comment PR with test results
-        uses: actions/github-script@v7
-        if: github.event_name == 'pull_request' && always()
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
+# - name: Comment PR with test results
+# uses: actions/github-script@v7
+# if: github.event_name == 'pull_request' && always()
+# with:
+# script: |
+# const fs = require('fs');
+# const path = require('path');
 
-            // Try to read test results
-            let testResults = 'Playwright tests completed.';
-            try {
-              const reportPath = path.join('tests/test-results/playwright-results.json');
-              if (fs.existsSync(reportPath)) {
-                const results = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
-                const { passed, failed, skipped } = results.stats;
-                testResults = `🎭 Playwright Test Results (${{ matrix.browser }}):
-                ✅ Passed: ${passed}
-                ❌ Failed: ${failed}
-                ⏭️ Skipped: ${skipped}`;
-              }
-            } catch (error) {
-              console.log('Could not read test results:', error);
-            }
+# // Try to read test results
+# let testResults = 'Playwright tests completed.';
+# try {
+# const reportPath = path.join('tests/test-results/playwright-results.json');
+# if (fs.existsSync(reportPath)) {
+# const results = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+# const { passed, failed, skipped } = results.stats;
+# testResults = `🎭 Playwright Test Results (${{ matrix.browser }}):
+# ✅ Passed: ${passed}
+# ❌ Failed: ${failed}
+# ⏭️ Skipped: ${skipped}`;
+# }
+# } catch (error) {
+# console.log('Could not read test results:', error);
+# }
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: testResults
-            });
+# github.rest.issues.createComment({
+# issue_number: context.issue.number,
+# owner: context.repo.owner,
+# repo: context.repo.repo,
+# body: testResults
+# });
