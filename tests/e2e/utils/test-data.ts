@@ -1,6 +1,6 @@
 export const TEST_USERS = {
   valid: {
-    email: 'test@academico-ai.com',
+    email: 'test@example.com',
     password: 'TestPassword123!',
     fullName: 'Test User',
   },
@@ -10,7 +10,7 @@ export const TEST_USERS = {
     fullName: 'Invalid User',
   },
   admin: {
-    email: 'admin@academico-ai.com',
+    email: 'admin@example.com',
     password: 'AdminPassword123!',
     fullName: 'Admin User',
   },
@@ -62,7 +62,7 @@ export const TEST_CONFIG = {
   },
   users: {
     valid: {
-      email: 'test@academico-ai.com',
+      email: 'test@example.com',
       password: 'TestPassword123!',
       name: 'Test User',
     },

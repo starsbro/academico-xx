@@ -6,7 +6,7 @@ Welcome to Academico-AI! This guide will help you make the most of your AI-power
 
 ### Creating Your Account
 
-1. Visit [academico-ai.web.app](https://academico-ai.web.app)
+1. Visit [your-project.web.app](https://your-project.web.app)
 2. Click **"Sign Up"**
 3. Enter your email and create a strong password
 4. Verify your email address

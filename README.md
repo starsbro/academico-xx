@@ -14,7 +14,7 @@ An AI-powered academic platform built with Next.js, Firebase, and modern web tec
 
 ### Production
 
-Visit our deployed version: https://academico-ai.web.app
+Visit our deployed version: https://your-project.web.app
 
 ## 🧪 Testing
 

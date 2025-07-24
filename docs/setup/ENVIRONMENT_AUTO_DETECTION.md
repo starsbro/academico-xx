@@ -31,7 +31,7 @@ export const getBackendUrl = (): string => {
   // Server-side: Use NODE_ENV
   if (typeof window === "undefined") {
     return process.env.NODE_ENV === "production"
-      ? "https://api-bcsebzkoea-uc.a.run.app" // Production
+      ? "https://your-backend-url.run.app" // Production
       : "http://localhost:5050"; // Development
   }
 
@@ -39,15 +39,15 @@ export const getBackendUrl = (): string => {
   const isLocalhost = window.location.hostname === "localhost";
   return isLocalhost
     ? "http://localhost:5050" // Local development
-    : "https://api-bcsebzkoea-uc.a.run.app"; // Production deployment
+    : "https://your-backend-url.run.app"; // Production deployment
 };
 ```
 
 ### 2. Automatic URL Switching
 
 - **Local Development** (`npm run dev`): `http://localhost:5050`
-- **Production Build** (`npm run build` with NODE_ENV=production): `https://api-bcsebzkoea-uc.a.run.app`
-- **Deployed Site**: `https://api-bcsebzkoea-uc.a.run.app`
+- **Production Build** (`npm run build` with NODE_ENV=production): `https://your-backend-url.run.app`
+- **Deployed Site**: `https://your-backend-url.run.app`
 
 ### 3. Updated Code Files
 
@@ -77,7 +77,7 @@ npm run dev                    # Auto-uses: http://localhost:5050
 ./scripts/dev-check.sh         # Builds with environment detection
 
 # 3. Push to production
-git push origin main           # Auto-deploys with: https://api-bcsebzkoea-uc.a.run.app
+git push origin main           # Auto-deploys with: https://your-backend-url.run.app
 ```
 
 ### No More Manual Steps!
@@ -122,18 +122,18 @@ npm run build    # Should auto-configure for production URL
 
 ```bash
 # ✅ Simplified - no more manual URL switching needed
-NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyB-CddbN7VvC9jen8PfL1vym4Hm2FwTy90
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=academico-ai.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=academico-ai
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=academico-ai.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=520745038762
-NEXT_PUBLIC_FIREBASE_APP_ID=1:520745038762:web:79bc67d1ea7296cda831d3
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
 
 # Backend URLs are now auto-detected based on environment!
 # Development: http://localhost:5050
-# Production: https://api-bcsebzkoea-uc.a.run.app
+# Production: https://your-backend-url.run.app
 ```
 
 ### Debug Information

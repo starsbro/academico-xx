@@ -159,7 +159,7 @@ Your pipeline is working when you see:
 - ✅ Green checkmarks in GitHub Actions
 - ✅ Successful builds in action logs
 - ✅ Preview URLs in PR comments (when secrets are configured)
-- ✅ Live site updates at https://academico-ai.web.app (when deployed)
+- ✅ Live site updates at https://your-project.web.app (when deployed)
 
 ---
 

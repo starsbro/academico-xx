@@ -4,8 +4,8 @@ This document provides comprehensive API documentation for the Academico-AI back
 
 ## 🔗 **Base URLs**
 
-- **Production**: `https://api-bcsebzkoea-uc.a.run.app`
-- **Development**: `http://localhost:5001/academico-ai/us-central1/api`
+- **Production**: `https://your-backend-url.run.app`
+- **Development**: `http://localhost:5001/your-project/us-central1/api`
 
 ## 🔐 **Authentication**
 
@@ -57,7 +57,7 @@ Test CORS configuration.
 ```json
 {
   "message": "CORS is working!",
-  "origin": "https://academico-ai.web.app",
+  "origin": "https://your-project.web.app",
   "timestamp": "2025-01-22T10:30:00Z"
 }
 ```
@@ -492,7 +492,7 @@ All errors follow this structure:
 1. **Create a new chat:**
 
 ```bash
-curl -X POST https://api-bcsebzkoea-uc.a.run.app/api/chats \
+curl -X POST https://your-backend-url.run.app/api/chats \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -505,7 +505,7 @@ curl -X POST https://api-bcsebzkoea-uc.a.run.app/api/chats \
 2. **Send follow-up message:**
 
 ```bash
-curl -X POST https://api-bcsebzkoea-uc.a.run.app/api/chats/chat123/messages \
+curl -X POST https://your-backend-url.run.app/api/chats/chat123/messages \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -516,7 +516,7 @@ curl -X POST https://api-bcsebzkoea-uc.a.run.app/api/chats/chat123/messages \
 3. **Get chat history:**
 
 ```bash
-curl https://api-bcsebzkoea-uc.a.run.app/api/chats/chat123 \
+curl https://your-backend-url.run.app/api/chats/chat123 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -562,17 +562,17 @@ X-RateLimit-Reset: 1642857600
 TOKEN="your_firebase_auth_token"
 
 # Test basic connectivity
-curl https://api-bcsebzkoea-uc.a.run.app/
+curl https://your-backend-url.run.app/
 
 # Test authenticated endpoint
 curl -H "Authorization: Bearer $TOKEN" \
-     https://api-bcsebzkoea-uc.a.run.app/api/user/profile
+     https://your-backend-url.run.app/api/user/profile
 ```
 
 ### Using JavaScript/TypeScript
 
 ```typescript
-const API_BASE = "https://api-bcsebzkoea-uc.a.run.app";
+const API_BASE = "https://your-backend-url.run.app";
 
 class AcademicoAPI {
   constructor(private authToken: string) {}

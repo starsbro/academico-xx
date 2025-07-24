@@ -3,7 +3,7 @@ import { createTestHelpers } from '../utils/test-helpers';
 
 // Test configuration
 const TEST_USER = {
-  email: process.env.TEST_USER_EMAIL || 'test@academico-ai.com',
+  email: process.env.TEST_USER_EMAIL || 'test@example.com',
   password: process.env.TEST_USER_PASSWORD || 'TestPassword123!'
 };
 

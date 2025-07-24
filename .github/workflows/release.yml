@@ -86,10 +86,10 @@ jobs:
           body: |
             ## Changes in this Release
             - Auto-generated release from tag ${{ github.ref }}
-            - Deployed to Firebase: https://academico-ai.web.app
+            - Deployed to Firebase: https://your-project.web.app
 
             ## Deployment URLs
-            - **Production**: https://academico-ai.web.app
+            - **Production**: https://your-project.web.app
             - **Firebase Console**: https://console.firebase.google.com/project/academico-ai
           draft: false
           prerelease: false

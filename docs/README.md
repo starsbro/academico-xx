@@ -125,8 +125,8 @@ firebase deploy            # Deploy to production
 
 ### Key URLs
 
-- **Production**: https://academico-ai.web.app
-- **API Base**: https://api-bcsebzkoea-uc.a.run.app
+- **Production**: https://your-project.web.app
+- **API Base**: https://your-backend-url.run.app
 - **GitHub Repo**: https://github.com/starsbro/academico-ai
 
 ### Getting Help

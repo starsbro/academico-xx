@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Only allow trusted origins in production
 app.use(cors({
-  origin: process.env.NODE_ENV === "production" ? ["https://academico-ai.web.app"] : true,
+  origin: process.env.NODE_ENV === "production" ? ["https://your-project.web.app"] : true,
 }));
 
 // Handle preflight requests explicitly

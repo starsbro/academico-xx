@@ -21,13 +21,13 @@ Verify all environment variables are set:
 ```bash
 # Frontend Environment Variables (.env.production)
 NEXT_PUBLIC_FIREBASE_API_KEY=your_production_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=academico-ai.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=academico-ai
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=academico-ai.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=520745038762
-NEXT_PUBLIC_FIREBASE_APP_ID=1:520745038762:web:79bc67d1ea7296cda831d3
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
-NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app
+NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.run.app
 ```
 
 ### 2. Firebase Configuration
@@ -103,7 +103,7 @@ Required Secrets:
    - Verify all steps complete successfully
 
 3. **Verify deployment**:
-   - Visit https://academico-ai.web.app
+   - Visit https://your-project.web.app
    - Test key functionality
    - Check browser console for errors
 
@@ -158,15 +158,15 @@ Test your API endpoints:
 
 ```bash
 # Test main API endpoint
-curl https://api-bcsebzkoea-uc.a.run.app/
+curl https://your-backend-url.run.app/
 
 # Test CORS configuration
-curl -H "Origin: https://academico-ai.web.app" \
-     https://api-bcsebzkoea-uc.a.run.app/cors-test
+curl -H "Origin: https://your-project.web.app" \
+     https://your-backend-url.run.app/cors-test
 
 # Test authentication endpoint (requires token)
 curl -H "Authorization: Bearer your_token" \
-     https://api-bcsebzkoea-uc.a.run.app/api/user/profile
+     https://your-backend-url.run.app/api/user/profile
 ```
 
 ### 3. Database Connectivity

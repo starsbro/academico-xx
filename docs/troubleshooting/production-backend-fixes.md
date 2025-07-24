@@ -1,7 +1,7 @@
 # 🚀 Production Backend URL Fix - RESOLVED
 
 ## 🐛 Issue Summary
-The production website at `https://academico-ai.web.app/academic-chat/` was returning the error:
+The production website at `https://your-project.web.app/academic-chat/` was returning the error:
 ```
 Failed to send message: SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
 ```
@@ -10,7 +10,7 @@ This indicated the frontend was receiving HTML (error pages) instead of JSON fro
 
 ## 🔍 Root Cause Analysis
 1. **Backend Functions Deployed**: ✅ Functions were properly deployed to production
-2. **API Endpoints Working**: ✅ Backend API was responding correctly at `https://api-bcsebzkoea-uc.a.run.app`
+2. **API Endpoints Working**: ✅ Backend API was responding correctly at `https://your-backend-url.run.app`
 3. **Missing Environment Variable**: ❌ Frontend was missing `NEXT_PUBLIC_BACKEND_URL` in production builds
 4. **Wrong Configuration**: ❌ Production frontend was still trying to call local emulator URLs
 
@@ -19,13 +19,13 @@ This indicated the frontend was receiving HTML (error pages) instead of JSON fro
 ### 1. **Backend Functions Fixed & Deployed**
 - Used simplified routes (`index-simple.ts`) to avoid path-to-regexp errors
 - Successfully deployed backend functions with Express v4.18.2
-- Production API URL: `https://api-bcsebzkoea-uc.a.run.app`
+- Production API URL: `https://your-backend-url.run.app`
 
 ### 2. **Production Environment Configuration**
 **Created `/frontend/.env.production`:**
 ```bash
 NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
-NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app
+NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.run.app
 # ... other Firebase config
 ```
 
@@ -33,7 +33,7 @@ NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app
 **Updated `.github/workflows/deploy.yml`** to include:
 ```yaml
 echo "NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false" >> .env.local
-echo "NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app" >> .env.local
+echo "NEXT_PUBLIC_BACKEND_URL=https://your-backend-url.run.app" >> .env.local
 ```
 
 ### 4. **Manual Production Deployment**
@@ -45,20 +45,20 @@ echo "NEXT_PUBLIC_BACKEND_URL=https://api-bcsebzkoea-uc.a.run.app" >> .env.local
 ### ✅ **Backend API Tests** (All Working):
 ```bash
 # Main API endpoint
-curl https://api-bcsebzkoea-uc.a.run.app/
+curl https://your-backend-url.run.app/
 # Response: "Firebase Cloud Function Express API is running!"
 
 # CORS test
-curl https://api-bcsebzkoea-uc.a.run.app/cors-test
-# Response: {"message":"CORS is working!","origin":"https://academico-ai.web.app","timestamp":"..."}
+curl https://your-backend-url.run.app/cors-test
+# Response: {"message":"CORS is working!","origin":"https://your-project.web.app","timestamp":"..."}
 
 # Test chats endpoint  
-curl https://api-bcsebzkoea-uc.a.run.app/test-chats
+curl https://your-backend-url.run.app/test-chats
 # Response: {"message":"Test chats endpoint working"}
 ```
 
 ### ✅ **Frontend Deployment**:
-- **Production URL**: https://academico-ai.web.app
+- **Production URL**: https://your-project.web.app
 - **Environment**: Correctly configured with production backend URL
 - **Status**: Successfully deployed with updated configuration
 
@@ -100,10 +100,10 @@ The pull request (#2) will now automatically deploy with the correct configurati
 5. ✅ **Testing**: All endpoints verified working in production
 
 ### **Production API Endpoints Working:**
-- `https://api-bcsebzkoea-uc.a.run.app/` ✅
-- `https://api-bcsebzkoea-uc.a.run.app/users/test-user/chats` ✅ (returns `[]`)
-- `https://api-bcsebzkoea-uc.a.run.app/cors-test` ✅
+- `https://your-backend-url.run.app/` ✅
+- `https://your-backend-url.run.app/users/test-user/chats` ✅ (returns `[]`)
+- `https://your-backend-url.run.app/cors-test` ✅
 
 The production website should now work correctly with full chat functionality.
 
-**Production URL**: https://academico-ai.web.app/academic-chat/ 🚀
+**Production URL**: https://your-project.web.app/academic-chat/ 🚀

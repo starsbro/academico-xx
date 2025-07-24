@@ -35,7 +35,7 @@ git status
 cd frontend
 npm run dev
 # ✅ Runs on http://localhost:3000
-# ✅ Auto-uses https://api-bcsebzkoea-uc.a.run.app for backend
+# ✅ Auto-uses https://your-backend-url.run.app for backend
 ```
 
 #### **Option B: Full Local Development**
@@ -70,7 +70,7 @@ git checkout -b feature/your-feature-name
 # Real-time testing while coding:
 # - Frontend: http://localhost:3000
 # - Backend: http://localhost:5050 (if running locally)
-# - Production backend: https://api-bcsebzkoea-uc.a.run.app (fallback)
+# - Production backend: https://your-backend-url.run.app (fallback)
 ```
 
 ### **2. Pre-Push Validation (ESSENTIAL)**
@@ -275,13 +275,13 @@ tests/
 
 Development (localhost:3000):
 → Backend: http://localhost:5050 (if running)
-→ Fallback: https://api-bcsebzkoea-uc.a.run.app
+→ Fallback: https://your-backend-url.run.app
 
 Production (deployed):
-→ Backend: https://api-bcsebzkoea-uc.a.run.app
+→ Backend: https://your-backend-url.run.app
 
 Build time (npm run build):
-→ Backend: https://api-bcsebzkoea-uc.a.run.app
+→ Backend: https://your-backend-url.run.app
 ```
 
 ### **Environment Verification**

@@ -72,7 +72,7 @@ Administrative interface for teachers to monitor student progress, configure AI 
 **Firebase Hosting**
 
 - Static web hosting service for the frontend application
-- Production deployment: https://academico-ai.web.app
+- Production deployment: https://your-project.web.app
 
 ### **AI & Machine Learning**
 
@@ -223,12 +223,12 @@ Administrative interface for teachers to monitor student progress, configure AI 
 **Firebase Hosting**
 
 - Production hosting for the frontend application
-- URL: https://academico-ai.web.app
+- URL: https://your-project.web.app
 
 **Cloud Run**
 
 - Serverless container platform for API services
-- API Base: https://api-bcsebzkoea-uc.a.run.app
+- API Base: https://your-backend-url.run.app
 
 ### **CI/CD Pipeline**
 

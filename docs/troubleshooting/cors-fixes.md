@@ -17,8 +17,8 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",      // Local frontend dev
     "http://127.0.0.1:3000",      // Alternative localhost
-    "https://academico-ai.web.app", // Production frontend
-    "https://academico-ai.firebaseapp.com", // Firebase hosting
+    "https://your-project.web.app", // Production frontend
+    "https://your-project.firebaseapp.com", // Firebase hosting
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -110,17 +110,17 @@ npm run dev
 Verify your `.env.local` has the correct backend URL:
 ```bash
 # Frontend: /frontend/.env.local
-NEXT_PUBLIC_BACKEND_URL=http://localhost:5001/academico-ai/us-central1/api
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5001/your-project/us-central1/api
 ```
 
 ## 📋 **Debugging Steps**
 
 ### **1. Check Backend Is Running**
-Visit: `http://localhost:5001/academico-ai/us-central1/api/`
+Visit: `http://localhost:5001/your-project/us-central1/api/`
 Should see: "Firebase Cloud Function Express API is running!"
 
 ### **2. Test CORS Directly**
-Visit: `http://localhost:5001/academico-ai/us-central1/api/cors-test`
+Visit: `http://localhost:5001/your-project/us-central1/api/cors-test`
 Should see JSON response with CORS confirmation.
 
 ### **3. Check Browser Network Tab**
