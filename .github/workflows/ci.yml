@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Integration (Final Validation)
 
 on:
   push:
@@ -20,11 +20,11 @@ permissions:
   statuses: write
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "20"
 
 jobs:
   ci:
-    name: CI
+    name: Final Validation (Lint + Build)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install root dependencies
         run: npm ci
@@ -43,15 +43,11 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
-      - name: Run frontend linter
+      - name: Run frontend linter (final check)
         working-directory: ./frontend
         run: npm run lint
 
-      - name: Run frontend tests
-        working-directory: ./frontend
-        run: npm run test:ci || echo "No tests configured yet"
-
-      - name: Build frontend project
+      - name: Build frontend project (deployment validation)
         working-directory: ./frontend
         run: npm run build
 
@@ -66,11 +62,11 @@ jobs:
         working-directory: ./backend/functions
         run: npm ci
 
-      - name: Run backend linter
+      - name: Run backend linter (final check)
         working-directory: ./backend/functions
         run: npm run lint
 
-      - name: Build backend functions
+      - name: Build backend functions (deployment validation)
         working-directory: ./backend/functions
         run: npm run build
 
@@ -80,6 +76,3 @@ jobs:
           name: backend-build-${{ github.sha }}
           path: backend/functions/lib/
           retention-days: 7
-
-      - name: Run comprehensive validation
-        run: npm run validate

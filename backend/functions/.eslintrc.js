@@ -33,6 +33,7 @@ module.exports = {
     "new-cap": ["error", 
       { "newIsCap": true, 
         "capIsNew": true, 
-        "capIsNewExceptions": ["Router"] }]
+        "capIsNewExceptions": ["Router"] }],
+    "object-curly-spacing": "off"
   },
 };

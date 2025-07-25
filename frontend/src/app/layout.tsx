@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Outfit } from 'next/font/google';
 import './globals.css';
-import { ErrorBoundary } from './components/ErrorBoundary';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import { AuthProvider } from '../contexts/AuthContext';
 import { Toaster } from 'react-hot-toast';
 //import { UserButton } from '../components/Auth/UserButton';

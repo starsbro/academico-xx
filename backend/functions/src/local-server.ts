@@ -5,7 +5,7 @@ import "dotenv/config";
 (global as any).DOMMatrix = class {};
 
 // Initialize Firebase Admin SDK for local server
-import "./config/firebaseAdmin.js";
+import "./config/firebaseAdmin";
 
 import express from "express";
 import cors from "cors";
@@ -16,12 +16,8 @@ const app = express();
 // Allow all CORS for local testing
 app.use(cors());
 
-
-// Only use express.json() for routes that expect JSON
-// (e.g., /message, /users, /chats)
-app.use("/message", express.json());
-app.use("/users", express.json());
-app.use("/chats", express.json());
+// Use express.json() globally so all routes can access req.body for JSON
+app.use(express.json());
 
 // Logging middleware (optional)
 app.use((req, res, next) => {

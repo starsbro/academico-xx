@@ -5,6 +5,8 @@ export interface ChatMessage {
   userId: string;
   message: string;
   timestamp: string;
+  source?: 'pdf' | 'chat';
+  pdfFilename?: string;
 }
 
 export interface UserChat {

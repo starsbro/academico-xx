@@ -1,16 +1,75 @@
-How to Run thisacademico-ai project?
-1. At root folder, npm install , npm run dev, it will start Firebase emulator.
-2. cd frontend ent frontend folder, npm run dev, open http://localhost:3000
-3. sign-in by email or Google the third sign-in.
+# Academico AI
 
+An AI-powered academic platform built with Next.js, Firebase, and modern web technologies.
 
-How to visit Our deploy version?
-Visit https://academico-ai.web.app
+## 🚀 Quick Start
 
+### Development Setup
 
-This is a template for Spark! DS 519 projects. It has pre-configured eslint.config.mjs - ([`ESLint`](https://eslint.org/)) and .prettierrc - ([`Prettier`](https://prettier.io/)) to reflect industry standard development guidelines.
+1. **Install dependencies**: `npm install` (at root)
+2. **Start Firebase emulators**: `npm run dev`
+3. **Start frontend**: `cd frontend && npm run dev`
+4. **Open browser**: http://localhost:3000
+5. **Sign in**: Use email or Google authentication
 
-## Setting Up Your Developer Experience
+### Production
+
+Visit our deployed version: https://your-project.web.app
+
+## 🧪 Testing
+
+Run tests from the project root:
+
+```bash
+# All tests
+npm run test
+
+# Specific test types
+npm run test:unit          # Unit tests (frontend & backend)
+npm run test:integration   # Integration tests
+npm run test:e2e          # End-to-end tests with Playwright
+npm run test:e2e:ui       # E2E tests with Playwright UI
+
+# Development
+npm run test:watch        # Watch mode
+npm run test:coverage     # Coverage report
+```
+
+## 📚 Documentation
+
+For comprehensive guides and detailed information:
+
+### 🚀 **Quick Access**
+
+- **[Complete Documentation](./docs/)** - Full documentation hub
+- **[Development Workflow](./docs/developer/DETAILED_DEVELOPMENT_WORKFLOW.md)** - Complete development guide
+- **[Quick Start](./docs/getting-started/quick-start.md)** - Get running in 5 minutes
+
+### 📁 **By Category**
+
+- **[Developer Guides](./docs/developer/)** - Development workflow, local setup, testing
+- **[Setup & Configuration](./docs/setup/)** - Environment setup, auto-detection, Firebase
+- **[Troubleshooting](./docs/troubleshooting/)** - Common issues and solutions
+- **[Architecture](./docs/architecture/)** - Technical design and decisions
+- **[API Reference](./docs/api/)** - Complete API documentation
+
+## ⚡ **Essential Scripts**
+
+### **Daily Development**
+
+```bash
+./scripts/dev-check.sh           # Pre-push validation (30s) - ESSENTIAL
+./scripts/test-with-servers.sh   # Comprehensive testing (5min) - Optional
+```
+
+### **Setup & Configuration**
+
+```bash
+./scripts/setup-real-firebase.sh    # Firebase authentication setup
+./scripts/setup-github-secrets.sh   # CI/CD secrets configuration
+```
+
+## 🛠 Development Tools
 
 To get the most out of ESLint and Prettier, It is recommended to make the changes to you IDE:
 

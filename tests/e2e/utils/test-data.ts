@@ -1,7 +1,7 @@
 export const TEST_USERS = {
   valid: {
-    email: 'test@academico-ai.com',
-    password: 'Test123456!',
+    email: 'test@example.com',
+    password: 'TestPassword123!',
     fullName: 'Test User',
   },
   invalid: {
@@ -10,8 +10,8 @@ export const TEST_USERS = {
     fullName: 'Invalid User',
   },
   admin: {
-    email: 'admin@academico-ai.com',
-    password: 'Admin123456!',
+    email: 'admin@example.com',
+    password: 'AdminPassword123!',
     fullName: 'Admin User',
   },
 };
@@ -25,15 +25,15 @@ export const TEST_CHAT_MESSAGES = [
 
 export const TEST_URLS = {
   home: '/',
-  signIn: '/auth/signin',
-  signUp: '/auth/signup',
+  signIn: '/sign-in',
+  signUp: '/sign-up',
   academicChat: '/academic-chat',
 } as const;
 
 export const SELECTORS = {
   // Auth selectors
-  emailInput: '[placeholder="Enter your email"]',
-  passwordInput: '[placeholder="Enter your password"]',
+  emailInput: '#email',
+  passwordInput: '#password',
   signInButton: 'button:has-text("Sign in")',
   signUpButton: 'button:has-text("Create account")',
 
@@ -43,47 +43,53 @@ export const SELECTORS = {
   chatLink: 'text=Academic Chat',
 
   // Chat selectors
-  chatInput: '[placeholder="What are you thinking?"]',
+  chatInput: 'textarea, input[type="text"]',
   searchButton: '[data-testid="search-button"]',
 
   // Common selectors
-  loadingSpinner: '[data-testid="loading"]',
+  loadingSpinner: '.animate-spin, [data-testid="loading"]',
   errorMessage: '[data-testid="error"]',
 } as const;
 
 export const TEST_CONFIG = {
   baseURL: 'http://localhost:3000',
   timeout: 30000,
-
-  // Routes
   routes: {
     home: '/',
     signIn: '/sign-in',
     signUp: '/sign-up',
     academicChat: '/academic-chat',
   },
-
-  // Test user data (update with your actual test accounts)
   users: {
     valid: {
       email: 'test@example.com',
-      password: 'testpassword123',
+      password: 'TestPassword123!',
       name: 'Test User',
     },
     invalid: {
-      email: 'invalid@example.com',
+      email: 'invalid@email.com',
       password: 'wrongpassword',
     },
   },
-
-  // Common selectors
   selectors: {
+    // Auth selectors
     emailInput: '#email',
     passwordInput: '#password',
-    submitButton: 'button[type="submit"]',
     signInButton: 'button:has-text("Sign in")',
-    signUpLink: 'a:has-text("Sign up")',
-    navElements: 'nav, header, [role="navigation"]',
+    signUpButton: 'button:has-text("Create account")',
+
+    // Navigation selectors
+    userButton: '[data-testid="user-button"]',
+    homeLink: 'text=Home',
+    chatLink: 'text=Academic Chat',
+
+    // Chat selectors
+    chatInput: 'textarea, input[type="text"]',
+    searchButton: '[data-testid="search-button"]',
+
+    // Common selectors
+    loadingSpinner: '.animate-spin, [data-testid="loading"]',
+    errorMessage: '[data-testid="error"]',
   },
 } as const;
 

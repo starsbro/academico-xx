@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+/tests/test-results
+/test-results
 
 # next.js
 /.next/
@@ -44,7 +46,15 @@ next-env.d.ts
 # clerk configuration (can include secrets)
 /.clerk/
 
+# firebase
+firebase-export-*/
+firestore-debug.log
+ui-debug.log
+
 GITHUB_SECRETS_SETUP.md
+
+# GitHub secrets documentation (contains sensitive Firebase config)
+docs/setup/github-secrets.md
 
 setup-github-secrets.sh
 

@@ -10,7 +10,7 @@ select,
 optgroup,
 textarea,
 ::file-selector-button {
-  border-radius: 0.75rem; /* Example: 12px, or use your preferred value */
+  border-radius: 0.75rem;
 }
 
 :root {

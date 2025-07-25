@@ -1,11 +1,23 @@
 import { ChatMessage, UserChat } from '../types/chat.types';
-// Custom hook for managing chat state and operations
-
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { ChatService } from '../services/chatService';
+import { getBackendUrl } from '../lib/env-config';
 
 export const useChat = () => {
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const [userChats, setUserChats] = useState<UserChat[]>([]);
+  const [isLoadingChats, setIsLoadingChats] = useState<boolean>(true);
+  const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [newChatTitle, setNewChatTitle] = useState<string>('');
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const [intentionalNewChat, setIntentionalNewChat] = useState(false);
+  const initialChatFetchRef = useRef(false);
+  const { user } = useAuth();
+
   // Optimistically add a message to chat history (for user or AI thinking placeholder)
   const addMessageToChat = (msg: Partial<ChatMessage> & { userId: string; message: string }) => {
     setChatHistory((prev) => [
@@ -17,35 +29,26 @@ export const useChat = () => {
       } as ChatMessage,
     ]);
   };
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [currentMessage, setCurrentMessage] = useState<string>('');
-  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
-  const [userChats, setUserChats] = useState<UserChat[]>([]);
-  const [isLoadingChats, setIsLoadingChats] = useState<boolean>(true);
-  const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
-  const [editingChatId, setEditingChatId] = useState<string | null>(null);
-  const [newChatTitle, setNewChatTitle] = useState<string>('');
 
-  const chatEndRef = useRef<HTMLDivElement>(null);
-  const [intentionalNewChat, setIntentionalNewChat] = useState(false);
-  const initialChatFetchRef = useRef(false);
-  const { user } = useAuth();
+  // Clear optimistic messages (messages with IDs starting with 'local-')
+  const clearOptimisticMessages = () => {
+    setChatHistory((prev) => {
+      const optimisticCount = prev.filter((msg) => msg.id.startsWith('local-')).length;
+      const filteredMessages = prev.filter((msg) => !msg.id.startsWith('local-'));
+      console.log(
+        `[CLEAR-OPTIMISTIC] Removed ${optimisticCount} optimistic messages, ${filteredMessages.length} remain`
+      );
+      return filteredMessages;
+    });
+  };
 
-  // Scroll to the latest message whenever chatHistory updates
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [chatHistory]);
-
-  // Function to fetch the list of all chats for the user
+  // Fetch all chats for the user
   const fetchUserChats = useCallback(async () => {
     if (!user?.uid) {
       setIsLoadingChats(false);
       setUserChats([]);
       return;
     }
-
     setIsLoadingChats(true);
     try {
       const data = await ChatService.fetchUserChats(user.uid);
@@ -57,15 +60,35 @@ export const useChat = () => {
     }
   }, [user?.uid]);
 
-  // Function to fetch messages for a specific chat
+  // Fetch messages for a specific chat
   const fetchMessagesForChat = useCallback(
     async (chatId: string) => {
       if (!user?.uid) return;
-
       setIsLoadingMessages(true);
       try {
+        console.log(`[FETCH-MESSAGES] Fetching messages for chat ${chatId}`);
         const data = await ChatService.fetchChatMessages(chatId, user.uid);
-        setChatHistory(data);
+        console.log(`[FETCH-MESSAGES] Retrieved ${data.length} messages from server`);
+
+        // Debug: Log raw timestamps before sorting
+        console.log('[FETCH-MESSAGES] Raw message timestamps:');
+        data.forEach((msg, idx) => {
+          console.log(
+            `  ${idx + 1}. ${msg.userId === user.uid ? 'User' : 'AI'}: "${msg.message.substring(0, 30)}..." - ${msg.timestamp} (${new Date(msg.timestamp).getTime()})`
+          );
+        });
+
+        // Sort messages by timestamp to ensure correct order
+        const sortedData = data.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        console.log(
+          `[FETCH-MESSAGES] Message order after sorting: ${sortedData
+            .map(
+              (msg, idx) =>
+                `${idx + 1}. ${msg.userId === user.uid ? 'User' : 'AI'}: "${msg.message.substring(0, 30)}..."`
+            )
+            .join(', ')}`
+        );
+        setChatHistory(sortedData);
       } catch (error) {
         console.error(`Failed to fetch chat history for chat ${chatId}:`, error);
         setChatHistory([]);
@@ -76,58 +99,55 @@ export const useChat = () => {
     [user?.uid]
   );
 
-  // Handle new chat creation
-  const handleNewChat = useCallback(() => {
+  // Create a new chat
+  const handleNewChat = useCallback(async () => {
     setIntentionalNewChat(true);
-    setSelectedChatId(null);
+    setIsLoadingMessages(true);
     setChatHistory([]);
     setCurrentMessage('');
     setEditingChatId(null);
-    setIsLoadingMessages(false);
     initialChatFetchRef.current = false;
-  }, []);
+    if (!user?.uid) {
+      setIsLoadingMessages(false);
+      setSelectedChatId(null);
+      return;
+    }
+    try {
+      const idToken = user && user.getIdToken ? await user.getIdToken() : null;
+      if (!idToken) throw new Error('No auth token available');
+      const formData = new FormData();
+      formData.append('userId', user.uid);
+      const response = await fetch(`${getBackendUrl()}/chat-with-pdf`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+      if (!response.ok) throw new Error('Failed to create new chat');
+      const data = await response.json();
+      if (data.chatId) {
+        setSelectedChatId(data.chatId);
+        await fetchUserChats();
+        await fetchMessagesForChat(data.chatId);
+      } else {
+        setSelectedChatId(null);
+      }
+    } catch (error) {
+      console.error('Failed to create new chat:', error);
+      setSelectedChatId(null);
+    } finally {
+      setIsLoadingMessages(false);
+    }
+  }, [user, fetchUserChats, fetchMessagesForChat]);
 
-  // Handle chat selection
+  // Select a chat
   const handleSelectChat = useCallback((chatId: string) => {
     setSelectedChatId(chatId);
     setEditingChatId(null);
   }, []);
 
-  // Handle sending a message
-  const handleSendMessage = useCallback(async () => {
-    if (!currentMessage.trim() || !user?.uid) return;
-
-    const newMessagePayload = {
-      userId: user.uid,
-      message: currentMessage.trim(),
-      timestamp: new Date().toISOString(),
-      ...(selectedChatId && { chatId: selectedChatId }),
-    };
-
-    try {
-      setIntentionalNewChat(false); // Reset the flag when sending a message
-      const savedResponse = await ChatService.sendMessage(newMessagePayload);
-
-      // If a new chat was created, update selectedChatId and the userChats list
-      if (savedResponse.newChatId && !selectedChatId) {
-        setSelectedChatId(savedResponse.newChatId);
-        fetchUserChats();
-      } else if (selectedChatId && !savedResponse.newChatId) {
-        fetchUserChats();
-      }
-
-      // Add the new message to chat history
-      setChatHistory((prevHistory) => [
-        ...prevHistory,
-        { ...newMessagePayload, id: savedResponse.id, timestamp: savedResponse.timestamp } as ChatMessage,
-      ]);
-      setCurrentMessage('');
-    } catch (error) {
-      console.error('Failed to send message:', error);
-    }
-  }, [currentMessage, user?.uid, selectedChatId, fetchUserChats]);
-
-  // Handle saving chat title
+  // Save chat title
   const handleSaveChatTitle = useCallback(
     async (chatId: string) => {
       if (!newChatTitle.trim()) {
@@ -135,7 +155,6 @@ export const useChat = () => {
         setNewChatTitle('');
         return;
       }
-
       try {
         if (!user?.uid) return;
         await ChatService.updateChatTitle(chatId, newChatTitle.trim(), user.uid);
@@ -149,26 +168,33 @@ export const useChat = () => {
     [newChatTitle, fetchUserChats, user?.uid]
   );
 
-  // Handle editing chat title
+  // Edit chat title
   const handleEditChatTitle = useCallback((chatId: string, currentTitle: string) => {
     setEditingChatId(chatId);
     setNewChatTitle(currentTitle);
   }, []);
 
-  // Handle canceling edit
+  // Cancel edit
   const handleCancelEdit = useCallback(() => {
     setEditingChatId(null);
     setNewChatTitle('');
   }, []);
 
-  // Handle key press for sending messages
-  const handleKeyPress = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        handleSendMessage();
+  // Delete a chat
+  const handleDeleteChat = useCallback(
+    async (chatId: string) => {
+      if (!user?.uid || !chatId) return;
+      try {
+        const idToken = user.getIdToken ? await user.getIdToken() : null;
+        if (!idToken) throw new Error('No auth token');
+        await ChatService.deleteChat(chatId, user.uid, idToken);
+        if (selectedChatId === chatId) setSelectedChatId(null);
+        await fetchUserChats();
+      } catch (err) {
+        console.error('Failed to delete chat:', err);
       }
     },
-    [handleSendMessage]
+    [user, selectedChatId, fetchUserChats]
   );
 
   // Effects
@@ -184,7 +210,6 @@ export const useChat = () => {
     }
   }, [selectedChatId, fetchMessagesForChat]);
 
-  // Initial load effect
   useEffect(() => {
     if (user?.uid && !initialChatFetchRef.current) {
       const initialLoadAndSelect = async () => {
@@ -192,7 +217,6 @@ export const useChat = () => {
         try {
           const data = await ChatService.fetchUserChats(user.uid);
           setUserChats(data);
-
           if (selectedChatId === null && data.length > 0 && !intentionalNewChat) {
             setSelectedChatId(data[0].id);
           }
@@ -203,13 +227,12 @@ export const useChat = () => {
           initialChatFetchRef.current = true;
         }
       };
-
       initialLoadAndSelect();
     }
   }, [user?.uid, selectedChatId, intentionalNewChat]);
 
+  // Return all state and handlers
   return {
-    // State
     chatHistory,
     currentMessage,
     selectedChatId,
@@ -220,23 +243,18 @@ export const useChat = () => {
     newChatTitle,
     chatEndRef,
 
-    // Actions
     setCurrentMessage,
     setNewChatTitle,
+    clearOptimisticMessages,
     handleNewChat,
     handleSelectChat,
-    handleSendMessage,
     handleSaveChatTitle,
     handleEditChatTitle,
     handleCancelEdit,
-    handleKeyPress,
     fetchUserChats,
     fetchMessagesForChat,
-
-    // Optimistic UI
+    handleDeleteChat,
     addMessageToChat,
-
-    // User data
     user,
   };
 };

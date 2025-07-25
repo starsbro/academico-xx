@@ -1,5 +1,4 @@
 import * as admin from "firebase-admin";
-import {FieldValue} from "firebase-admin/firestore";
 
 /**
  * Interface for a message document returned from the database.
@@ -9,6 +8,8 @@ interface ChatMessage {
   userId: string;
   message: string;
   timestamp: string;
+  source?: string;
+  pdfFilename?: string;
 }
 
 /**
@@ -24,7 +25,13 @@ interface ChatMessage {
 export async function addMessageToChat(
   userId: string,
   chatId: string,
-  messageData: { userId: string; message: string; timestamp: string },
+  messageData: {
+    userId: string;
+    message: string;
+    timestamp: string;
+    source?: string;
+    pdfFilename?: string;
+  }
 ): Promise<admin.firestore.DocumentReference> {
   const db = admin.firestore();
 
@@ -37,7 +44,14 @@ export async function addMessageToChat(
     .add({
       userId: messageData.userId,
       message: messageData.message,
-      timestamp: FieldValue.serverTimestamp(),
+      // Use provided timestamp instead of server timestamp
+      timestamp: messageData.timestamp,
+      ...(messageData.source ? { source: messageData.source } : {}),
+      ...(messageData.pdfFilename ?
+        {
+          pdfFilename: messageData.pdfFilename,
+        } :
+        {}),
     });
   return newMessageRef;
 }
@@ -65,13 +79,28 @@ export async function getMessagesByChatId(
   const chatMessages: ChatMessage[] = [];
   snapshot.forEach((doc) => {
     const data = doc.data();
+
+    // Handle both string timestamps (new) and Firestore Timestamp objects (old)
+    let timestampString: string;
+    if (typeof data.timestamp === "string") {
+      // Already a string timestamp
+      timestampString = data.timestamp;
+    } else if (data.timestamp && typeof data.timestamp.toDate === "function") {
+      // Firestore Timestamp object
+      timestampString = (data.timestamp as admin.firestore.Timestamp)
+        .toDate().toISOString();
+    } else {
+      // Fallback
+      timestampString = new Date().toISOString();
+    }
+
     chatMessages.push({
       id: doc.id,
       userId: data.userId,
       message: data.message,
-      timestamp: data.timestamp ?
-        (data.timestamp as admin.firestore.Timestamp).toDate().toISOString() :
-        new Date().toISOString(),
+      timestamp: timestampString,
+      ...(data.source ? { source: data.source } : {}),
+      ...(data.pdfFilename ? { pdfFilename: data.pdfFilename } : {}),
     });
   });
   return chatMessages;

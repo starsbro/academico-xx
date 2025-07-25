@@ -1,6 +1,8 @@
+// tests/unit/frontend/components/ThemeToggle/ThemeToggle.test.tsx
+// frontend/src/components/ThemeToggle/ThemeToggle.tsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
+import { ThemeToggle } from '../../../../../frontend/src/components/ThemeToggle/ThemeToggle';
 
 describe('ThemeToggle', () => {
   const mockMatchMedia = (matches: boolean) => {

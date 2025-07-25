@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Button } from '@/components/Button/Button';
+// Update the import path to the correct location of Button component
+import { Button } from '../../../../frontend/src/components/Button/Button';
 
 // Integration test with minimal mocking for coverage
 describe('Button Integration', () => {

@@ -11,11 +11,21 @@ interface UserChat {
   lastUpdatedAt: string;
 }
 
+// Helper to get Firestore server timestamp
+
+/**
+ * Returns a Firestore server timestamp value.
+ * @return {admin.firestore.FieldValue} Firestore server timestamp
+ */
+export function getServerTimestamp(): admin.firestore.FieldValue {
+  return FieldValue.serverTimestamp();
+}
+
 /**
  * Create a new chat document for a given user.
- * @param {string} userId: The ID of the user.
+ * @param {string} userId The ID of the user.
  * @param {string} title The title of the chat.
- * @return {Promise<any>} A new chat document
+ * @return {Promise<admin.firestore.DocumentReference>} A new chat document
  */
 export async function createChat(
   userId: string,
@@ -64,6 +74,30 @@ export async function updateChat(
 }
 
 /**
+ * Deletes a chat and all its messages for a given user.
+ * @param {string} userId The ID of the user.
+ * @param {string} chatId The ID of the chat.
+ */
+export async function deleteChat(
+  userId: string,
+  chatId: string
+): Promise<void> {
+  const db = admin.firestore();
+  const chatRef = db
+    .collection("users")
+    .doc(userId)
+    .collection("chats")
+    .doc(chatId);
+
+  // Delete all messages in the chat
+  const messagesSnap = await chatRef.collection("messages").get();
+  const batch = db.batch();
+  messagesSnap.forEach((doc) => batch.delete(doc.ref));
+  batch.delete(chatRef); // Delete the chat document itself
+  await batch.commit();
+}
+
+/**
  * Fetches all chats for a specific user, ordered by last update
  * @param {string} userId The ID of the user.
  * @return {Promise<UserChat[]>} all chats for a specific user
@@ -83,13 +117,14 @@ export async function getChatsByUserId(userId: string): Promise<UserChat[]> {
     userChats.push({
       id: doc.id,
       title: data.title || "Untitled Chat",
-      createdAt: data.createdAt ?
-        (data.createdAt as admin.firestore.Timestamp).toDate().toISOString() :
+      createdAt: data.createdAt ? typeof data.createdAt.toDate === "function" ?
+        data.createdAt.toDate().toISOString() :
+        new Date(data.createdAt).toISOString() :
         new Date().toISOString(),
       lastUpdatedAt: data.lastUpdatedAt ?
-        (data.lastUpdatedAt as admin.firestore.Timestamp)
-          .toDate()
-          .toISOString() :
+        typeof data.lastUpdatedAt.toDate === "function" ?
+          data.lastUpdatedAt.toDate().toISOString() :
+          new Date(data.lastUpdatedAt).toISOString() :
         new Date().toISOString(),
     });
   });
